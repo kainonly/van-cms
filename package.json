@@ -1,5 +1,5 @@
 {
-  "name": "van-cms",
+  "name": "van-core",
   "version": "0.0.0",
   "scripts": {
     "start": "ng serve",

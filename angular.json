@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "van-cms": {
+    "van-core": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/van-cms",
+            "outputPath": "dist/van-core",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -61,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "van-cms:build"
+            "browserTarget": "van-core:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "van-cms:build:production"
+              "browserTarget": "van-core:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "van-cms:build"
+            "browserTarget": "van-core:build"
           }
         },
         "test": {
@@ -109,15 +109,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "van-cms:serve"
+            "devServerTarget": "van-core:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "van-cms:serve:production"
+              "devServerTarget": "van-core:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "van-cms"
+  "defaultProject": "van-core"
 }
