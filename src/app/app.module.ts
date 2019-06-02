@@ -13,11 +13,10 @@ import {environment} from '../environments/environment';
 registerLocaleData(en);
 
 import {AppComponent} from './app.component';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {LoginComponent} from './login/login.component';
 
 import {TokenService} from './guard/token.service';
 import {MainService} from './api/main.service';
+import {CenterService} from './api/center.service';
 
 const routes: Routes = [
   {path: '', loadChildren: './app.router.module#AppRouterModule', canActivate: [TokenService]},
@@ -31,8 +30,6 @@ const perfectBar: PerfectScrollbarConfigInterface = {
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +46,7 @@ const perfectBar: PerfectScrollbarConfigInterface = {
   providers: [
     TokenService,
     MainService,
+    CenterService,
     {provide: NZ_I18N, useValue: en_US},
     {provide: PERFECT_SCROLLBAR_CONFIG, useValue: perfectBar}
   ],

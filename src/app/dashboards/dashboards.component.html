@@ -1,0 +1,70 @@
+<nz-layout class="dashboard-layout">
+  <nz-header>
+    <div class="logo">KACHA ERP</div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="float: right;line-height: 64px;">
+      <li nz-submenu>
+        <span title>
+          <i nz-icon type="user"></i> 个人中心
+        </span>
+        <ul>
+          <li nz-menu-item routerLink="/{profile}">
+            <a title><i nz-icon type="solution"></i> 个人信息</a>
+          </li>
+          <li nz-menu-item (click)="logout()">
+            <a title><i nz-icon type="logout"></i> 退出</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-header>
+  <nz-layout>
+    <nz-sider [nzWidth]="200" class="main-sider">
+      <ul nz-menu [nzMode]="'inline'">
+        <ng-container *ngTemplateOutlet="navTpl; context: {$implicit: navLists}"></ng-container>
+        <ng-template #navTpl let-navs>
+          <ng-container *ngFor="let x of navs">
+            <ng-container *ngIf="x.routerlink;else notRouterlink">
+              <li nz-menu-item
+                  [nzSelected]="bit.navActive.indexOf(x.id)!==-1"
+                  [bitOpen]="[x.routerlink]">
+                <i nz-icon [type]="x.icon"></i>
+                <span class="nav-text">{{x.name}}</span>
+              </li>
+            </ng-container>
+            <ng-template #notRouterlink>
+              <li nz-submenu [nzOpen]="bit.navActive.indexOf(x.id)!==-1">
+                <span title><i nz-icon [type]="x.icon"></i><span>{{x.name}}</span></span>
+                <ul>
+                  <ng-container *ngTemplateOutlet="navTpl; context: {$implicit: x.children}"></ng-container>
+                </ul>
+              </li>
+            </ng-template>
+          </ng-container>
+        </ng-template>
+      </ul>
+    </nz-sider>
+    <nz-layout class="app-warpper">
+      <nz-breadcrumb class="app-breadcrumb" [nzSeparator]="breadcrumbIcon">
+        <ng-template #breadcrumbIcon>
+          <i nz-icon type="right"></i>
+        </ng-template>
+        <nz-breadcrumb-item>
+          <a routerLink="/">{{bit.l['dashboard']}}</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item *ngFor="let x of bit.breadcrumb;last as islast">
+          <ng-container *ngIf="islast;else notLast">{{x.name}}</ng-container>
+          <ng-template #notLast>
+            <a *ngIf="x.routerlink;else notRouterlink" [bitCrossLevel]="x.routerlink">
+              {{x.name}}
+            </a>
+            <ng-template #notRouterlink>{{x.name}}</ng-template>
+          </ng-template>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+
+      <nz-content class="app-content">
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

@@ -1,0 +1,32 @@
+<div class="container-login">
+  <div class="login login-blue">
+    <div class="login-brand">
+      <img src="assets/images/api.jpg" alt="logo">
+    </div>
+    <div class="login-wrapper">
+      <div class="login-box login-login">
+        <div class="login-box-inner">
+          <form [formGroup]="form" (bitFormSubmit)="submit($event)">
+            <p>VAN Core</p>
+            <div class="login-group">
+              <label>用户名</label>
+              <input type="text" formControlName="username" class="login-input">
+            </div>
+            <div class="login-group password-group">
+              <label>口令</label>
+              <input type="password" formControlName="password" class="login-input">
+            </div>
+            <button type="submit" class="login-btn login-btn">
+              登录
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer class="login-footer">
+      &copy;2019
+    </footer>
+  </div>
+
+</div>
