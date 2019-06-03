@@ -7,8 +7,9 @@ import {BitService} from 'ngx-bit';
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-
-  constructor(public bit: BitService) {
+  constructor(
+    public bit: BitService
+  ) {
   }
 
   ngOnInit() {

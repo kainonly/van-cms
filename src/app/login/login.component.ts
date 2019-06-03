@@ -14,11 +14,13 @@ import packer from './language';
 export class LoginComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private mainService: MainService,
-              private notification: NzNotificationService,
-              private router: Router,
-              private fb: FormBuilder,
-              public bit: BitService) {
+  constructor(
+    private mainService: MainService,
+    private notification: NzNotificationService,
+    private router: Router,
+    private fb: FormBuilder,
+    public bit: BitService
+  ) {
   }
 
   ngOnInit() {

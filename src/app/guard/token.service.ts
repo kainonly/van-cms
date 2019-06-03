@@ -5,8 +5,10 @@ import {MainService} from '../api/main.service';
 
 @Injectable()
 export class TokenService implements CanActivate {
-  constructor(private main: MainService,
-              private router: Router) {
+  constructor(
+    private main: MainService,
+    private router: Router
+  ) {
   }
 
   canActivate() {

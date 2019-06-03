@@ -14,14 +14,16 @@ export class DashboardsComponent implements OnInit, OnDestroy {
   collapsed = false;
   navLists: any[] = [];
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private mainService: MainService,
-              private centerService: CenterService,
-              private events: EventsService,
-              private storage: StorageService,
-              private notification: NzNotificationService,
-              public bit: BitService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private mainService: MainService,
+    private centerService: CenterService,
+    private events: EventsService,
+    private storage: StorageService,
+    private notification: NzNotificationService,
+    public bit: BitService
+  ) {
   }
 
   ngOnInit() {

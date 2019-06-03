@@ -7,7 +7,9 @@ import {map} from 'rxjs/operators';
 export class MainService {
   private model = 'main';
 
-  constructor(private http: HttpService) {
+  constructor(
+    private http: HttpService
+  ) {
   }
 
   /**

@@ -8,8 +8,9 @@ import packer from './language';
   styleUrls: ['./empty.component.scss']
 })
 export class EmptyComponent implements OnInit {
-
-  constructor(public bit: BitService) {
+  constructor(
+    public bit: BitService
+  ) {
   }
 
   ngOnInit() {

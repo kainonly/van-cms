@@ -6,14 +6,13 @@ import {registerLocaleData} from '@angular/common';
 import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
 import en from '@angular/common/locales/en';
 import {NgZorroAntdModule, NZ_I18N, en_US} from 'ng-zorro-antd';
-import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {NgxBitModule} from 'ngx-bit';
-import {environment} from '../environments/environment';
+import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 
 registerLocaleData(en);
 
+import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
-
 import {TokenService} from './guard/token.service';
 import {MainService} from './api/main.service';
 import {CenterService} from './api/center.service';
