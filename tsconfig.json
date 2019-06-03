@@ -19,6 +19,12 @@
       "dom"
     ],
     "paths": {
+      "ngx-bit": [
+        "dist/ngx-bit"
+      ],
+      "ngx-bit/*": [
+        "dist/ngx-bit/*"
+      ]
     }
   }
 }
