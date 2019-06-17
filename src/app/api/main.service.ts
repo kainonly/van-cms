@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from 'ngx-bit';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable()
@@ -25,8 +25,11 @@ export class MainService {
   /**
    * Token Verify
    */
-  verify(): Observable<boolean> {
-    return this.http.req(this.model + '/verify');
+  verify(): Observable<any> {
+    // this.http.req(this.model + '/verify')
+    return of({
+      error: 0
+    });
   }
 
   /**

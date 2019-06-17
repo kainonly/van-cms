@@ -46,10 +46,10 @@ export class DashboardsComponent implements OnInit, OnDestroy {
    * 获取菜单数据
    */
   private getMenuLists() {
-    this.mainService.menu().subscribe(data => {
-      this.storage.setMenu(data.menu, data.router);
-      this.navLists = data.nav;
-    });
+    // this.mainService.menu().subscribe(data => {
+    //   this.storage.setMenu(data.menu, data.router);
+    //   this.navLists = data.nav;
+    // });
   }
 
   /**
