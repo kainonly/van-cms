@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from 'ngx-bit';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable()
@@ -23,13 +23,19 @@ export class MainService {
   }
 
   /**
+   * logout
+   */
+  logout(): Observable<boolean> {
+    return this.http.req(this.model + '/logout').pipe(
+      map(res => !res.error)
+    );
+  }
+
+  /**
    * Token Verify
    */
   verify(): Observable<any> {
-    // this.http.req(this.model + '/verify')
-    return of({
-      error: 0
-    });
+    return this.http.req(this.model + '/verify');
   }
 
   /**
@@ -72,5 +78,21 @@ export class MainService {
         }
       })
     );
+  }
+
+  /**
+   * get information
+   */
+  information(): Observable<any> {
+    return this.http.req(this.model + '/information').pipe(
+      map(res => !res.error ? res.data : {})
+    );
+  }
+
+  /**
+   * update profile
+   */
+  update(data: any): Observable<any> {
+    return this.http.req(this.model + '/update', data);
   }
 }

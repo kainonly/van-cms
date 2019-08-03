@@ -19,9 +19,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.bit.registerLocales(packer, true);
     this.config.interceptor = (res: any): Observable<any> => {
-      if (res.error && res.msg === 'error:rbac') {
-        this.message.error(this.bit.l.rbac_error);
-      }
       return of(res);
     };
   }

@@ -4,7 +4,7 @@ export const environment = {
     originUrl: 'https://api.yelinvan.cc',
     staticUrl: 'https://cdn.yelinvan.cc/',
     iconUrl: 'https://cdn.yelinvan.cc/',
-    namespace: '',
+    namespace: '/erp',
     uploadsUrl: false,
     uploadsPath: 'main/uploads',
     withCredentials: true,

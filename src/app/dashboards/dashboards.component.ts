@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {BitService, EventsService, StorageService} from 'ngx-bit';
 import {NzNotificationService} from 'ng-zorro-antd';
 import {MainService} from '../api/main.service';
-import {CenterService} from '../api/center.service';
 
 @Component({
   selector: 'app-dashboards',
@@ -18,7 +17,6 @@ export class DashboardsComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private mainService: MainService,
-    private centerService: CenterService,
     private events: EventsService,
     private storage: StorageService,
     private notification: NzNotificationService,
@@ -56,7 +54,7 @@ export class DashboardsComponent implements OnInit, OnDestroy {
    * 注销登录
    */
   logout() {
-    this.centerService.logout().subscribe(() => {
+    this.mainService.logout().subscribe(() => {
       this.bit.breadcrumb = [];
       this.bit.navActive = [];
       this.storage.clear();
