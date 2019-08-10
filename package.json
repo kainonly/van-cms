@@ -21,6 +21,7 @@
     "@angular/router": "~8.2.0",
     "@ngx-pwa/local-storage": "^8.0.2",
     "ng-zorro-antd": "^8.1.2",
+    "ngx-bit": "^8.2.2",
     "ngx-perfect-scrollbar": "^8.0.0",
     "rxjs": "~6.5.2",
     "sweetalert2": "^8.14.0",
