@@ -8,8 +8,14 @@ const routes: Routes = [
     path: '',
     component: DashboardsComponent,
     children: [
-      {path: '', loadChildren: './pages/welcome/welcome.module#WelcomeModule'},
-      {path: '{empty}', loadChildren: './pages/empty/empty.module#EmptyModule'},
+      {
+        path: '',
+        loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule)
+      },
+      {
+        path: '{empty}',
+        loadChildren: () => import('./pages/empty/empty.module').then(m => m.EmptyModule)
+      },
     ]
   }
 ];

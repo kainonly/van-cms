@@ -1,12 +1,14 @@
+import {en_US, zh_CN} from 'ng-zorro-antd';
+
 export const environment = {
   production: true,
   bit: {
     originUrl: 'https://api.yelinvan.cc',
     staticUrl: 'https://cdn.yelinvan.cc/',
-    iconUrl: 'https://cdn.yelinvan.cc/',
-    namespace: '/erp',
+    iconUrl: 'https://cdn.yelinvan.cc/static/',
+    namespace: '/system',
     uploadsUrl: false,
-    uploadsPath: 'main/uploads',
+    uploadsPath: 'system/main/uploads',
     withCredentials: true,
     httpInterceptor: true,
     pageLimit: 10,
@@ -36,6 +38,11 @@ export const environment = {
         nzSm: 24
       },
     },
+    localDefault: 'zh_cn',
+    localeBind: new Map([
+      ['zh_cn', zh_CN],
+      ['en_us', en_US]
+    ]),
     i18nDefault: 'zh_cn',
     i18nContain: ['zh_cn', 'en_us'],
     i18nSwitch: [

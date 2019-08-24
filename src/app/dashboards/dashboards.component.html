@@ -19,21 +19,24 @@
   </nz-header>
   <nz-layout>
     <nz-sider [nzWidth]="200" class="main-sider">
-      <ul nz-menu [nzMode]="'inline'">
+      <ul nz-menu
+          [nzTheme]="'dark'"
+          [nzInlineCollapsed]="collapsed"
+          [nzMode]="collapsed?'vertical':'inline'">
         <ng-container *ngTemplateOutlet="navTpl; context: {$implicit: navLists}"></ng-container>
         <ng-template #navTpl let-navs>
           <ng-container *ngFor="let x of navs">
-            <ng-container *ngIf="x.routerlink;else notRouterlink">
+            <ng-container *ngIf="x.router;else notRouter">
               <li nz-menu-item
-                  [nzSelected]="bit.navActive.indexOf(x.id)!==-1"
-                  [bitOpen]="[x.routerlink]">
+                  [nzSelected]="bit.navActive.indexOf(x.key)!==-1"
+                  [bitOpen]="[x.key]">
                 <i nz-icon [type]="x.icon"></i>
-                <span class="nav-text">{{x.name}}</span>
+                <span class="nav-text">{{x.name|Locale:bit.locale}}</span>
               </li>
             </ng-container>
-            <ng-template #notRouterlink>
-              <li nz-submenu [nzOpen]="bit.navActive.indexOf(x.id)!==-1">
-                <span title><i nz-icon [type]="x.icon"></i><span>{{x.name}}</span></span>
+            <ng-template #notRouter>
+              <li nz-submenu [nzOpen]="bit.navActive.indexOf(x.key)!==-1">
+                <span title><i nz-icon [type]="x.icon"></i><span>{{x.name|Locale:bit.locale}}</span></span>
                 <ul>
                   <ng-container *ngTemplateOutlet="navTpl; context: {$implicit: x.children}"></ng-container>
                 </ul>
@@ -44,7 +47,7 @@
       </ul>
     </nz-sider>
     <nz-layout class="app-warpper">
-      <nz-breadcrumb class="app-breadcrumb" [nzSeparator]="breadcrumbIcon">
+      <nz-breadcrumb [nzSeparator]="breadcrumbIcon">
         <ng-template #breadcrumbIcon>
           <i nz-icon type="right"></i>
         </ng-template>
@@ -52,12 +55,12 @@
           <a routerLink="/">{{bit.l['dashboard']}}</a>
         </nz-breadcrumb-item>
         <nz-breadcrumb-item *ngFor="let x of bit.breadcrumb;last as islast">
-          <ng-container *ngIf="islast;else notLast">{{x.name}}</ng-container>
+          <ng-container *ngIf="islast;else notLast">{{x.name|Locale:bit.locale}}</ng-container>
           <ng-template #notLast>
-            <a *ngIf="x.routerlink;else notRouterlink" [bitCrossLevel]="x.routerlink">
-              {{x.name}}
+            <a *ngIf="x.router;else notRouterlink" [bitCrossLevel]="x.key">
+              {{x.name|Locale:bit.locale}}
             </a>
-            <ng-template #notRouterlink>{{x.name}}</ng-template>
+            <ng-template #notRouterlink>{{x.name|Locale:bit.locale}}</ng-template>
           </ng-template>
         </nz-breadcrumb-item>
       </nz-breadcrumb>

@@ -17,8 +17,15 @@ import {TokenService} from './guard/token.service';
 import {MainService} from './api/main.service';
 
 const routes: Routes = [
-  {path: '', loadChildren: './app.router.module#AppRouterModule', canActivate: [TokenService]},
-  {path: 'login', loadChildren: './login/login.module#LoginModule'},
+  {
+    path: '',
+    loadChildren: () => import('./app.router.module').then(m => m.AppRouterModule),
+    canActivate: [TokenService]
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  },
 ];
 
 const perfectBar: PerfectScrollbarConfigInterface = {
