@@ -4,14 +4,14 @@
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="float: right;line-height: 64px;">
       <li nz-submenu>
         <span title>
-          <i nz-icon type="user"></i> 个人中心
+          <i nz-icon nzType="user"></i> 个人中心
         </span>
         <ul>
           <li nz-menu-item routerLink="/{profile}">
-            <a title><i nz-icon type="solution"></i> 个人信息</a>
+            <a title><i nz-icon nzType="solution"></i> 个人信息</a>
           </li>
           <li nz-menu-item (click)="logout()">
-            <a title><i nz-icon type="logout"></i> 退出</a>
+            <a title><i nz-icon nzType="logout"></i> 退出</a>
           </li>
         </ul>
       </li>
@@ -20,7 +20,6 @@
   <nz-layout>
     <nz-sider [nzWidth]="200" class="main-sider">
       <ul nz-menu
-          [nzTheme]="'dark'"
           [nzInlineCollapsed]="collapsed"
           [nzMode]="collapsed?'vertical':'inline'">
         <ng-container *ngTemplateOutlet="navTpl; context: {$implicit: navLists}"></ng-container>
@@ -30,13 +29,13 @@
               <li nz-menu-item
                   [nzSelected]="bit.navActive.indexOf(x.key)!==-1"
                   [bitOpen]="[x.key]">
-                <i nz-icon [type]="x.icon"></i>
+                <i nz-icon [nzType]="x.icon"></i>
                 <span class="nav-text">{{x.name|Locale:bit.locale}}</span>
               </li>
             </ng-container>
             <ng-template #notRouter>
               <li nz-submenu [nzOpen]="bit.navActive.indexOf(x.key)!==-1">
-                <span title><i nz-icon [type]="x.icon"></i><span>{{x.name|Locale:bit.locale}}</span></span>
+                <span title><i nz-icon [nzType]="x.icon"></i><span>{{x.name|Locale:bit.locale}}</span></span>
                 <ul>
                   <ng-container *ngTemplateOutlet="navTpl; context: {$implicit: x.children}"></ng-container>
                 </ul>
@@ -49,7 +48,7 @@
     <nz-layout class="app-warpper">
       <nz-breadcrumb [nzSeparator]="breadcrumbIcon">
         <ng-template #breadcrumbIcon>
-          <i nz-icon type="right"></i>
+          <i nz-icon nzType="right"></i>
         </ng-template>
         <nz-breadcrumb-item>
           <a routerLink="/">{{bit.l['dashboard']}}</a>

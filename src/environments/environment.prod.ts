@@ -5,7 +5,7 @@ export const environment = {
   bit: {
     originUrl: 'https://api.yelinvan.cc',
     staticUrl: 'https://cdn.yelinvan.cc/',
-    iconUrl: 'https://cdn.yelinvan.cc/static/',
+    iconUrl: 'https://cdn.yelinvan.cc/',
     namespace: '/system',
     uploadsUrl: false,
     uploadsPath: 'system/main/uploads',
