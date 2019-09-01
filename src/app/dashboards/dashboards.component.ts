@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BitService, EventsService, StorageService} from 'ngx-bit';
 import {NzNotificationService} from 'ng-zorro-antd';
-import {MainService} from '../api/main.service';
+import {MainService} from '@common/main.service';
 
 @Component({
   selector: 'app-dashboards',

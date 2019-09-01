@@ -22,7 +22,6 @@
     "@ngx-pwa/local-storage": "^8.2.1",
     "ng-zorro-antd": "^8.2.0",
     "ngx-bit": "^8.2.6",
-    "ngx-perfect-scrollbar": "^8.0.0",
     "rxjs": "~6.5.2",
     "sweetalert2": "^8.16.3",
     "tslib": "^1.9.0",

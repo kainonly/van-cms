@@ -1,20 +1,24 @@
-import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
 import {registerLocaleData} from '@angular/common';
-import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
-import en from '@angular/common/locales/en';
-import {NgZorroAntdModule, NZ_I18N, en_US} from 'ng-zorro-antd';
+import zh from '@angular/common/locales/zh';
+import {NgZorroAntdModule, NZ_I18N, zh_CN} from 'ng-zorro-antd';
 import {NgxBitModule} from 'ngx-bit';
-import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {environment} from '@env';
 
-registerLocaleData(en);
+registerLocaleData(zh);
 
-import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
-import {TokenService} from './guard/token.service';
-import {MainService} from './api/main.service';
+import {TokenService} from '@common/token.service';
+import {MainService} from '@common/main.service';
+import {AdminService} from '@common/admin.service';
+import {RoleService} from '@common/role.service';
+import {AclService} from '@common/acl.service';
+import {ResourceService} from '@common/resource.service';
+import {PolicyService} from '@common/policy.service';
 
 const routes: Routes = [
   {
@@ -28,10 +32,6 @@ const routes: Routes = [
   },
 ];
 
-const perfectBar: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,19 +40,19 @@ const perfectBar: PerfectScrollbarConfigInterface = {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'VanXsrf',
-    }),
     NgZorroAntdModule,
-    PerfectScrollbarModule,
     NgxBitModule.forRoot(environment.bit),
     RouterModule.forRoot(routes, {useHash: true}),
   ],
   providers: [
     TokenService,
     MainService,
-    {provide: NZ_I18N, useValue: en_US},
-    {provide: PERFECT_SCROLLBAR_CONFIG, useValue: perfectBar}
+    AclService,
+    ResourceService,
+    PolicyService,
+    RoleService,
+    AdminService,
+    {provide: NZ_I18N, useValue: zh_CN},
   ],
   bootstrap: [AppComponent]
 })
