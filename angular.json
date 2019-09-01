@@ -72,6 +72,41 @@
           }
         }
       }
+    },
+    "ngx-bit": {
+      "projectType": "library",
+      "root": "projects/ngx-bit",
+      "sourceRoot": "projects/ngx-bit/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-bit/tsconfig.lib.json",
+            "project": "projects/ngx-bit/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-bit/src/test.ts",
+            "tsConfig": "projects/ngx-bit/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-bit/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-bit/tsconfig.lib.json",
+              "projects/ngx-bit/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "van-cms"
