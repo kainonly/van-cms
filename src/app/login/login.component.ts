@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzNotificationService} from 'ng-zorro-antd';
+import {MainService} from '@common/main.service';
 import {BitService} from 'ngx-bit';
-import {MainService} from '../api/main.service';
 import packer from './language';
+
 
 @Component({
   selector: 'app-login',
@@ -26,8 +27,19 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.bit.registerLocales(packer);
     this.form = this.fb.group({
-      username: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
-      password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(18)]]
+      username: [null, [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(20)
+      ]],
+      password: [null, [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(18)]
+      ],
+      remember: [true, [
+        Validators.required
+      ]]
     });
   }
 

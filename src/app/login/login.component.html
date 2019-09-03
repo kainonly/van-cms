@@ -1,32 +1,77 @@
 <div class="container-login">
-  <div class="login login-blue">
-    <div class="login-brand">
-      <img src="assets/images/api.jpg" alt="logo">
-    </div>
-    <div class="login-wrapper">
-      <div class="login-box login-login">
-        <div class="login-box-inner">
-          <form [formGroup]="form" (bitFormSubmit)="submit($event)">
-            <p>VAN CMS</p>
-            <div class="login-group">
-              <label>用户名</label>
-              <input type="text" formControlName="username" class="login-input">
-            </div>
-            <div class="login-group password-group">
-              <label>口令</label>
-              <input type="password" formControlName="password" class="login-input">
-            </div>
-            <button type="submit" class="login-btn login-btn">
-              登录
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+  <div class="login-wrapper">
+    <form [formGroup]="form" (bitFormSubmit)="submit($event)">
+      <h2 nz-title nzContent="VAN CMS"></h2>
+      <nz-form-item>
+        <nz-form-label>{{bit.l['username']}}</nz-form-label>
+        <nz-form-control [nzErrorTip]="username.ref">
+          <nz-input-group nzSize="large"
+                          [nzSuffix]="usernameSuffix"
+                          [nzPrefix]="userPrefix">
+            <input type="text" nz-input
+                   formControlName="username"
+                   [placeholder]="bit.l['usernameRequire']">
+            <ng-template #userPrefix>
+              <i nz-icon nzType="user"></i>
+            </ng-template>
+            <ng-template #usernameSuffix>
+              <i nz-icon nzType="close-circle"
+                 *ngIf="form.get('username').value"
+                 (click)="form.get('username').reset()"></i>
+            </ng-template>
+          </nz-input-group>
+          <bit-error-tip #username [hasError]="{
+            required:bit.l['usernameRequire'],
+            minlength:bit.l['usernameCorrectly'],
+            maxlength:bit.l['usernameCorrectly']
+          }">
+          </bit-error-tip>
+        </nz-form-control>
+      </nz-form-item>
 
-    <footer class="login-footer">
-      &copy;2019
-    </footer>
+      <nz-form-item>
+        <nz-form-label>{{bit.l['password']}}</nz-form-label>
+        <nz-form-control [nzErrorTip]="password.ref">
+          <nz-input-group nzSize="large"
+                          [nzSuffix]="passwordSuffix"
+                          [nzPrefix]="passwordPrefix">
+            <input type="password" nz-input
+                   formControlName="password"
+                   [placeholder]="bit.l['passwordRequire']">
+          </nz-input-group>
+          <ng-template #passwordPrefix>
+            <i nz-icon nzType="lock"></i>
+          </ng-template>
+          <ng-template #passwordSuffix>
+            <i nz-icon nzType="close-circle"
+               *ngIf="form.get('password').value"
+               (click)="form.get('password').reset()">
+            </i>
+          </ng-template>
+          <bit-error-tip #password [hasError]="{
+            required:bit.l['passwordRequire'],
+            minlength:bit.l['passwordCorrectly'],
+            maxlength:bit.l['passwordCorrectly']
+          }">
+          </bit-error-tip>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <label nz-checkbox formControlName="remember">
+            <span>{{bit.l['loginRemember']}}</span>
+          </label>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzSize="large" nzType="primary" [nzBlock]="true">
+            {{bit.l['login']}}
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
   </div>
-
 </div>
