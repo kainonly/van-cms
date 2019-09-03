@@ -6,7 +6,6 @@ import {MainService} from '@common/main.service';
 import {BitService} from 'ngx-bit';
 import packer from './language';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -46,11 +45,16 @@ export class LoginComponent implements OnInit {
   submit(data: any) {
     this.mainService.login(data.username, data.password).subscribe(res => {
       if (!res.error) {
-        localStorage.setItem('username', data.username);
-        this.notification.success(this.bit.l.login_tips, this.bit.l.login_success);
+        this.notification.success(
+          this.bit.l.loginTips,
+          this.bit.l.loginSuccess
+        );
         this.router.navigateByUrl('/');
       } else {
-        this.notification.error(this.bit.l.login_tips, this.bit.l.login_failed);
+        this.notification.error(
+          this.bit.l.loginTips,
+          this.bit.l.loginFailed
+        );
       }
     });
   }
