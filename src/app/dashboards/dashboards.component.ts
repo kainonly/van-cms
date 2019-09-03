@@ -36,6 +36,7 @@ export class DashboardsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.events.off('locale');
     this.events.off('refresh-menu');
     this.storage.destoryBreadcrumb();
   }

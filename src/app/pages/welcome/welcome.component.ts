@@ -3,8 +3,7 @@ import {BitService} from 'ngx-bit';
 
 @Component({
   selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  template: ``,
 })
 export class WelcomeComponent implements OnInit {
   constructor(
