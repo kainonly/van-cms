@@ -13,7 +13,7 @@ export class MainService {
   }
 
   /**
-   * 登录
+   * User Login
    */
   login(username: string, password: string): Observable<any> {
     return this.http.req(this.model + '/login', {
@@ -23,7 +23,7 @@ export class MainService {
   }
 
   /**
-   * 登出
+   * User Logout
    */
   logout(): Observable<boolean> {
     return this.http.req(this.model + '/logout').pipe(
@@ -32,14 +32,14 @@ export class MainService {
   }
 
   /**
-   * Token验证
+   * Token Verify
    */
   verify(): Observable<boolean> {
     return this.http.req(this.model + '/verify');
   }
 
   /**
-   * 获取资源控制
+   * Get Resource
    */
   resource(): Observable<any> {
     return this.http.req(this.model + '/resource').pipe(
@@ -82,7 +82,7 @@ export class MainService {
   }
 
   /**
-   * 获取个人信息
+   * Get Profile Information
    */
   information(): Observable<any> {
     return this.http.req(this.model + '/information').pipe(
@@ -91,7 +91,7 @@ export class MainService {
   }
 
   /**
-   * 更新个人信息
+   * Update Profile
    */
   update(data: any): Observable<any> {
     return this.http.req(this.model + '/update', data);

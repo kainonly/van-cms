@@ -40,7 +40,7 @@ export class AdminService {
   }
 
   /**
-   * 验证用户是否存在
+   * Validate Username
    */
   validedUsername(username: string) {
     return this.http.req(this.model + '/validedUsername', {

@@ -41,17 +41,17 @@ export class DashboardsComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 获取菜单数据
+   * Get Menu Lists
    */
   private getMenuLists() {
-    // this.mainService.menu().subscribe(data => {
-    //   this.storage.setMenu(data.menu, data.router);
-    //   this.navLists = data.nav;
-    // });
+    this.mainService.resource().subscribe(data => {
+      this.storage.putResource(data.resource, data.router);
+      this.navLists = data.nav;
+    });
   }
 
   /**
-   * 注销登录
+   * User logout
    */
   logout() {
     this.mainService.logout().subscribe(() => {

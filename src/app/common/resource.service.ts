@@ -33,7 +33,7 @@ export class ResourceService {
   }
 
   /**
-   * 排序请求
+   * Resource Sort
    */
   sort(data: any[]): Observable<any> {
     return this.http.req(this.model + '/sort', {
@@ -42,7 +42,7 @@ export class ResourceService {
   }
 
   /**
-   * 验证访问控制键是否存在
+   * Validate Resource Key
    */
   validedKey(key: string, edit: Observable<string> = of(null)) {
     return edit.pipe(

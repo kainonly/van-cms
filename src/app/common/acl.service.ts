@@ -41,7 +41,7 @@ export class AclService {
   }
 
   /**
-   * 验证访问控制键是否存在
+   * Validate Acl Key
    */
   validedKey(key: string, edit: Observable<string> = of(null)) {
     return edit.pipe(
