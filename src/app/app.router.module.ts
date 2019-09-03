@@ -16,6 +16,10 @@ const routes: Routes = [
         path: '{empty}',
         loadChildren: () => import('./pages/empty/empty.module').then(m => m.EmptyModule)
       },
+      {
+        path: '{profile}',
+        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
+      },
     ]
   }
 ];
