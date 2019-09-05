@@ -135,6 +135,7 @@ export class RoleAddComponent implements OnInit, OnDestroy {
         queue.push(...children);
       }
     }
+    this.nzTree.nzCheckBoxChange.emit();
   }
 
   /**

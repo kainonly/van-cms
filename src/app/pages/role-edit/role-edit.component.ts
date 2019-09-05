@@ -187,6 +187,7 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
         queue.push(...children);
       }
     }
+    this.nzTree.nzCheckBoxChange.emit();
   }
 
   /**
