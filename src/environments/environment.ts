@@ -3,9 +3,9 @@ import {en_US, zh_CN} from 'ng-zorro-antd';
 export const environment = {
   production: false,
   bit: {
-    originUrl: 'https://api.yelinvan.cc',
-    staticUrl: 'https://cdn.yelinvan.cc/',
-    iconUrl: 'https://cdn.yelinvan.cc/',
+    originUrl: 'https://api.kainonly.com',
+    staticUrl: 'https://cdn.kainonly.com/',
+    iconUrl: 'https://cdn.kainonly.com/',
     namespace: '/system',
     uploadsUrl: false,
     uploadsPath: 'system/main/uploads',
