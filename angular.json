@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "kc-console": {
+    "van-console": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/kc-console",
+            "outputPath": "dist/van-console",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,11 +63,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "kc-console:build"
+            "browserTarget": "van-console:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "kc-console:build:production"
+              "browserTarget": "van-console:build:production"
             }
           }
         }
@@ -109,5 +109,5 @@
       }
     }
   },
-  "defaultProject": "kc-console"
+  "defaultProject": "van-console"
 }

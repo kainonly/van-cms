@@ -1,2 +1,2 @@
-# KachaOS
+# VAN console platform
 
