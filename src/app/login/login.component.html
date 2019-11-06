@@ -10,7 +10,13 @@
                           [nzPrefix]="userPrefix">
             <input type="text" nz-input
                    formControlName="username"
+                   [nzAutocomplete]="auto"
                    [placeholder]="bit.l['usernameRequire']">
+            <nz-autocomplete #auto>
+              <ng-container *ngFor="let x of users">
+                <nz-auto-option [nzValue]="x">{{x}}</nz-auto-option>
+              </ng-container>
+            </nz-autocomplete>
             <ng-template #userPrefix>
               <i nz-icon nzType="user"></i>
             </ng-template>

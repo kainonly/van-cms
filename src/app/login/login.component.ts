@@ -3,7 +3,9 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzNotificationService} from 'ng-zorro-antd';
 import {MainService} from '@common/main.service';
-import {BitService} from 'ngx-bit';
+import {BitService, StorageService} from 'ngx-bit';
+import {StorageMap} from '@ngx-pwa/local-storage';
+import {switchMap} from 'rxjs/operators';
 import packer from './language';
 
 @Component({
@@ -13,13 +15,16 @@ import packer from './language';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  users: any[] = [];
 
   constructor(
     private mainService: MainService,
     private notification: NzNotificationService,
     private router: Router,
     private fb: FormBuilder,
-    public bit: BitService
+    public bit: BitService,
+    private storageService: StorageService,
+    private storageMap: StorageMap
   ) {
   }
 
@@ -40,11 +45,30 @@ export class LoginComponent implements OnInit {
         Validators.required
       ]]
     });
+    this.storageMap.get('users').subscribe((data: Set<string>) => {
+      if (data) {
+        this.users = [...data.keys()];
+      }
+    });
   }
 
   submit(data: any) {
     this.mainService.login(data.username, data.password).subscribe(res => {
       if (!res.error) {
+        this.storageService.clear();
+        if (data.remember) {
+          this.storageMap.get('users').pipe(
+            switchMap((lists: Set<string>) =>
+              this.storageMap.set(
+                'users',
+                lists ? lists.add(data.username) : new Set([data.username])
+              )
+            )
+          ).subscribe(() => {
+          });
+        }
+        sessionStorage.setItem('currentUsername', data.username);
+        sessionStorage.setItem('loginTime', new Date().toISOString());
         this.notification.success(
           this.bit.l.loginTips,
           this.bit.l.loginSuccess
