@@ -19,8 +19,8 @@ import {RoleService} from '@common/role.service';
 import {AclService} from '@common/acl.service';
 import {ResourceService} from '@common/resource.service';
 import {PolicyService} from '@common/policy.service';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {UpdateService} from '@common/update.service';
 
 const routes: Routes = [
   {
@@ -45,9 +45,10 @@ const routes: Routes = [
     NgZorroAntdModule,
     NgxBitModule.forRoot(environment.bit),
     RouterModule.forRoot(routes, {useHash: true}),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
   ],
   providers: [
+    UpdateService,
     TokenService,
     MainService,
     AclService,
