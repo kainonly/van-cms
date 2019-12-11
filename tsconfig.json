@@ -19,9 +19,6 @@
       "dom"
     ],
     "paths": {
-      "ngx-bit": [
-        "projects/ngx-bit/src/public-api.ts"
-      ],
       "@common": [
         "src/app/common"
       ],
