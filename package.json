@@ -4,10 +4,7 @@
   "scripts": {
     "start": "ng serve",
     "serve:open": "ng serve --host 0.0.0.0 --disableHostCheck",
-    "build": "ng build --prod --buildOptimizer",
-    "docs": "docsify serve ./projects/ngx-bit/docs",
-    "build:ngx-bit": "ng build ngx-bit",
-    "release:ngx-bit": "cd dist/ngx-bit && npm publish"
+    "build": "ng build --prod"
   },
   "private": true,
   "dependencies": {
