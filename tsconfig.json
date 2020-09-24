@@ -14,7 +14,21 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@common": [
+        "src/app/common"
+      ],
+      "@common/*": [
+        "src/app/common/*"
+      ],
+      "@env": [
+        "src/environments/environment.ts"
+      ],
+      "@ext": [
+        "src/app/app.ext.module.ts"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
