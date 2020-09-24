@@ -12,7 +12,7 @@ const bit = factoryBitConfig({
   },
   api: {
     namespace: '',
-    upload: '/main/uploads',
+    upload: '',
     withCredentials: true
   },
   col: {
