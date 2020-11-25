@@ -5,13 +5,13 @@
 </bit-header>
 <ng-template #title>
   <nz-space>
-    <nz-space-item *ngIf="lists.hasSearch('name->'+bit.locale)">
+    <nz-space-item *ngIf="lists.hasSearch('name::jsonb->>\''+bit.locale+'\'')">
       <nz-input-group nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 320px">
         <input
           nz-input
           [bitSearchStart]="lists"
           [placeholder]="bit.l['search']"
-          [(ngModel)]="lists.search['name->'+bit.locale].value"
+          [(ngModel)]="lists.search['name::jsonb->>\''+bit.locale+'\''].value"
           (after)="getLists(true)"
         >
       </nz-input-group>

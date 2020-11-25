@@ -24,8 +24,8 @@ export class AclIndexComponent implements OnInit {
     this.lists = this.bit.listByPage({
       id: 'acl-index',
       query: [
-        { field: 'name->zh_cn', op: 'like', value: '' },
-        { field: 'name->en_us', op: 'like', value: '' }
+        { field: `name::jsonb->>'zh_cn'`, op: 'like', value: '' },
+        { field: `name::jsonb->>'en_us'`, op: 'like', value: '' }
       ]
     });
     this.lists.ready.subscribe(() => {

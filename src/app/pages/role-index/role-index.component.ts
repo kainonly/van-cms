@@ -33,8 +33,8 @@ export class RoleIndexComponent implements OnInit, AfterViewInit {
     this.lists = this.bit.listByPage({
       id: 'role-index',
       query: [
-        { field: 'name->zh_cn', op: 'like', value: '' },
-        { field: 'name->en_us', op: 'like', value: '' }
+        { field: `name::jsonb->>'zh_cn'`, op: 'like', value: '' },
+        { field: `name::jsonb->>'en_us'`, op: 'like', value: '' }
       ]
     });
     this.lists.ready.subscribe(() => {

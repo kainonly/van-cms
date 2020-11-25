@@ -5,13 +5,13 @@
 </bit-header>
 <ng-template #title>
   <nz-space>
-    <nz-space-item *ngIf="lists.hasSearch('name->'+bit.locale)">
+    <nz-space-item *ngIf="lists.hasSearch('name::jsonb->>\''+bit.locale+'\'')">
       <nz-input-group nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 320px">
         <input
           nz-input
           [bitSearchStart]="lists"
           [placeholder]="bit.l['search']"
-          [(ngModel)]="lists.search['name->'+bit.locale].value"
+          [(ngModel)]="lists.search['name::jsonb->>\''+bit.locale+'\''].value"
           (after)="getLists(true)"
         >
       </nz-input-group>
@@ -92,8 +92,8 @@
       ></td>
       <td>{{data.name|Locale:bit.locale}}</td>
       <td>{{data.key}}</td>
-      <td nzEllipsis>{{data.write}}</td>
-      <td>{{data.read}}</td>
+      <td nzEllipsis>{{data.write|JSONParse}}</td>
+      <td>{{data.read|JSONParse}}</td>
       <td>
         <nz-switch
           [(ngModel)]="data.status"
@@ -105,7 +105,7 @@
       </td>
       <td>
         <a [bitOpen]="['acl-edit',data.id]">
-          <i nz-icon nzType="edit"></i>  {{bit.l['edit']}}
+          <i nz-icon nzType="edit"></i> {{bit.l['edit']}}
         </a>
         <nz-divider nzType="vertical"></nz-divider>
         <a (click)="deleteData([data.id])">
