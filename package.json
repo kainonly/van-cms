@@ -16,7 +16,7 @@
     "@angular/router": "~10.2.0",
     "@angular/service-worker": "~10.2.0",
     "ng-zorro-antd": "^10.1.2",
-    "ngx-bit": "^10.1.1",
+    "ngx-bit": "^10.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

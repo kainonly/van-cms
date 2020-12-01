@@ -6,9 +6,7 @@ import { BitService } from 'ngx-bit';
   template: `
     <nz-result nzStatus="403" nzTitle="403" [nzSubTitle]="bit.l['tips']">
       <div nz-result-extra>
-        <button nz-button
-                nzType="primary"
-                routerLink="/">
+        <button nz-button nzType="primary" routerLink="/">
           {{bit.l['home']}}
         </button>
       </div>

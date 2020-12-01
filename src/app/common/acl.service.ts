@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ListByPage } from 'ngx-bit/factory';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { BitHttpService } from 'ngx-bit';
 
 @Injectable()
@@ -47,25 +47,6 @@ export class AclService {
   /**
    * Validate Acl Key
    */
-  validedName(name: string, edit: Observable<string> = of(null)): Observable<any> {
-    return edit.pipe(
-      switchMap(nameKey => {
-        if (name !== nameKey) {
-          return this.http.req(this.model + '/validedName', {
-            name
-          });
-        }
-        return of({
-          error: 0,
-          data: false
-        });
-      })
-    );
-  }
-
-  /**
-   * Validate Acl Key
-   */
   validedKey(key: string, edit: Observable<string> = of(null)): Observable<any> {
     return edit.pipe(
       switchMap(editKey => {
@@ -76,8 +57,16 @@ export class AclService {
         }
         return of({
           error: 0,
-          data: false
+          data: {
+            exists: false
+          }
         });
+      }),
+      map(res => {
+        if (res.error === 1) {
+          return false;
+        }
+        return !res.data.exists;
       })
     );
   }

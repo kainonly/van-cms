@@ -1,21 +1,16 @@
 <bit-header [subTitle]="nzMessage">
   <ng-template #nzMessage>
-    <span>{{bit.l['info']}}</span>
+    <span>{{ bit.l['info'] }}</span>
   </ng-template>
   <button nz-button nzType="primary" [bitOpen]="['resource-add']">
-    <span>{{bit.l['add']}}</span>
+    <span>{{ bit.l['add'] }}</span>
   </button>
 </bit-header>
 <ng-template #title>
   <nz-space>
     <nz-space-item>
       <nz-input-group [nzSuffix]="suffixIcon" style="width: 320px">
-        <input
-          type="text"
-          nz-input
-          [placeholder]="bit.l['search']"
-          [(ngModel)]="search"
-        />
+        <input type="text" nz-input [placeholder]="bit.l['search']" [(ngModel)]="search" />
       </nz-input-group>
       <ng-template #suffixIcon>
         <i nz-icon nzType="search"></i>
@@ -24,33 +19,32 @@
     <nz-space-item>
       <button nz-button (click)="allExpand()">
         <i nz-icon nzType="node-expand"></i>
-        {{bit.l['expand']}}
+        {{ bit.l['expand'] }}
       </button>
     </nz-space-item>
     <nz-space-item>
       <button nz-button (click)="allClose()">
         <i nz-icon nzType="node-collapse"></i>
-        {{bit.l['close']}}
+        {{ bit.l['close'] }}
       </button>
     </nz-space-item>
     <nz-space-item *ngIf="!sort">
       <button nz-button (click)="startSort()">
         <i nz-icon nzType="sort-ascending"></i>
-        {{bit.l['sort']}}
+        {{ bit.l['sort'] }}
       </button>
     </nz-space-item>
     <ng-container *ngIf="sort">
-
       <nz-space-item>
         <button nz-button (click)="submitSort()">
           <i nz-icon nzType="check"></i>
-          {{bit.l['sortYes']}}
+          {{ bit.l['sortYes'] }}
         </button>
       </nz-space-item>
       <nz-space-item>
         <button nz-button (click)="cancelSort()">
           <i nz-icon nzType="close"></i>
-          {{bit.l['sortCancel']}}
+          {{ bit.l['sortCancel'] }}
         </button>
       </nz-space-item>
     </ng-container>
@@ -80,7 +74,7 @@
       [nzData]="nodes"
       (nzExpandChange)="onExpanded()"
       (nzClick)="clickNode($event)"
-      (nzContextMenu)="contextMenu($event,menu)"
+      (nzContextMenu)="contextMenu($event, menu)"
       [nzTreeTemplate]="nzTreeTemplate"
       [nzSearchValue]="search"
     >
@@ -102,28 +96,24 @@
             </ng-container>
           </ng-container>
           <ng-container *ngIf="node.origin.router">
-            <i
-              nz-icon
-              nzType="global"
-              (click)="openResource(node)"
-            ></i>
+            <i nz-icon nzType="global" (click)="openResource(node)"></i>
           </ng-container>
-          <span class="title">{{ node.title }} [{{node.key}}]</span>
+          <span class="title">{{ node.title }} [{{ node.key }}]</span>
           <span class="policy" *ngIf="node.origin.policy">
             <ng-container *ngFor="let x of policy.get(node.key)">
-              <nz-tag [nzColor]="x.policy===0?'default':'blue'">
-                {{x.acl_key}}
+              <nz-tag [nzColor]="x.policy === 0 ? 'default' : 'blue'">
+                {{ x.acl_key }}
               </nz-tag>
             </ng-container>
           </span>
         </div>
         <div class="resource-line" *ngIf="node.isLeaf">
           <i nz-icon nzType="file-text"></i>
-          <span class="title">{{ node.title }} [{{node.key}}]</span>
+          <span class="title">{{ node.title }} [{{ node.key }}]</span>
           <span class="policy" *ngIf="node.origin.policy">
             <ng-container *ngFor="let x of policy.get(node.key)">
               <nz-tag [nzColor]="'blue'">
-                {{x.acl_key}} : {{bit.l[policyInfo[x.policy]]}}
+                {{ x.acl_key }} : {{ bit.l[policyInfo[x.policy]] }}
               </nz-tag>
             </ng-container>
           </span>
@@ -132,27 +122,29 @@
     </ng-template>
 
     <nz-dropdown-menu #menu>
-      <ul nz-menu *ngIf="activeNode!==undefined">
+      <ul nz-menu *ngIf="activeNode !== undefined">
         <li style="color: #333" nz-menu-item nzDisabled>
-          <b>{{activeNode.title}} [{{activeNode.key}}]</b>
+          <b>{{ activeNode.title }} [{{ activeNode.key }}]</b>
         </li>
         <li nz-menu-divider></li>
         <li nz-menu-item (click)="addResource()">
-          {{bit.l['AddResource']}}
+          {{ bit.l['AddResource'] }}
         </li>
         <li nz-menu-item *ngIf="activeNode.origin.policy" (click)="openPolicy()">
-          {{bit.l['policyEdit']}}
+          {{ bit.l['policyEdit'] }}
         </li>
-        <li nz-menu-item (click)="editResource()">{{bit.l['edit']}}</li>
-        <li nz-menu-item (click)="deleteResource()"
-            [nzDisabled]="activeNode.getChildren().length!==0">
-          {{bit.l['delete']}}
+        <li nz-menu-item (click)="editResource()">{{ bit.l['edit'] }}</li>
+        <li
+          nz-menu-item
+          (click)="deleteResource()"
+          [nzDisabled]="activeNode.getChildren().length !== 0"
+        >
+          {{ bit.l['delete'] }}
         </li>
       </ul>
     </nz-dropdown-menu>
   </ng-container>
 </nz-card>
-
 
 <nz-drawer
   [nzWidth]="500"
@@ -161,13 +153,13 @@
   (nzOnClose)="closePolicy()"
 >
   <ng-template #nzTitle>
-    <b *ngIf="activeNode">{{bit.l['policyEdit']}}: {{activeNode.title}}</b>
+    <b *ngIf="activeNode">{{ bit.l['policyEdit'] }}: {{ activeNode.title }}</b>
   </ng-template>
-  <ng-container *ngIf="activeNode&&policyForm">
+  <ng-container *ngIf="activeNode && policyForm">
     <form nz-form [formGroup]="policyForm" (bitFormSubmit)="submitPolicy($event)">
       <ng-container *ngFor="let x of policy.get(activeNode.key)">
         <nz-tag [nzColor]="'blue'" nzMode="closeable" (nzOnClose)="deletePolicy(x.id)">
-          {{x.acl_key}}:{{bit.l[policyInfo[x.policy]]}}
+          {{ x.acl_key }}:{{ bit.l[policyInfo[x.policy]] }}
         </nz-tag>
       </ng-container>
 
@@ -175,27 +167,30 @@
 
       <nz-form-item>
         <nz-form-label [nzSpan]="6" nzRequired>
-          {{bit.l['resource_key']}}
+          {{ bit.l['resource_key'] }}
         </nz-form-label>
         <nz-form-control [nzSpan]="18">
-          <input type="text" nz-input [disabled]="true" [value]="activeNode.key">
+          <input type="text" nz-input [disabled]="true" [value]="activeNode.key" />
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
         <nz-form-label [nzSpan]="6" nzRequired>
-          {{bit.l['acl_key']}}
+          {{ bit.l['acl_key'] }}
         </nz-form-label>
         <nz-form-control [nzSpan]="18">
-          <nz-select formControlName="acl_key"
-                     nzAllowClear
-                     [nzShowSearch]="true"
-                     [nzPlaceHolder]="bit.l['aclPlaceHolder']">
+          <nz-select
+            formControlName="acl_key"
+            nzAllowClear
+            [nzShowSearch]="true"
+            [nzPlaceHolder]="bit.l['aclPlaceHolder']"
+          >
             <ng-container *ngFor="let x of aclLists">
-              <nz-option [nzLabel]="(x.name|Locale:bit.locale)+'['+x.key+']'"
-
-                         [nzDisabled]="disabledAcl(x.key)"
-                         [nzValue]="x.key">
+              <nz-option
+                [nzLabel]="(x.name | Locale: bit.locale) + '[' + x.key + ']'"
+                [nzDisabled]="disabledAcl(x.key)"
+                [nzValue]="x.key"
+              >
               </nz-option>
             </ng-container>
           </nz-select>
@@ -204,12 +199,12 @@
 
       <nz-form-item>
         <nz-form-label [nzSpan]="6" nzRequired>
-          {{bit.l['policy']}}
+          {{ bit.l['policy'] }}
         </nz-form-label>
         <nz-form-control [nzSpan]="18">
           <nz-radio-group formControlName="policy">
-            <label nz-radio-button [nzValue]="0">{{bit.l['readonly']}}</label>
-            <label nz-radio-button [nzValue]="1">{{bit.l['readandwrite']}}</label>
+            <label nz-radio-button [nzValue]="0">{{ bit.l['readonly'] }}</label>
+            <label nz-radio-button [nzValue]="1">{{ bit.l['readandwrite'] }}</label>
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
@@ -219,7 +214,7 @@
       <nz-form-item>
         <nz-form-control [nzOffset]="6" [nzSpan]="18">
           <button nz-button nzType="primary" [disabled]="!policyForm.valid">
-            {{bit.l['submit']}}
+            {{ bit.l['submit'] }}
           </button>
         </nz-form-control>
       </nz-form-item>

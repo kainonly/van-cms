@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BitSwalService, BitService } from 'ngx-bit';
-import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { asyncValidator } from 'ngx-bit/operates';
-import { map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { AclService } from '@common/acl.service';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncSubject } from 'rxjs';
@@ -37,9 +37,6 @@ export class AclEditComponent implements OnInit {
         validate: {
           zh_cn: [Validators.required],
           en_us: []
-        },
-        asyncValidate: {
-          zh_cn: [this.existsName]
         }
       })),
       key: [null, [Validators.required], [this.existsKey]],
@@ -53,17 +50,6 @@ export class AclEditComponent implements OnInit {
     });
   }
 
-  existsName: AsyncValidatorFn = (control: AbstractControl) => {
-    return asyncValidator(this.aclService.validedName(control.value, this.nameAsync)).pipe(
-      map(result => {
-        if (control.touched) {
-          control.setErrors(result);
-        }
-        return result;
-      })
-    );
-  };
-
   existsKey = (control: AbstractControl) => {
     return asyncValidator(this.aclService.validedKey(control.value, this.keyAsync));
   };
@@ -75,8 +61,8 @@ export class AclEditComponent implements OnInit {
       this.nameAsync.complete();
       this.keyAsync.next(data.key);
       this.keyAsync.complete();
-      const write = !data.write ? [] : data.write.split(',');
-      const read = !data.read ? [] : data.read.split(',');
+      const write = !data.write ? [] : JSON.parse(data.write);
+      const read = !data.read ? [] : JSON.parse(data.read);
       this.form.setValue({
         name,
         key: data.key,

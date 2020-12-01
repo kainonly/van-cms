@@ -51,6 +51,7 @@ const routes: Routes = [
     StorageModule.forRoot({ IDBNoWrap: false })
   ],
   providers: [
+    { provide: NZ_I18N, useValue: zh_CN },
     UpdateService,
     TokenService,
     MainService,
@@ -58,8 +59,7 @@ const routes: Routes = [
     ResourceService,
     PolicyService,
     RoleService,
-    AdminService,
-    { provide: NZ_I18N, useValue: zh_CN }
+    AdminService
   ],
   bootstrap: [AppComponent]
 })

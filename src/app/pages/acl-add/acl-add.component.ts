@@ -44,17 +44,6 @@ export class AclAddComponent implements OnInit {
     });
   }
 
-  existsName: AsyncValidatorFn = (control: AbstractControl) => {
-    return asyncValidator(this.aclService.validedName(control.value)).pipe(
-      map(result => {
-        if (control.touched) {
-          control.setErrors(result);
-        }
-        return result;
-      })
-    );
-  };
-
   existsKey = (control: AbstractControl) => {
     return asyncValidator(this.aclService.validedKey(control.value));
   };
@@ -63,11 +52,12 @@ export class AclAddComponent implements OnInit {
    * 提交
    */
   submit(data): void {
-    this.aclService.add(data).pipe(
-      switchMap(res => this.swal.addAlert(res, this.form, {
-        status: true
-      }))
-    ).subscribe(() => {
-    });
+    console.log(data);
+    // this.aclService.add(data).pipe(
+    //   switchMap(res => this.swal.addAlert(res, this.form, {
+    //     status: true
+    //   }))
+    // ).subscribe(() => {
+    // });
   }
 }
