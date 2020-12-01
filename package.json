@@ -1,5 +1,5 @@
 {
-  "name": "van-console",
+  "name": "lab-console",
   "scripts": {
     "start": "ng serve --host 0.0.0.0 --port 4201 --disableHostCheck",
     "build": "ng build --prod"

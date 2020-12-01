@@ -1,6 +1,6 @@
 {
-  "name": "van-console",
-  "short_name": "van-console",
+  "name": "lab-console",
+  "short_name": "lab-console",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
