@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
 import { NZ_I18N, zh_CN } from 'ng-zorro-antd/i18n';
 import { NgxBitModule } from 'ngx-bit';
 import { environment } from '@env';
@@ -37,6 +38,10 @@ const routes: Routes = [
   }
 ];
 
+const ngZorroConfig: NzConfig = {
+  notification: { nzPlacement: 'bottomRight' }
+};
+
 @NgModule({
   declarations: [
     AppComponent
@@ -52,7 +57,6 @@ const routes: Routes = [
     StorageModule.forRoot({ IDBNoWrap: false })
   ],
   providers: [
-    { provide: NZ_I18N, useValue: zh_CN },
     UpdateService,
     TokenService,
     PgService,
@@ -61,7 +65,9 @@ const routes: Routes = [
     ResourceService,
     PolicyService,
     RoleService,
-    AdminService
+    AdminService,
+    { provide: NZ_I18N, useValue: zh_CN },
+    { provide: NZ_CONFIG, useValue: ngZorroConfig }
   ],
   bootstrap: [AppComponent]
 })

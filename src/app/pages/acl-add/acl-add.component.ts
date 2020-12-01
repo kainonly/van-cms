@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BitSwalService, BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AclService } from '@common/acl.service';
 import { asyncValidator } from 'ngx-bit/operates';
-import { map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-acl-add',
@@ -52,12 +52,11 @@ export class AclAddComponent implements OnInit {
    * 提交
    */
   submit(data): void {
-    console.log(data);
-    // this.aclService.add(data).pipe(
-    //   switchMap(res => this.swal.addAlert(res, this.form, {
-    //     status: true
-    //   }))
-    // ).subscribe(() => {
-    // });
+    this.aclService.add(data).pipe(
+      switchMap(res => this.swal.addAlert(res, this.form, {
+        status: true
+      }))
+    ).subscribe(() => {
+    });
   }
 }
