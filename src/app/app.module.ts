@@ -23,6 +23,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { UpdateService } from '@common/update.service';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { AppExtModule } from '@ext';
+import { PgService } from '@common/pg.service';
 
 const routes: Routes = [
   {
@@ -54,6 +55,7 @@ const routes: Routes = [
     { provide: NZ_I18N, useValue: zh_CN },
     UpdateService,
     TokenService,
+    PgService,
     MainService,
     AclService,
     ResourceService,

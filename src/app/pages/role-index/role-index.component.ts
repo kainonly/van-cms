@@ -6,6 +6,7 @@ import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { ListByPage } from 'ngx-bit/factory';
 import { RoleService } from '@common/role.service';
 import { ResourceService } from '@common/resource.service';
+import { PgService } from '@common/pg.service';
 
 @Component({
   selector: 'app-role-index',
@@ -24,7 +25,8 @@ export class RoleIndexComponent implements OnInit, AfterViewInit {
     public bit: BitService,
     private notification: NzNotificationService,
     public roleService: RoleService,
-    private resourceService: ResourceService
+    private resourceService: ResourceService,
+    public pg: PgService
   ) {
   }
 
@@ -33,8 +35,8 @@ export class RoleIndexComponent implements OnInit, AfterViewInit {
     this.lists = this.bit.listByPage({
       id: 'role-index',
       query: [
-        { field: `name::jsonb->>'zh_cn'`, op: 'like', value: '' },
-        { field: `name::jsonb->>'en_us'`, op: 'like', value: '' }
+        { field: this.pg.jsonb('name', 'zh_cn'), op: 'like', value: '' },
+        { field: this.pg.jsonb('name', 'en_us'), op: 'like', value: '' }
       ]
     });
     this.lists.ready.subscribe(() => {

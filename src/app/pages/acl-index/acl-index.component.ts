@@ -3,6 +3,7 @@ import { BitSwalService, BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AclService } from '@common/acl.service';
 import { ListByPage } from 'ngx-bit/factory';
+import { PgService } from '@common/pg.service';
 
 @Component({
   selector: 'app-acl-index',
@@ -15,7 +16,8 @@ export class AclIndexComponent implements OnInit {
     private swal: BitSwalService,
     public bit: BitService,
     public aclService: AclService,
-    private notification: NzNotificationService
+    private notification: NzNotificationService,
+    public pg: PgService
   ) {
   }
 
@@ -24,8 +26,8 @@ export class AclIndexComponent implements OnInit {
     this.lists = this.bit.listByPage({
       id: 'acl-index',
       query: [
-        { field: `name::jsonb->>'zh_cn'`, op: 'like', value: '' },
-        { field: `name::jsonb->>'en_us'`, op: 'like', value: '' }
+        { field: this.pg.jsonb('name', 'zh_cn'), op: 'like', value: '' },
+        { field: this.pg.jsonb('name', 'en_us'), op: 'like', value: '' }
       ]
     });
     this.lists.ready.subscribe(() => {
