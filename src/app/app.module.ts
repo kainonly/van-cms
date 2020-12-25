@@ -52,7 +52,7 @@ const ngZorroConfig: NzConfig = {
     HttpClientModule,
     AppExtModule,
     NgxBitModule.forRoot(environment.bit),
-    RouterModule.forRoot(routes, { useHash: true }),
+    RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     StorageModule.forRoot({ IDBNoWrap: false })
   ],
