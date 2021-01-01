@@ -22,8 +22,8 @@
           <ng-template #notRouter>
             <li nz-submenu [nzOpen]="support.navActive.indexOf(x.key) !== -1">
               <span title
-                ><i nz-icon [nzType]="x.icon"></i
-                ><span>{{ x.name | Locale: bit.locale }}</span></span
+              ><i nz-icon [nzType]="x.icon"></i
+              ><span>{{ x.name | Locale: bit.locale }}</span></span
               >
               <ul>
                 <ng-container
@@ -89,7 +89,7 @@
           <nz-breadcrumb-item *ngFor="let x of support.breadcrumb; last as islast">
             <ng-container *ngIf="islast; else notLast">{{
               x.name | Locale: bit.locale
-            }}</ng-container>
+              }}</ng-container>
             <ng-template #notLast>
               <a *ngIf="x.router; else notRouterlink" [bitCrossLevel]="x.key">
                 {{ x.name | Locale: bit.locale }}
