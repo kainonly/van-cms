@@ -92,7 +92,7 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   getData(): void {
     this.roleService.get(this.id).subscribe(data => {
-      this.resource = data.resource ? data.resource.split(',') : '';
+      this.resource = JSON.parse(data.resource);
       this.dataAsync.next();
       this.dataAsync.complete();
       this.keyAsync.next(data.key);

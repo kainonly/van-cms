@@ -155,69 +155,71 @@
   <ng-template #nzTitle>
     <b *ngIf="activeNode">{{ bit.l['policyEdit'] }}: {{ activeNode.title }}</b>
   </ng-template>
-  <ng-container *ngIf="activeNode && policyForm">
-    <form nz-form [formGroup]="policyForm" (bitFormSubmit)="submitPolicy($event)">
-      <ng-container *ngFor="let x of policy.get(activeNode.key)">
-        <nz-tag [nzColor]="'blue'" nzMode="closeable" (nzOnClose)="deletePolicy(x.id)">
-          {{ x.acl_key }}:{{ bit.l[policyInfo[x.policy]] }}
-        </nz-tag>
-      </ng-container>
+  <ng-container *nzDrawerContent>
+    <ng-container *ngIf="activeNode && policyForm">
+      <form nz-form [formGroup]="policyForm" (bitFormSubmit)="submitPolicy($event)">
+        <ng-container *ngFor="let x of policy.get(activeNode.key)">
+          <nz-tag [nzColor]="'blue'" nzMode="closeable" (nzOnClose)="deletePolicy(x.id)">
+            {{ x.acl_key }}:{{ bit.l[policyInfo[x.policy]] }}
+          </nz-tag>
+        </ng-container>
 
-      <nz-divider></nz-divider>
+        <nz-divider></nz-divider>
 
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzRequired>
-          {{ bit.l['resource_key'] }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="18">
-          <input type="text" nz-input [disabled]="true" [value]="activeNode.key" />
-        </nz-form-control>
-      </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzRequired>
+            {{ bit.l['resource_key'] }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input type="text" nz-input [disabled]="true" [value]="activeNode.key" />
+          </nz-form-control>
+        </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzRequired>
-          {{ bit.l['acl_key'] }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="18">
-          <nz-select
-            formControlName="acl_key"
-            nzAllowClear
-            [nzShowSearch]="true"
-            [nzPlaceHolder]="bit.l['aclPlaceHolder']"
-          >
-            <ng-container *ngFor="let x of aclLists">
-              <nz-option
-                [nzLabel]="(x.name | Locale: bit.locale) + '[' + x.key + ']'"
-                [nzDisabled]="disabledAcl(x.key)"
-                [nzValue]="x.key"
-              >
-              </nz-option>
-            </ng-container>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzRequired>
+            {{ bit.l['acl_key'] }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <nz-select
+              formControlName="acl_key"
+              nzAllowClear
+              [nzShowSearch]="true"
+              [nzPlaceHolder]="bit.l['aclPlaceHolder']"
+            >
+              <ng-container *ngFor="let x of aclLists">
+                <nz-option
+                  [nzLabel]="(x.name | Locale: bit.locale) + '[' + x.key + ']'"
+                  [nzDisabled]="disabledAcl(x.key)"
+                  [nzValue]="x.key"
+                >
+                </nz-option>
+              </ng-container>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzRequired>
-          {{ bit.l['policy'] }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="18">
-          <nz-radio-group formControlName="policy">
-            <label nz-radio-button [nzValue]="0">{{ bit.l['readonly'] }}</label>
-            <label nz-radio-button [nzValue]="1">{{ bit.l['readandwrite'] }}</label>
-          </nz-radio-group>
-        </nz-form-control>
-      </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzRequired>
+            {{ bit.l['policy'] }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <nz-radio-group formControlName="policy">
+              <label nz-radio-button [nzValue]="0">{{ bit.l['readonly'] }}</label>
+              <label nz-radio-button [nzValue]="1">{{ bit.l['readandwrite'] }}</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
 
-      <nz-divider></nz-divider>
+        <nz-divider></nz-divider>
 
-      <nz-form-item>
-        <nz-form-control [nzOffset]="6" [nzSpan]="18">
-          <button nz-button nzType="primary" [disabled]="!policyForm.valid">
-            {{ bit.l['submit'] }}
-          </button>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
+        <nz-form-item>
+          <nz-form-control [nzOffset]="6" [nzSpan]="18">
+            <button nz-button nzType="primary" [disabled]="!policyForm.valid">
+              {{ bit.l['submit'] }}
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </ng-container>
   </ng-container>
 </nz-drawer>

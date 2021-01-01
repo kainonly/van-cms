@@ -38,7 +38,7 @@
       </button>
     </nz-space-item>
     <nz-space-item>
-      <button nz-button nzType="danger" [disabled]="!lists.batch" (click)="deleteCheckData()">
+      <button nz-button nzDanger [disabled]="!lists.batch" (click)="deleteCheckData()">
         <i nz-icon nzType="rest"></i> {{ bit.l['bulkDelete'] }}
       </button>
     </nz-space-item>
