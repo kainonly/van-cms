@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BitSwalService, BitService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ListByPage } from 'ngx-bit/factory';
 import { RoleService } from '@common/role.service';
@@ -13,7 +13,6 @@ export class RoleIndexComponent implements OnInit {
   lists: ListByPage;
 
   constructor(
-    private swal: BitSwalService,
     public bit: BitService,
     private notification: NzNotificationService,
     public roleService: RoleService,
@@ -44,39 +43,34 @@ export class RoleIndexComponent implements OnInit {
       refresh,
       event !== undefined
     ).subscribe(data => {
-      this.lists.setData(data.map(v => {
-        v.acl = JSON.parse(v.acl);
-        v.resource = JSON.parse(v.resource);
-        return v;
-      }));
+      this.lists.setData(data);
     });
   }
 
   /**
-   * 删除单操作
+   * 删除数据
    */
-  deleteData(id: any[]): void {
-    this.swal.deleteAlert(this.roleService.delete(id)).subscribe(res => {
-      if (!res.error) {
-        this.notification.success(
-          this.bit.l.operateSuccess,
-          this.bit.l.deleteSuccess
-        );
-        this.getLists(true);
-      } else {
+  delete(id: any[]): void {
+    this.roleService.delete(id).subscribe(res => {
+      if (res.error) {
         this.notification.error(
           this.bit.l.operateError,
           this.bit.l.deleteError
         );
+        return;
       }
+      this.notification.success(
+        this.bit.l.operateSuccess,
+        this.bit.l.deleteSuccess
+      );
+      this.getLists(true);
     });
   }
 
   /**
-   * 选中删除
+   * 批量删除
    */
-  deleteCheckData(): void {
-    const id = this.lists.getChecked().map(v => v.id);
-    this.deleteData(id);
+  bulkDelete(): void {
+    this.delete(this.lists.getChecked().map(v => v.id));
   }
 }

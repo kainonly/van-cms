@@ -33,6 +33,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTreeModule } from 'ng-zorro-antd/tree';
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 @NgModule({
   exports: [
@@ -70,6 +71,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
     NzResultModule,
     NzMessageModule,
     NzUploadModule,
+    NzPopconfirmModule,
     BitExtModule,
     BitPipeModule,
     BitDirectiveModule
