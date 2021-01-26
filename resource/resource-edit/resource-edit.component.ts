@@ -136,14 +136,13 @@ export class ResourceEditComponent implements OnInit, OnDestroy {
 
   submit(data): void {
     Reflect.set(data, 'id', this.id);
-    this.resourceService
-      .edit(data)
-      .pipe(switchMap(res => this.swal.editAlert(res)))
-      .subscribe(status => {
-        if (status) {
-          this.getParentNodes();
-        }
-        this.events.publish('refresh-menu');
-      });
+    this.resourceService.edit(data).pipe(
+      switchMap(res => this.swal.editAlert(res))
+    ).subscribe(status => {
+      if (status) {
+        this.getParentNodes();
+      }
+      this.events.publish('refresh-menu');
+    });
   }
 }

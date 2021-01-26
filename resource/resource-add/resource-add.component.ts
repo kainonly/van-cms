@@ -115,22 +115,20 @@ export class ResourceAddComponent implements OnInit, OnDestroy {
   }
 
   submit(data): void {
-    this.resourceService
-      .add(data)
-      .pipe(
-        switchMap(res =>
-          this.swal.addAlert(res, this.form, {
-            nav: false,
-            router: false,
-            policy: false,
-            status: true
-          })
-        )
+    this.resourceService.add(data).pipe(
+      switchMap(res =>
+        this.swal.addAlert(res, this.form, {
+          nav: false,
+          router: false,
+          policy: false,
+          status: true
+        })
       )
-      .subscribe(status => {
-        if (status) {
-          this.getParentNodes();
-        }
-      });
+    ).subscribe(status => {
+      if (status) {
+        this.getParentNodes();
+      }
+      this.events.publish('refresh-menu');
+    });
   }
 }

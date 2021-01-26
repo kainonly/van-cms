@@ -176,16 +176,13 @@ export class RoleAddComponent implements OnInit, OnDestroy {
    */
   submit(data): void {
     Reflect.set(data, 'resource', this.resource);
-    this.roleService
-      .add(data)
-      .pipe(
-        switchMap(res =>
-          this.swal.addAlert(res, this.form, {
-            status: true
-          })
-        )
+    this.roleService.add(data).pipe(
+      switchMap(res =>
+        this.swal.addAlert(res, this.form, {
+          status: true
+        })
       )
-      .subscribe(() => {
-      });
+    ).subscribe(() => {
+    });
   }
 }

@@ -227,13 +227,13 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
   submit(data): void {
     Reflect.set(data, 'id', this.id);
     Reflect.set(data, 'resource', this.resource);
-    this.roleService
-      .edit(data)
-      .pipe(switchMap(res => this.swal.editAlert(res)))
-      .subscribe(status => {
-        if (status) {
-          this.getData();
-        }
-      });
+    this.roleService.edit(data).pipe(
+      switchMap(res => this.swal.editAlert(res))
+    ).subscribe(status => {
+      if (status) {
+        this.getData();
+      }
+      this.events.publish('refresh-menu');
+    });
   }
 }
