@@ -3,9 +3,19 @@
 </bit-header>
 <nz-card>
   <form nz-form [formGroup]="form" (bitFormSubmit)="submit($event)">
-    <nz-form-item formGroupName="name">
+    <nz-form-item formGroupName="name" bitI18nUpdate>
       <nz-form-label bitCol="label" nzRequired>
-        {{ bit.l["name"] }}
+        <span>
+          {{ bit.l["name"] }}
+          <i
+            nz-icon
+            nz-tooltip
+            [nzTooltipTitle]="bit.l['i18nTip']"
+            nzType="translation"
+            nzTheme="outline"
+          >
+          </i>
+        </span>
       </nz-form-label>
       <ng-container *ngFor="let x of bit.i18nContain">
         <nz-form-control
@@ -16,7 +26,6 @@
         >
           <input
             nz-input
-            bitI18nUpdate
             [nz-tooltip]="tooltip.ref"
             [formControlName]="x"
             [placeholder]="bit.l['namePlaceholder']"
