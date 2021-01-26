@@ -137,7 +137,7 @@
               <i nz-icon nzType="control"></i>
             </ng-container>
           </nz-tag>
-          <nz-tag *ngIf="node.origin.policy" nzColor="blue">
+          <nz-tag *ngIf="node.origin.policy && policy.has(node.key)" nzColor="blue">
             <ng-container *ngIf="policy.has(node.key)">
               <ng-container *ngFor="let x of policy.get(node.key); last as isLast; index as i">
                 <ng-container *ngIf="i < 10">
