@@ -28,6 +28,6 @@ export default {
   phone: ['联系电话', 'Phone'],
   phonePlaceholder: ['请输入手机号码', 'Please Enter Phone'],
   avatar: ['头像', 'Avatar'],
-  selfTips: ['检测到修改为当前用户', 'Modified to current user detected'],
+  selfTip: ['检测到为当前登录用户', 'Detected as currently logged in user'],
   goProfile: ['前往个人中心', 'Go Profile']
 };

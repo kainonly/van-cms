@@ -87,10 +87,11 @@ export class AdminIndexComponent implements OnInit {
    * 自定义返回结果
    */
   statusFeedback(res: any): void {
-    if (res.msg === 'error:self') {
-      this.message.error(this.bit.l.statusSelfError);
-    } else {
+    if (res.error === 1) {
       this.message.error(this.bit.l.StatusError);
+    }
+    if (res.error === 2) {
+      this.message.error(this.bit.l.statusSelfError);
     }
   }
 }

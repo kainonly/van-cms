@@ -99,22 +99,19 @@ export class AdminEditComponent implements OnInit {
   getData(): void {
     this.adminService.get(this.id).subscribe(data => {
       if (data.self) {
-        BitSwalService.native
-          .fire({
-            title: this.bit.l.operateInfo,
-            text: this.bit.l.selfTips,
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonText: this.bit.l.goProfile,
-            cancelButtonText: this.bit.l.operateBack
-          })
-          .then(result => {
-            if (result.value) {
-              this.bit.open(['profile']);
-            } else {
-              this.bit.back();
-            }
-          });
+        this.swal.create({
+          title: this.bit.l.auth,
+          content: this.bit.l.selfTip,
+          type: 'info',
+          okText: this.bit.l.goProfile,
+          cancelText: this.bit.l.back
+        }).subscribe((status) => {
+          if (status) {
+            this.bit.open(['profile']);
+          } else {
+            this.bit.back();
+          }
+        });
       }
       this.username = data.username;
       this.form.patchValue({
