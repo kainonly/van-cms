@@ -89,7 +89,7 @@
 
       <nz-form-item>
         <nz-form-control>
-          <button nz-button nzType="primary" [nzBlock]="true">
+          <button nz-button [nzLoading]="logining" nzType="primary" [nzBlock]="true" [disabled]="!form.valid">
             {{ bit.l["login"] }}
           </button>
         </nz-form-control>

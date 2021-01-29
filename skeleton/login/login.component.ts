@@ -16,6 +16,7 @@ import * as packer from './language';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   users: any[] = [];
+  logining = false;
 
   constructor(
     public bit: BitService,
@@ -43,23 +44,30 @@ export class LoginComponent implements OnInit {
   }
 
   submit(data: any): void {
+    this.logining = true;
     this.mainService.login(data.username, data.password).subscribe(res => {
-      if (!res.error) {
-        this.support.clearStorage();
-        if (data.remember) {
-          this.storageMap
-            .get('users')
-            .pipe(
-              switchMap((lists: Set<string>) => this.storageMap.set('users', lists ? lists.add(data.username) : new Set([data.username])))
-            )
-            .subscribe(() => {
+      switch (res.error) {
+        case 0:
+          this.support.clearStorage();
+          if (data.remember) {
+            this.storageMap.get('users').pipe(
+              switchMap((lists: Set<string>) =>
+                this.storageMap.set('users', lists ? lists.add(data.username) : new Set([data.username]))
+              )
+            ).subscribe(() => {
             });
-        }
-        this.notification.success(this.bit.l.auth, this.bit.l.loginSuccess);
-        this.router.navigateByUrl('/');
-      } else {
-        this.notification.error(this.bit.l.auth, this.bit.l.loginError);
+          }
+          this.notification.success(this.bit.l.auth, this.bit.l.loginSuccess);
+          this.router.navigateByUrl('/');
+          break;
+        case 1:
+          this.notification.error(this.bit.l.auth, this.bit.l.loginError);
+          break;
+        case 2:
+          this.notification.error(this.bit.l.auth, this.bit.l.loginManyTimes);
+          break;
       }
+      this.logining = false;
     });
   }
 }
