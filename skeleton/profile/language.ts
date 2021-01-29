@@ -16,7 +16,7 @@ export default {
   passwordSymbol: ['密码必须包含符号@$!%*?&-+', 'Password must contain the symbol @$!%*?&-+'],
   passwordCheck: ['再次验证', 'Password Check'],
   passwordCorrectly: ['请输入正确的用户密码', 'Please enter the correct user password'],
-  passwordError: ['用户密码更新失败', 'User password update failed'],
+  passwordError: ['用户旧密码验证不一致', 'User’s old password verification is inconsistent'],
   call: ['称呼', 'Call Name'],
   callPlaceholder: ['请输入称呼', 'Please Enter Call Name'],
   email: ['电子邮件', 'Email'],

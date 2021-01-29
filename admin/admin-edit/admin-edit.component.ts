@@ -158,6 +158,7 @@ export class AdminEditComponent implements OnInit {
       .pipe(switchMap(res => this.swal.editAlert(res)))
       .subscribe(status => {
         if (status) {
+          this.form.reset();
           this.getData();
         }
       });

@@ -149,14 +149,9 @@ export class ProfileComponent implements OnInit {
    */
   editPasswordChange(status: boolean): void {
     if (status) {
-      this.form.addControl('old_password', new FormControl([null, [this.validedPassword]]));
-      this.form.addControl('new_password', new FormControl([null, [this.validedNewPassword]]));
-      this.form.addControl('new_password_check', new FormControl([null, [this.checkNewPassword]]));
-      this.form.patchValue({
-        old_password: null,
-        new_password: null,
-        new_password_check: null
-      });
+      this.form.addControl('old_password', new FormControl(null, [this.validedPassword]));
+      this.form.addControl('new_password', new FormControl(null, [this.validedNewPassword]));
+      this.form.addControl('new_password_check', new FormControl(null, [this.checkNewPassword]));
     } else {
       this.form.removeControl('old_password');
       this.form.removeControl('new_password');
@@ -177,15 +172,19 @@ export class ProfileComponent implements OnInit {
       delete data.new_password;
     }
     this.mainService.update(data).subscribe(res => {
-      if (res.error) {
-        if (res.msg === 'error:password') {
-          this.notification.error(this.bit.l.failed, this.bit.l.passwordError);
-        } else {
-          this.notification.error(this.bit.l.failed, this.bit.l.updateError);
-        }
-      } else {
-        this.notification.success(this.bit.l.success, this.bit.l.updateSuccess);
-        this.getInformation();
+      switch (res.error) {
+        case 0:
+          this.notification.success(this.bit.l.success, this.bit.l.updateSuccess);
+          this.form.reset();
+          this.editPassword = false;
+          this.getInformation();
+          break;
+        case 1:
+          this.notification.error(this.bit.l.error, this.bit.l.updateError);
+          break;
+        case 2:
+          this.notification.error(this.bit.l.error, this.bit.l.passwordError);
+          break;
       }
     });
   }

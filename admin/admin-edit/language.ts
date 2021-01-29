@@ -6,6 +6,7 @@ export default {
   usernameDuplicated: ['当前用户名称已存在', 'Current user name already exists'],
   role: ['权限组', 'Role Group'],
   rolePlaceholder: ['请选择权限组', 'Please Enter Role Group'],
+  password: ['用户密码', 'Password'],
   passwordTips: [
     '密码最小为12位，由大写字母、小写字母、符号、数字组合',
     'The password must be at least 12 digits and be composed of uppercase letters, lowercase letters, symbols, and numbers'
