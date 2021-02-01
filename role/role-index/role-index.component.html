@@ -66,8 +66,9 @@
         [nzIndeterminate]="lists.indeterminate"
         (nzCheckedChange)="lists.checkedAll($event)"
       ></th>
-      <th nzWidth="300px">{{ bit.l["name"] }}</th>
-      <th nzWidth="300px">{{ bit.l["key"] }}</th>
+      <th nzWidth="200px">{{ bit.l["name"] }}</th>
+      <th nzWidth="200px">{{ bit.l["key"] }}</th>
+      <th nzWidth="200px">{{ bit.l["permission"] }}</th>
       <th>{{ bit.l["status"] }}</th>
       <th nzWidth="300px" nzRight="0px">{{ bit.l["action"] }}</th>
     </tr>
@@ -80,8 +81,20 @@
           [(nzChecked)]="data.checked"
           (nzCheckedChange)="lists.refreshStatus()"
         ></td>
-        <td>{{ data.name | object: bit.locale }}</td>
+        <td>
+          <span>{{ data.name | object: bit.locale }}</span>
+          <ng-container *ngIf="data.note">
+            <nz-divider nzType="vertical"></nz-divider>
+            <i nz-icon nzType="info-circle" [nz-tooltip]="data.note"></i>
+          </ng-container>
+        </td>
         <td>{{ data.key }}</td>
+        <td nzBreakWord>
+          <ng-container *ngFor="let x of data.permission | Split: ',';last as isLast">
+            {{ permission[x] | object: bit.locale }}
+            <ng-container *ngIf="!isLast">,</ng-container>
+          </ng-container>
+        </td>
         <td>
           <nz-switch
             [(ngModel)]="data.status"

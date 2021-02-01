@@ -8,6 +8,7 @@ import { switchMap } from 'rxjs/operators';
 import { ResourceService } from 'van-skeleton/resource';
 import { RoleService } from '../role.service';
 import * as packer from './language';
+import { PermissionService } from 'van-skeleton/permission';
 
 @Component({
   selector: 'van-role-add',
@@ -17,6 +18,7 @@ export class RoleAddComponent implements OnInit, OnDestroy {
   @ViewChild('nzTree', { static: true }) nzTree: NzTreeComponent;
   private resource: string[] = [];
   nodes: NzTreeNodeOptions[] = [];
+  permission: any[] = [];
   form: FormGroup;
 
   constructor(
@@ -26,7 +28,8 @@ export class RoleAddComponent implements OnInit, OnDestroy {
     private notification: NzNotificationService,
     private swal: BitSwalService,
     private roleService: RoleService,
-    private resourceService: ResourceService
+    private resourceService: ResourceService,
+    private permissionService: PermissionService
   ) {
   }
 
@@ -36,15 +39,17 @@ export class RoleAddComponent implements OnInit, OnDestroy {
       name: this.fb.group(
         this.bit.i18nGroup({
           validate: {
-            zh_cn: [Validators.required],
-            en_us: []
+            zh_cn: [Validators.required]
           }
         })
       ),
       key: [null, [Validators.required], [this.existsKey]],
+      permission: [null],
+      note: [null],
       status: [true, [Validators.required]]
     });
     this.getNodes();
+    this.getPermission();
     this.events.on('locale').subscribe(() => {
       this.getNodes();
     });
@@ -90,6 +95,15 @@ export class RoleAddComponent implements OnInit, OnDestroy {
         }
       }
       this.nodes = nodes;
+    });
+  }
+
+  /**
+   * 获取特殊授权
+   */
+  getPermission(): void {
+    this.permissionService.originLists().subscribe(data => {
+      this.permission = data;
     });
   }
 

@@ -113,6 +113,37 @@
     </nz-form-item>
 
     <nz-form-item>
+      <nz-form-label bitCol="label">
+        <span>
+          {{ bit.l["permission"] }}
+        </span>
+      </nz-form-label>
+      <nz-form-control bitCol="control">
+        <nz-select
+          style="width: 100%"
+          nzMode="multiple"
+          formControlName="permission"
+          [nzPlaceHolder]="bit.l['permissionPlaceholder']"
+        >
+          <ng-container *ngFor="let x of permission">
+            <nz-option [nzLabel]="x.name | object: bit.locale" [nzValue]="x.key"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label bitCol="label">
+        <span>
+          {{ bit.l["note"] }}
+        </span>
+      </nz-form-label>
+      <nz-form-control bitCol="control">
+        <textarea rows="4" nz-input formControlName="note"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
       <nz-form-label bitCol="label" nzRequired>
         {{ bit.l["status"] }}
       </nz-form-label>

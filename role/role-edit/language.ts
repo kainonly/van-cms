@@ -12,5 +12,8 @@ export default {
   checked: ['选中', 'Checked'],
   unchecked: ['取消', 'UnChecked'],
   expand: ['展开', 'Expand'],
-  close: ['收起', 'Close']
+  close: ['收起', 'Close'],
+  permission: ['特殊授权', 'Permission'],
+  permissionPlaceholder: ['请选择特殊授权代码', 'Please select permission key'],
+  note: ['备注', 'Note']
 };

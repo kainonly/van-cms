@@ -81,7 +81,7 @@
       ></td>
       <td>{{ data.name | object: bit.locale }}</td>
       <td>{{ data.key }}</td>
-      <td nzEllipsis>{{ data.note }}</td>
+      <td nzBreakWord>{{ data.note }}</td>
       <td>
         <nz-switch
           [(ngModel)]="data.status"

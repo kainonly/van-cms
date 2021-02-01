@@ -10,6 +10,7 @@ import { AsyncSubject } from 'rxjs';
 import { ResourceService } from 'van-skeleton/resource';
 import { RoleService } from '../role.service';
 import * as packer from './language';
+import { PermissionService } from 'van-skeleton/permission';
 
 @Component({
   selector: 'van-role-edit',
@@ -22,6 +23,7 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
   private keyAsync: AsyncSubject<string> = new AsyncSubject();
   private resource: string[] = [];
   nodes: NzTreeNodeOptions[] = [];
+  permission: any[] = [];
   form: FormGroup;
 
   constructor(
@@ -32,7 +34,8 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
     private swal: BitSwalService,
     private roleService: RoleService,
     private resourceService: ResourceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private permissionService: PermissionService
   ) {
   }
 
@@ -42,15 +45,17 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
       name: this.fb.group(
         this.bit.i18nGroup({
           validate: {
-            zh_cn: [Validators.required],
-            en_us: []
+            zh_cn: [Validators.required]
           }
         })
       ),
       key: [null, [Validators.required], [this.existsKey]],
+      permission: [null],
+      note: [null],
       status: [true, [Validators.required]]
     });
     this.getNodes();
+    this.getPermission();
     this.events.on('locale').subscribe(() => {
       this.getNodes();
     });
@@ -95,14 +100,17 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   getData(): void {
     this.roleService.get(this.id).subscribe(data => {
+      console.log(data.permission ? data.permission.split(',') : '');
       this.resource = data.resource ? data.resource.split(',') : '';
       this.dataAsync.next();
       this.dataAsync.complete();
       this.keyAsync.next(data.key);
       this.keyAsync.complete();
-      this.form.setValue({
+      this.form.patchValue({
         name: JSON.parse(data.name),
         key: data.key,
+        permission: data.permission ? data.permission.split(',') : '',
+        note: data.note,
         status: data.status
       });
     });
@@ -142,6 +150,16 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
       this.nodes = nodes;
     });
   }
+
+  /**
+   * 获取特殊授权
+   */
+  getPermission(): void {
+    this.permissionService.originLists().subscribe(data => {
+      this.permission = data;
+    });
+  }
+
 
   /**
    * 获取资源键

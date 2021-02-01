@@ -4,6 +4,7 @@ import { ListByPage } from 'ngx-bit/factory';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { RoleService } from '../role.service';
 import * as packer from './language';
+import { PermissionService } from 'van-skeleton/permission';
 
 @Component({
   selector: 'van-role-index',
@@ -11,12 +12,14 @@ import * as packer from './language';
 })
 export class RoleIndexComponent implements OnInit {
   lists: ListByPage;
+  permission: any = {};
 
   constructor(
     public bit: BitService,
     private swal: BitSwalService,
     private message: NzMessageService,
-    public roleService: RoleService
+    public roleService: RoleService,
+    private permissionService: PermissionService
   ) {
   }
 
@@ -30,6 +33,7 @@ export class RoleIndexComponent implements OnInit {
       ]
     });
     this.lists.ready.subscribe(() => {
+      this.getPermission();
       this.getLists();
     });
   }
@@ -46,6 +50,14 @@ export class RoleIndexComponent implements OnInit {
           return v;
         })
       );
+    });
+  }
+
+  getPermission(): void {
+    this.permissionService.originLists().subscribe(data => {
+      for (const x of data) {
+        this.permission[x.key] = x.name;
+      }
     });
   }
 
