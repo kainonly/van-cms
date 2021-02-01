@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdminService } from '../admin.service';
 import { RoleService } from 'van-skeleton/role';
 import * as packer from './language';
+import { PermissionService } from 'van-skeleton/permission';
 
 @Component({
   selector: 'van-admin-edit',
@@ -18,6 +19,7 @@ export class AdminEditComponent implements OnInit {
   username: string;
   avatar = '';
   roleLists: any[] = [];
+  permissionLists: any[] = [];
 
   constructor(
     private swal: BitSwalService,
@@ -26,7 +28,8 @@ export class AdminEditComponent implements OnInit {
     private route: ActivatedRoute,
     private notification: NzNotificationService,
     private adminService: AdminService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private permissionService: PermissionService
   ) {
   }
 
@@ -36,6 +39,7 @@ export class AdminEditComponent implements OnInit {
       password: [null, [this.validedPassword]],
       password_check: [null, [this.checkPassword]],
       role: [null, [Validators.required]],
+      permission: [null],
       call: [null],
       email: [null, [Validators.email]],
       phone: [null],
@@ -45,6 +49,7 @@ export class AdminEditComponent implements OnInit {
       this.id = param.id;
       this.getData();
       this.getRole();
+      this.getPermission();
     });
   }
 
@@ -116,6 +121,7 @@ export class AdminEditComponent implements OnInit {
       this.username = data.username;
       this.form.patchValue({
         role: data.role,
+        permission: data.permission ? data.permission.split(',') : [],
         call: data.call,
         email: data.email,
         phone: data.phone,
@@ -130,6 +136,15 @@ export class AdminEditComponent implements OnInit {
   getRole(): void {
     this.roleService.originLists().subscribe(data => {
       this.roleLists = data;
+    });
+  }
+
+  /**
+   * 获取特殊授权
+   */
+  getPermission(): void {
+    this.permissionService.originLists().subscribe(data => {
+      this.permissionLists = data;
     });
   }
 

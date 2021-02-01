@@ -124,7 +124,7 @@
           formControlName="permission"
           [nzPlaceHolder]="bit.l['permissionPlaceholder']"
         >
-          <ng-container *ngFor="let x of permission">
+          <ng-container *ngFor="let x of permissionLists">
             <nz-option [nzLabel]="x.name | object: bit.locale" [nzValue]="x.key"></nz-option>
           </ng-container>
         </nz-select>

@@ -65,11 +65,9 @@
         [nzIndeterminate]="lists.indeterminate"
         (nzCheckedChange)="lists.checkedAll($event)"
       ></th>
-      <th nzWidth="200px">{{ bit.l["username"] }}</th>
+      <th nzWidth="200px">{{ bit.l["username"] }}（{{ bit.l["call"] }}）</th>
       <th nzWidth="200px">{{ bit.l["role"] }}</th>
-      <th nzWidth="200px">{{ bit.l["call"] }}</th>
-      <th nzWidth="150px">{{ bit.l["phone"] }}</th>
-      <th nzWidth="200px">{{ bit.l["email"] }}</th>
+      <th>{{ bit.l["permission"] }}</th>
       <th>{{ bit.l["status"] }}</th>
       <th nzWidth="300px" nzRight="0px">{{ bit.l["action"] }}</th>
     </tr>
@@ -81,15 +79,26 @@
         [(nzChecked)]="data.checked"
         (nzCheckedChange)="lists.refreshStatus()"
       ></td>
-      <td>{{ data.username }}</td>
+      <td>
+          <span>
+            {{ data.username }}
+            <ng-container *ngIf="data.call"> （{{ data.call }}） </ng-container>
+          </span>
+        <a (click)="openAdminVisable(data)">
+          <i nz-icon nzType="audit"></i>
+        </a>
+      </td>
       <td>
         <ng-container *ngIf="role[data.role] !== undefined">
           {{ role[data.role].name | object: bit.locale }}
         </ng-container>
       </td>
-      <td>{{ data.call }}</td>
-      <td>{{ data.phone }}</td>
-      <td>{{ data.email }}</td>
+      <td nzBreakWord>
+        <ng-container *ngFor="let x of data.permission | Split: ','; last as isLast">
+          {{ permission[x] | object: bit.locale }}
+          <ng-container *ngIf="!isLast">,</ng-container>
+        </ng-container>
+      </td>
       <td>
         <nz-switch
           [(ngModel)]="data.status"
@@ -114,3 +123,40 @@
     </tbody>
   </nz-table>
 </nz-card>
+
+<nz-drawer
+  [nzWidth]="540"
+  [nzClosable]="false"
+  [nzVisible]="adminVisible"
+  (nzOnClose)="closeAdminVisable()"
+>
+  <ng-container *nzDrawerContent>
+    <nz-descriptions
+      *ngIf="adminData"
+      nzLayout="vertical"
+      nzBordered
+      [nzColumn]="1"
+      nzSize="middle"
+    >
+      <nz-descriptions-item [nzTitle]="bit.l['call']">
+        <ng-container *ngIf="adminData.call; else empty">
+          {{ adminData.call }}
+        </ng-container>
+      </nz-descriptions-item>
+      <nz-descriptions-item [nzTitle]="bit.l['email']">
+        <ng-container *ngIf="adminData.email; else empty">
+          {{ adminData.email }}
+        </ng-container>
+      </nz-descriptions-item>
+      <nz-descriptions-item [nzTitle]="bit.l['phone']">
+        <ng-container *ngIf="adminData.phone; else empty">
+          {{ adminData.phone }}
+        </ng-container>
+      </nz-descriptions-item>
+      <nz-descriptions-item *ngIf="adminData.avatar" [nzTitle]="bit.l['avatar']">
+        <img nz-image width="200px" height="200px" [nzSrc]="bit.static + adminData.avatar" />
+      </nz-descriptions-item>
+      <ng-template #empty>-</ng-template>
+    </nz-descriptions>
+  </ng-container>
+</nz-drawer>

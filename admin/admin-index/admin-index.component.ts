@@ -5,6 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { AdminService } from '../admin.service';
 import { RoleService } from 'van-skeleton/role';
 import * as packer from './language';
+import { PermissionService } from 'van-skeleton/permission';
 
 @Component({
   selector: 'van-admin-index',
@@ -13,13 +14,17 @@ import * as packer from './language';
 export class AdminIndexComponent implements OnInit {
   lists: ListByPage;
   role: any = {};
+  permission: any = {};
+  adminVisible = false;
+  adminData: any;
 
   constructor(
     private swal: BitSwalService,
     public bit: BitService,
     public adminService: AdminService,
     private roleService: RoleService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private permissionService: PermissionService
   ) {
   }
 
@@ -32,6 +37,7 @@ export class AdminIndexComponent implements OnInit {
     this.lists.ready.subscribe(() => {
       this.getLists();
       this.getRole();
+      this.getPermission();
     });
   }
 
@@ -53,6 +59,27 @@ export class AdminIndexComponent implements OnInit {
         this.role[x.key] = x;
       }
     });
+  }
+
+  /**
+   * 获取特殊授权
+   */
+  getPermission(): void {
+    this.permissionService.originLists().subscribe(data => {
+      for (const x of data) {
+        this.permission[x.key] = x.name;
+      }
+    });
+  }
+
+  openAdminVisable(data: any): void {
+    this.adminVisible = true;
+    this.adminData = data;
+  }
+
+  closeAdminVisable(): void {
+    this.adminVisible = false;
+    this.adminData = undefined;
   }
 
   /**

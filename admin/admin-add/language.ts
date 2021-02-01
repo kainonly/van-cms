@@ -21,6 +21,8 @@ export default {
   passwordSymbol: ['密码必须包含符号@$!%*?&-+', 'Password must contain the symbol @$!%*?&-+'],
   passwordCheck: ['再次验证', 'Password Check'],
   passwordCorrectly: ['请输入正确的用户密码', 'Please enter the correct user password'],
+  permission: ['特殊授权', 'Permission'],
+  permissionPlaceholder: ['请选择特殊授权代码', 'Please select permission key'],
   call: ['称呼', 'Call Name'],
   callPlaceholder: ['请输入称呼', 'Please Enter Call Name'],
   email: ['电子邮件', 'Email'],

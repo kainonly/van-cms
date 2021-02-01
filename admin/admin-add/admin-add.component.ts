@@ -7,6 +7,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AdminService } from '../admin.service';
 import { RoleService } from 'van-skeleton/role';
 import * as packer from './language';
+import { PermissionService } from 'van-skeleton/permission';
 
 @Component({
   selector: 'van-admin-add',
@@ -16,6 +17,7 @@ export class AdminAddComponent implements OnInit {
   form: FormGroup;
   avatar = '';
   roleLists: any[] = [];
+  permissionLists: any[] = [];
 
   constructor(
     private swal: BitSwalService,
@@ -23,7 +25,8 @@ export class AdminAddComponent implements OnInit {
     public bit: BitService,
     private notification: NzNotificationService,
     private adminService: AdminService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private permissionService: PermissionService
   ) {
   }
 
@@ -34,12 +37,14 @@ export class AdminAddComponent implements OnInit {
       password: [null, this.validedPassword],
       password_check: [null, [this.checkPassword]],
       role: [null, [Validators.required]],
+      permission: [null],
       call: [null],
       email: [null, [Validators.email]],
       phone: [null],
       status: [true, [Validators.required]]
     });
     this.getRole();
+    this.getPermission();
   }
 
   validedUsername = (control: AbstractControl) => {
@@ -97,6 +102,15 @@ export class AdminAddComponent implements OnInit {
   getRole(): void {
     this.roleService.originLists().subscribe(data => {
       this.roleLists = data;
+    });
+  }
+
+  /**
+   * 获取特殊授权
+   */
+  getPermission(): void {
+    this.permissionService.originLists().subscribe(data => {
+      this.permissionLists = data;
     });
   }
 

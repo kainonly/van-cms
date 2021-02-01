@@ -96,6 +96,26 @@
 
     <nz-form-item>
       <nz-form-label bitCol="label">
+        <span>
+          {{ bit.l["permission"] }}
+        </span>
+      </nz-form-label>
+      <nz-form-control bitCol="control">
+        <nz-select
+          style="width: 100%"
+          nzMode="multiple"
+          formControlName="permission"
+          [nzPlaceHolder]="bit.l['permissionPlaceholder']"
+        >
+          <ng-container *ngFor="let x of permissionLists">
+            <nz-option [nzLabel]="x.name | object: bit.locale" [nzValue]="x.key"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label bitCol="label">
         {{ bit.l["call"] }}
       </nz-form-label>
       <nz-form-control bitCol="control" nzHasFeedback>

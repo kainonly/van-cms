@@ -18,7 +18,7 @@ export class RoleAddComponent implements OnInit, OnDestroy {
   @ViewChild('nzTree', { static: true }) nzTree: NzTreeComponent;
   private resource: string[] = [];
   nodes: NzTreeNodeOptions[] = [];
-  permission: any[] = [];
+  permissionLists: any[] = [];
   form: FormGroup;
 
   constructor(
@@ -103,7 +103,7 @@ export class RoleAddComponent implements OnInit, OnDestroy {
    */
   getPermission(): void {
     this.permissionService.originLists().subscribe(data => {
-      this.permission = data;
+      this.permissionLists = data;
     });
   }
 

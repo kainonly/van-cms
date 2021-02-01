@@ -23,7 +23,7 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
   private keyAsync: AsyncSubject<string> = new AsyncSubject();
   private resource: string[] = [];
   nodes: NzTreeNodeOptions[] = [];
-  permission: any[] = [];
+  permissionLists: any[] = [];
   form: FormGroup;
 
   constructor(
@@ -109,7 +109,7 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
       this.form.patchValue({
         name: JSON.parse(data.name),
         key: data.key,
-        permission: data.permission ? data.permission.split(',') : '',
+        permission: data.permission ? data.permission.split(',') : [],
         note: data.note,
         status: data.status
       });
@@ -156,7 +156,7 @@ export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   getPermission(): void {
     this.permissionService.originLists().subscribe(data => {
-      this.permission = data;
+      this.permissionLists = data;
     });
   }
 

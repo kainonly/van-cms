@@ -44,6 +44,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 @NgModule({
   exports: [
@@ -90,6 +91,7 @@ import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
     NzImageModule,
     NzSpinModule,
     NzPopconfirmModule,
+    NzDescriptionsModule,
     NzTreeViewModule,
     BitExtModule,
     BitPipeModule,

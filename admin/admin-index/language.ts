@@ -5,6 +5,8 @@ export default {
   role: ['权限组', 'Role Group'],
   email: ['电子邮件', 'Email'],
   phone: ['联系电话', 'Phone'],
+  avatar: ['头像', 'Avatar'],
+  permission: ['特殊授权', 'Permission'],
   statusSelfError: ['您不能更新当前登陆中的账户状态', 'You cannot update the status of the account currently logged in'],
   deleteSelfError: ['您不能删除当前登陆中的账户', 'You cannot delete the account currently logged in']
 };
