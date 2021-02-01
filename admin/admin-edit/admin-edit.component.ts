@@ -120,7 +120,7 @@ export class AdminEditComponent implements OnInit {
       }
       this.username = data.username;
       this.form.patchValue({
-        role: data.role,
+        role: data.role.split(','),
         permission: data.permission ? data.permission.split(',') : [],
         call: data.call,
         email: data.email,
