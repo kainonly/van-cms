@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitSwalService, BitService } from 'ngx-bit';
+import { BitSwalService, BitService, BitEventsService } from 'ngx-bit';
 import { switchMap } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ActivatedRoute } from '@angular/router';
@@ -8,13 +8,20 @@ import { AdminService } from '../admin.service';
 import { RoleService } from 'van-skeleton/role';
 import * as packer from './language';
 import { PermissionService } from 'van-skeleton/permission';
+import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { ResourceService } from 'van-skeleton/resource';
+import { AsyncSubject } from 'rxjs';
 
 @Component({
   selector: 'van-admin-edit',
   templateUrl: './admin-edit.component.html'
 })
-export class AdminEditComponent implements OnInit {
+export class AdminEditComponent implements OnInit, AfterViewInit {
+  @ViewChild('nzTree', { static: true }) nzTree: NzTreeComponent;
   private id: number;
+  private resource: string[] = [];
+  private dataAsync: AsyncSubject<void> = new AsyncSubject<void>();
+  nodes: NzTreeNodeOptions[] = [];
   form: FormGroup;
   username: string;
   avatar = '';
@@ -25,10 +32,12 @@ export class AdminEditComponent implements OnInit {
     private swal: BitSwalService,
     private fb: FormBuilder,
     public bit: BitService,
+    private events: BitEventsService,
     private route: ActivatedRoute,
     private notification: NzNotificationService,
     private adminService: AdminService,
     private roleService: RoleService,
+    private resourceService: ResourceService,
     private permissionService: PermissionService
   ) {
   }
@@ -39,17 +48,43 @@ export class AdminEditComponent implements OnInit {
       password: [null, [this.validedPassword]],
       password_check: [null, [this.checkPassword]],
       role: [null, [Validators.required]],
-      permission: [null],
+      permission: [[]],
       call: [null],
       email: [null, [Validators.email]],
       phone: [null],
       status: [true, [Validators.required]]
     });
+    this.events.on('locale').subscribe(() => {
+      this.getNodes();
+    });
     this.route.params.subscribe(param => {
       this.id = param.id;
       this.getData();
       this.getRole();
+      this.getNodes();
       this.getPermission();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataAsync.subscribe(() => {
+      setTimeout(() => {
+        const resource = this.resource;
+        const queue = [...this.nzTree.getTreeNodes()];
+        while (queue.length !== 0) {
+          const node = queue.pop();
+          node.isChecked = resource.indexOf(node.key) !== -1;
+          const parent = node.parentNode;
+          if (parent) {
+            parent.isChecked = parent.getChildren().every(v => resource.indexOf(v.key) !== -1);
+            parent.isHalfChecked = !parent.isChecked && parent.getChildren().some(v => resource.indexOf(v.key) !== -1);
+          }
+          const children = node.getChildren();
+          if (children.length !== 0) {
+            queue.push(...children);
+          }
+        }
+      }, 200);
     });
   }
 
@@ -118,6 +153,9 @@ export class AdminEditComponent implements OnInit {
           }
         });
       }
+      this.resource = data.resource ? data.resource.split(',') : [];
+      this.dataAsync.next();
+      this.dataAsync.complete();
       this.username = data.username;
       this.form.patchValue({
         role: data.role.split(','),
@@ -137,6 +175,119 @@ export class AdminEditComponent implements OnInit {
     this.roleService.originLists().subscribe(data => {
       this.roleLists = data;
     });
+  }
+
+  /**
+   * 获取资源策略节点
+   */
+  getNodes(): void {
+    this.resourceService.originLists().subscribe(data => {
+      const refer: Map<string, NzTreeNodeOptions> = new Map();
+      const lists = data.map(v => {
+        const rows = {
+          title: JSON.parse(v.name)[this.bit.locale] + '[' + v.key + ']',
+          key: v.key,
+          parent: v.parent,
+          children: [],
+          isLeaf: true
+        };
+        refer.set(v.key, rows);
+        return rows;
+      });
+      const nodes: any[] = [];
+      for (const x of lists) {
+        if (x.parent === 'origin') {
+          nodes.push(x);
+        } else {
+          const parent = x.parent;
+          if (refer.has(parent)) {
+            const rows = refer.get(parent);
+            rows.isLeaf = false;
+            rows.children.push(x);
+            refer.set(parent, rows);
+          }
+        }
+      }
+      this.nodes = nodes;
+    });
+  }
+
+  /**
+   * 获取资源键
+   */
+  setResource(): void {
+    this.resource = [];
+    const queue = [...this.nzTree.getTreeNodes()];
+    while (queue.length !== 0) {
+      const node = queue.pop();
+      if (node.isChecked || node.isHalfChecked) {
+        this.resource.push(node.key);
+      }
+      const children = node.getChildren();
+      if (children.length !== 0) {
+        queue.push(...children);
+      }
+    }
+  }
+
+  /**
+   * 全部选中
+   */
+  allChecked(): void {
+    this.allCheckedStatus(true);
+  }
+
+  /**
+   * 取消选中
+   */
+  allUnchecked(): void {
+    this.allCheckedStatus(false);
+  }
+
+  /**
+   * 设置展开状态
+   */
+  private allCheckedStatus(status: boolean): void {
+    const queue = [...this.nzTree.getTreeNodes()];
+    while (queue.length !== 0) {
+      const node = queue.pop();
+      node.isHalfChecked = false;
+      node.isChecked = status;
+      const children = node.getChildren();
+      if (children.length !== 0) {
+        queue.push(...children);
+      }
+    }
+    this.nzTree.nzCheckBoxChange.emit();
+  }
+
+  /**
+   * 全部展开
+   */
+  allExpand(): void {
+    this.allExpandStatus(true);
+  }
+
+  /**
+   * 全部关闭
+   */
+  allClose(): void {
+    this.allExpandStatus(false);
+  }
+
+  /**
+   * 设置展开状态
+   */
+  private allExpandStatus(status: boolean): void {
+    const queue = [...this.nzTree.getTreeNodes()];
+    while (queue.length !== 0) {
+      const node = queue.pop();
+      node.isExpanded = status;
+      const children = node.getChildren();
+      if (children.length !== 0) {
+        queue.push(...children);
+      }
+    }
   }
 
   /**
@@ -166,16 +317,16 @@ export class AdminEditComponent implements OnInit {
    */
   submit(data): void {
     Reflect.set(data, 'id', this.id);
+    Reflect.deleteProperty(data, 'password_check');
+    Reflect.set(data, 'resource', this.resource);
     Reflect.set(data, 'avatar', this.avatar);
-    delete data.password_check;
-    this.adminService
-      .edit(data)
-      .pipe(switchMap(res => this.swal.editAlert(res)))
-      .subscribe(status => {
-        if (status) {
-          this.form.reset();
-          this.getData();
-        }
-      });
+    this.adminService.edit(data).pipe(
+      switchMap(res => this.swal.editAlert(res))
+    ).subscribe(status => {
+      if (status) {
+        this.form.reset();
+        this.getData();
+      }
+    });
   }
 }
