@@ -1,7 +1,6 @@
 <bit-header back>
   <bit-i18n-switch></bit-i18n-switch>
 </bit-header>
-
 <nz-card>
   <form nz-form [formGroup]="form" (bitFormSubmit)="submit($event)">
     <nz-form-item formGroupName="name" bitI18nUpdate>
@@ -13,6 +12,7 @@
             nz-tooltip
             [nzTooltipTitle]="bit.l['i18nTip']"
             nzType="translation"
+            nzTheme="outline"
           >
           </i>
         </span>
@@ -34,7 +34,8 @@
           <bit-error-tip
             #name
             [hasError]="{
-              required: bit.l['nameRequire']
+              required: bit.l['nameRequire'],
+              duplicated: bit.l['nameDuplicated']
             }"
           ></bit-error-tip>
         </nz-form-control>
@@ -43,15 +44,15 @@
 
     <nz-form-item>
       <nz-form-label bitCol="label" nzRequired>
-        <span
-        >{{ bit.l["key"] }}
+        <span>
+          {{ bit.l["key"] }}
           <i
             nz-icon
             nz-tooltip
             [nzTooltipTitle]="bit.l['keyHelp']"
             nzType="question-circle"
-          >
-          </i>
+            nzTheme="outline"
+          ></i>
         </span>
       </nz-form-label>
       <nz-form-control
@@ -72,28 +73,13 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label bitCol="label" nzRequired>
-        {{ bit.l["writeLists"] }}
+      <nz-form-label bitCol="label">
+        <span>
+          {{ bit.l["note"] }}
+        </span>
       </nz-form-label>
       <nz-form-control bitCol="control">
-        <nz-select nzMode="tags" formControlName="write">
-          <ng-container *ngFor="let v of writeLists">
-            <nz-option [nzLabel]="v" [nzValue]="v"></nz-option>
-          </ng-container>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label bitCol="label" nzRequired>
-        {{ bit.l["readLists"] }}
-      </nz-form-label>
-      <nz-form-control bitCol="control">
-        <nz-select nzMode="tags" formControlName="read">
-          <ng-container *ngFor="let v of readLists">
-            <nz-option [nzLabel]="v" [nzValue]="v"></nz-option>
-          </ng-container>
-        </nz-select>
+        <textarea rows="4" nz-input formControlName="note"></textarea>
       </nz-form-control>
     </nz-form-item>
 

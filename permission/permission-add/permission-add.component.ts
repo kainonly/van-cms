@@ -3,25 +3,23 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { BitSwalService, BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { asyncValidator } from 'ngx-bit/operates';
-import { switchMap } from 'rxjs/operators';
-import { AclService } from '../acl.service';
+import { map, switchMap } from 'rxjs/operators';
+import { PermissionService } from '../permission.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-acl-add',
-  templateUrl: './acl-add.component.html'
+  selector: 'van-permission-add',
+  templateUrl: './permission-add.component.html'
 })
-export class AclAddComponent implements OnInit {
+export class PermissionAddComponent implements OnInit {
   form: FormGroup;
-  writeLists: string[] = ['add', 'edit', 'delete'];
-  readLists: string[] = ['get', 'originLists', 'lists'];
 
   constructor(
     public bit: BitService,
     private fb: FormBuilder,
     private notification: NzNotificationService,
     private swal: BitSwalService,
-    private aclService: AclService
+    private permissionService: PermissionService
   ) {
   }
 
@@ -37,21 +35,20 @@ export class AclAddComponent implements OnInit {
         })
       ),
       key: [null, [Validators.required], [this.existsKey]],
-      write: [this.writeLists],
-      read: [this.readLists],
+      note: [null],
       status: [true, [Validators.required]]
     });
   }
 
   existsKey = (control: AbstractControl) => {
-    return asyncValidator(this.aclService.validedKey(control.value));
+    return asyncValidator(this.permissionService.validedKey(control.value));
   };
 
   /**
    * 提交
    */
   submit(data): void {
-    this.aclService.add(data).pipe(
+    this.permissionService.add(data).pipe(
       switchMap(res =>
         this.swal.addAlert(res, this.form, {
           status: true

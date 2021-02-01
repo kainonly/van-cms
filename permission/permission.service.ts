@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ListByPage } from 'ngx-bit/factory';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { BitHttpService } from 'ngx-bit';
+import { ListByPage } from 'ngx-bit/factory';
 
 @Injectable()
-export class AclService {
-  private model = 'acl';
+export class PermissionService {
+  private model = 'permission';
 
   constructor(
     private http: BitHttpService
@@ -45,7 +45,7 @@ export class AclService {
   }
 
   /**
-   * Validate Acl Key
+   * Validate Resource Key
    */
   validedKey(key: string, edit: Observable<string> = of(null)): Observable<any> {
     return edit.pipe(

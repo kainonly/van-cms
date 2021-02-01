@@ -43,8 +43,8 @@
 
     <nz-form-item>
       <nz-form-label bitCol="label" nzRequired>
-        <span
-        >{{ bit.l["key"] }}
+        <span>
+          {{ bit.l["key"] }}
           <i
             nz-icon
             nz-tooltip
@@ -72,28 +72,13 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label bitCol="label" nzRequired>
-        {{ bit.l["writeLists"] }}
+      <nz-form-label bitCol="label">
+        <span>
+          {{ bit.l["note"] }}
+        </span>
       </nz-form-label>
       <nz-form-control bitCol="control">
-        <nz-select nzMode="tags" formControlName="write">
-          <ng-container *ngFor="let v of writeLists">
-            <nz-option [nzLabel]="v" [nzValue]="v"></nz-option>
-          </ng-container>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label bitCol="label" nzRequired>
-        {{ bit.l["readLists"] }}
-      </nz-form-label>
-      <nz-form-control bitCol="control">
-        <nz-select nzMode="tags" formControlName="read">
-          <ng-container *ngFor="let v of readLists">
-            <nz-option [nzLabel]="v" [nzValue]="v"></nz-option>
-          </ng-container>
-        </nz-select>
+        <textarea rows="4" nz-input formControlName="note"></textarea>
       </nz-form-control>
     </nz-form-item>
 

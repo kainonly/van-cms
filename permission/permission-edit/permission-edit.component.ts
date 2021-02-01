@@ -6,19 +6,17 @@ import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncSubject } from 'rxjs';
-import { AclService } from '../acl.service';
+import { PermissionService } from '../permission.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-acl-edit',
-  templateUrl: './acl-edit.component.html'
+  selector: 'van-permission-edit',
+  templateUrl: './permission-edit.component.html'
 })
-export class AclEditComponent implements OnInit {
+export class PermissionEditComponent implements OnInit {
   private id: number;
   private keyAsync: AsyncSubject<string> = new AsyncSubject();
   form: FormGroup;
-  writeLists: string[] = ['add', 'edit', 'delete'];
-  readLists: string[] = ['get', 'originLists', 'lists'];
 
   constructor(
     public bit: BitService,
@@ -26,7 +24,7 @@ export class AclEditComponent implements OnInit {
     private notification: NzNotificationService,
     private swal: BitSwalService,
     private route: ActivatedRoute,
-    private aclService: AclService
+    private permissionService: PermissionService
   ) {
   }
 
@@ -42,8 +40,7 @@ export class AclEditComponent implements OnInit {
         })
       ),
       key: [null, [Validators.required], [this.existsKey]],
-      write: [[]],
-      read: [[]],
+      note: [],
       status: [true, [Validators.required]]
     });
     this.route.params.subscribe(param => {
@@ -53,21 +50,18 @@ export class AclEditComponent implements OnInit {
   }
 
   existsKey = (control: AbstractControl) => {
-    return asyncValidator(this.aclService.validedKey(control.value, this.keyAsync));
+    return asyncValidator(this.permissionService.validedKey(control.value, this.keyAsync));
   };
 
   getData(): void {
-    this.aclService.get(this.id).subscribe(data => {
+    this.permissionService.get(this.id).subscribe(data => {
       const name = this.bit.i18nParse(data.name);
       this.keyAsync.next(data.key);
       this.keyAsync.complete();
-      const write = !data.write ? [] : data.write.split(',');
-      const read = !data.read ? [] : data.read.split(',');
       this.form.patchValue({
         name,
         key: data.key,
-        write,
-        read,
+        note: data.note,
         status: data.status
       });
     });
@@ -78,7 +72,7 @@ export class AclEditComponent implements OnInit {
    */
   submit(data): void {
     Reflect.set(data, 'id', this.id);
-    this.aclService.edit(data).pipe(
+    this.permissionService.edit(data).pipe(
       switchMap(res => this.swal.editAlert(res))
     ).subscribe(status => {
       if (status) {

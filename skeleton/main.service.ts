@@ -69,7 +69,6 @@ export class MainService {
             }
           }
 
-          console.log(nav);
           return { resource, nav, router };
         } else {
           return {};
