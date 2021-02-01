@@ -9,8 +9,8 @@ export default {
   keyRequire: ['当前权限组代码不能为空', 'Current Role Code cannot be empty'],
   keyDuplicated: ['当前权限组代码已存在', 'Current Role Code already exists'],
   resource: ['资源策略', 'Resource Policy'],
-  checked: ['全部选中', 'Checked'],
-  unchecked: ['取消选中', 'UnChecked'],
-  expand: ['全部展开', 'Expand'],
-  close: ['全部关闭', 'Close']
+  checked: ['选中', 'Checked'],
+  unchecked: ['取消', 'UnChecked'],
+  expand: ['展开', 'Expand'],
+  close: ['收起', 'Close']
 };

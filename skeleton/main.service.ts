@@ -54,6 +54,7 @@ export class MainService {
             }
 
             if (x.parent === 'origin') {
+              x.level = 0;
               nav.push(x);
             } else {
               const parent = x.parent;
@@ -62,10 +63,13 @@ export class MainService {
                 if (!rows.hasOwnProperty('children')) {
                   rows.children = [];
                 }
+                x.level = rows.level + 1;
                 rows.children.push(x);
               }
             }
           }
+
+          console.log(nav);
           return { resource, nav, router };
         } else {
           return {};

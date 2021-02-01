@@ -14,6 +14,7 @@
               <ng-container *ngIf="x.router; else notRouter">
                 <li
                   nz-menu-item
+                  [nzPaddingLeft]="x.level * 24"
                   [bitOpen]="[x.key]"
                   [nzSelected]="support.navActive.indexOf(x.key) !== -1"
                 >
@@ -22,7 +23,11 @@
                 </li>
               </ng-container>
               <ng-template #notRouter>
-                <li nz-submenu [nzOpen]="support.navActive.indexOf(x.key) !== -1">
+                <li
+                  nz-submenu
+                  [nzOpen]="support.navActive.indexOf(x.key) !== -1"
+                  [nzPaddingLeft]="x.level * 24"
+                >
                   <span title>
                     <i nz-icon [nzType]="x.icon"></i>
                     <span>{{ x.name | object: bit.locale }}</span>
@@ -39,7 +44,7 @@
         </ul>
       </perfect-scrollbar>
     </nz-sider>
-    <nz-layout class="right-layout" [ngClass]="{'collapsed':collapsed}">
+    <nz-layout class="right-layout" [ngClass]="{ collapsed: collapsed }">
       <ul #header nz-menu [nzMode]="'horizontal'" [nzSelectable]="false">
         <li nz-menu-item routerLink="/">
           <i nz-icon nzType="dashboard"></i> {{ bit.l["dashboard"] }}
