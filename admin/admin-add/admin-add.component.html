@@ -31,8 +31,7 @@
       </nz-form-label>
       <nz-form-control bitCol="control">
         <nz-select
-          nzShowSearch
-          nzAllowClear
+          nzMode="multiple"
           formControlName="role"
           [nzPlaceHolder]="bit.l['rolePlaceholder']"
         >
@@ -102,7 +101,6 @@
       </nz-form-label>
       <nz-form-control bitCol="control">
         <nz-select
-          style="width: 100%"
           nzMode="multiple"
           formControlName="permission"
           [nzPlaceHolder]="bit.l['permissionPlaceholder']"

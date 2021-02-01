@@ -89,8 +89,9 @@
         </a>
       </td>
       <td>
-        <ng-container *ngIf="role[data.role] !== undefined">
-          {{ role[data.role].name | object: bit.locale }}
+        <ng-container *ngFor="let x of data.role | Split: ',';last as isLast">
+          {{ role[x].name | object: bit.locale }}
+          <ng-container *ngIf="!isLast">,</ng-container>
         </ng-container>
       </td>
       <td nzBreakWord>
