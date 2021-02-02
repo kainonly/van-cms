@@ -14,7 +14,7 @@
               <ng-container *ngIf="x.router; else notRouter">
                 <li
                   nz-menu-item
-                  [nzPaddingLeft]="x.level * 24"
+                  [nzPaddingLeft]="level(x)"
                   [bitOpen]="[x.key]"
                   [nzSelected]="support.navActive.indexOf(x.key) !== -1"
                 >
@@ -26,7 +26,7 @@
                 <li
                   nz-submenu
                   [nzOpen]="support.navActive.indexOf(x.key) !== -1"
-                  [nzPaddingLeft]="x.level * 24"
+                  [nzPaddingLeft]="level(x)"
                 >
                   <span title>
                     <i nz-icon [nzType]="x.icon"></i>

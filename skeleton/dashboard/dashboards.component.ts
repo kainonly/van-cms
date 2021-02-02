@@ -84,6 +84,15 @@ export class DashboardsComponent implements OnInit, OnDestroy {
     this.firstDispatch = false;
   }
 
+  level(data: any): number {
+    let deep = 0;
+    while (data.hasOwnProperty('parentNode')) {
+      deep++;
+      data = data.parentNode;
+    }
+    return deep * 24;
+  }
+
   /**
    * User logout
    */
