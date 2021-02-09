@@ -16,7 +16,10 @@
             />
             <nz-autocomplete #auto>
               <ng-container *ngFor="let x of users">
-                <nz-auto-option [nzValue]="x">{{ x }}</nz-auto-option>
+                <nz-auto-option [nzValue]="x">
+                  {{ x }}
+                  <i class="user-del" nz-icon nzType="delete" (click)="deleteUsername($event, x)"></i>
+                </nz-auto-option>
               </ng-container>
             </nz-autocomplete>
             <ng-template #userPrefix>
@@ -89,7 +92,13 @@
 
       <nz-form-item>
         <nz-form-control>
-          <button nz-button [nzLoading]="logining" nzType="primary" [nzBlock]="true" [disabled]="!form.valid">
+          <button
+            nz-button
+            [nzLoading]="logining"
+            nzType="primary"
+            [nzBlock]="true"
+            [disabled]="!form.valid"
+          >
             {{ bit.l["login"] }}
           </button>
         </nz-form-control>

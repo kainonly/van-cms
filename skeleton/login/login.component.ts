@@ -43,6 +43,27 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  addUsername(username: string): void {
+    this.storageMap.get('users').pipe(
+      switchMap((data: Set<string>) =>
+        this.storageMap.set('users', data ? data.add(username) : new Set([username]))
+      )
+    ).subscribe(() => {
+    });
+  }
+
+  deleteUsername(event: any, username: string): void {
+    this.storageMap.get('users').pipe(
+      switchMap((data: Set<string>) => {
+        data.delete(username);
+        this.users = [...data.keys()];
+        return this.storageMap.set('users', data);
+      })
+    ).subscribe(() => {
+    });
+    event.stopPropagation();
+  }
+
   submit(data: any): void {
     this.logining = true;
     this.mainService.login(data.username, data.password).subscribe(res => {
@@ -50,12 +71,7 @@ export class LoginComponent implements OnInit {
         case 0:
           this.support.clearStorage();
           if (data.remember) {
-            this.storageMap.get('users').pipe(
-              switchMap((lists: Set<string>) =>
-                this.storageMap.set('users', lists ? lists.add(data.username) : new Set([data.username]))
-              )
-            ).subscribe(() => {
-            });
+            this.addUsername(data.username);
           }
           this.notification.success(this.bit.l.auth, this.bit.l.loginSuccess);
           this.router.navigateByUrl('/');
