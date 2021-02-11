@@ -45,8 +45,8 @@ export class RoleIndexComponent implements OnInit {
     this.roleService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
       this.lists.setData(
         data.map(v => {
-          v.acl = v.acl.split(',').map(c => c.split(':'));
-          v.resource = v.resource.split(',');
+          v.acl = !v.acl ? [] : v.acl.split(',').map(c => c.split(':'));
+          v.resource = !v.resource ? [] : v.resource.split(',');
           return v;
         })
       );
