@@ -54,14 +54,16 @@ export class RoleService {
         }
         return of({
           error: 0,
-          data: false
+          data: {
+            exists: false
+          }
         });
       }),
       map(res => {
         if (res.error === 1) {
           return false;
         }
-        return !res.data;
+        return !res.data.exists;
       })
     );
   }
