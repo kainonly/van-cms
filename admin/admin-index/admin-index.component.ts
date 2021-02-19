@@ -55,9 +55,11 @@ export class AdminIndexComponent implements OnInit {
    */
   getRole(): void {
     this.roleService.originLists().subscribe(data => {
+      const role = {};
       for (const x of data) {
-        this.role[x.key] = x;
+        role[x.key] = x;
       }
+      this.role = role;
     });
   }
 
@@ -66,9 +68,11 @@ export class AdminIndexComponent implements OnInit {
    */
   getPermission(): void {
     this.permissionService.originLists().subscribe(data => {
+      const permission = {};
       for (const x of data) {
-        this.permission[x.key] = x.name;
+        permission[x.key] = x.name;
       }
+      this.permission = permission;
     });
   }
 
