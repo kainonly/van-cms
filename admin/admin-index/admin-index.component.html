@@ -90,7 +90,9 @@
       </td>
       <td>
         <ng-container *ngFor="let x of data.role | Split: ',';last as isLast">
-          {{ role[x].name | object: bit.locale }}
+          <ng-container *ngIf="role.hasOwnProperty(x)">
+            {{ role[x].name | object: bit.locale }}
+          </ng-container>
           <ng-container *ngIf="!isLast">,</ng-container>
         </ng-container>
       </td>
