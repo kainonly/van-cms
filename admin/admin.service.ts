@@ -56,7 +56,7 @@ export class AdminService {
           if (res.error === 1) {
             return false;
           }
-          return !res.data;
+          return !res.data.exists;
         })
       );
   }
