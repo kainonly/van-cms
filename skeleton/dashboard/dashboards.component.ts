@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BitService, BitEventsService, BitSupportService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription, timer } from 'rxjs';
-import { UiService } from 'van-skeleton';
+import { SystemService } from 'van-skeleton';
 import { MainService } from '../main.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class DashboardsComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private ui: UiService,
+    private system: SystemService,
     private mainService: MainService,
     private events: BitEventsService,
     private notification: NzNotificationService,
@@ -79,7 +79,7 @@ export class DashboardsComponent implements OnInit, OnDestroy {
         container.push(sibling);
         sibling = sibling.previousElementSibling;
       }
-      this.ui.container.next(container);
+      this.system.layout.next(container);
     });
     this.firstDispatch = false;
   }

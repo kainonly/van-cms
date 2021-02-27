@@ -1,10 +1,10 @@
 export default {
   username: ['账户', 'Username'],
   usernameRequire: ['请输入管理账户', 'Please Enter Username'],
-  usernameCorrectly: ['请输入正确的管理账户', 'Please Enter Correctly Username'],
+  usernameCorrectly: ['请输入正确的管理账户', 'Please enter correctly Username'],
   password: ['口令', 'Password'],
-  passwordRequire: ['请输入您的口令', 'Please Enter You Password!'],
-  passwordCorrectly: ['请输入格式正确的口令', 'Please Enter Correctly Password'],
+  passwordRequire: ['请输入您的口令', 'Please enter you password!'],
+  passwordCorrectly: ['请输入格式正确的口令', 'Please enter correctly Password'],
   login: ['登录', 'Login'],
   loginRemember: ['记住帐户登录', 'Remember account login'],
   loginSuccess: ['登录成功，正在加载数据~', 'Successful login, data is being loaded~'],
