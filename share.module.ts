@@ -42,7 +42,6 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
@@ -95,8 +94,7 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
     NzTreeViewModule,
     BitExtModule,
     BitPipeModule,
-    BitDirectiveModule,
-    PerfectScrollbarModule
+    BitDirectiveModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

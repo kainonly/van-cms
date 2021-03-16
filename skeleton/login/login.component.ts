@@ -6,6 +6,7 @@ import { BitService, BitSupportService } from 'ngx-bit';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { switchMap } from 'rxjs/operators';
 import { MainService } from '../main.service';
+import { IParticlesParams } from 'ng-particles';
 import * as packer from './language';
 
 @Component({
@@ -17,6 +18,47 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   users: any[] = [];
   logining = false;
+  particlesOptions: IParticlesParams = {
+    fpsLimit: 60,
+    particles: {
+      color: {
+        value: '#333'
+      },
+      links: {
+        color: '#ddd',
+        distance: 150,
+        enable: true,
+        opacity: 0.5,
+        width: 1
+      },
+      collisions: {
+        enable: true
+      },
+      move: {
+        enable: true,
+        outMode: 'bounce',
+        speed: 3
+      },
+      number: {
+        density: {
+          enable: true,
+          value_area: 1000
+        },
+        value: 80
+      },
+      opacity: {
+        value: 0.5
+      },
+      shape: {
+        type: 'edge'
+      },
+      size: {
+        random: true,
+        value: 4
+      }
+    },
+    detectRetina: true
+  };
 
   constructor(
     public bit: BitService,

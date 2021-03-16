@@ -5,9 +5,18 @@
   overflow: hidden;
 }
 
+.i18n-btn {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
 .login-wrapper {
-  width: 320px;
-  margin: 150px auto;
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  width: 360px;
+  margin-left: -180px;
   padding: 40px 25px 25px 25px;
   background: #fff;
   border-radius: 3px;

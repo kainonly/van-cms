@@ -14,7 +14,7 @@
 
 .main-layout {
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
 
   .main-scrollbar {
     height: 100%;
@@ -27,9 +27,9 @@ nz-sider {
   position: fixed;
   left: 0;
 
-  .sider-scrollbar {
-    height: 100%;
-    padding-bottom: 48px;
+  .scroll-bar {
+    height: calc(100% - 48px);
+    overflow: auto;
   }
 }
 
