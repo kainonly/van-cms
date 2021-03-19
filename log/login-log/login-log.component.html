@@ -1,0 +1,149 @@
+<ng-template #title>
+  <nz-space>
+    <nz-space-item *ngIf="lists.hasSearch('username')">
+      <nz-input-group nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 320px">
+        <input
+          nz-input
+          [bitSearchStart]="lists"
+          [placeholder]="bit.l['search']"
+          [(ngModel)]="lists.search['username'].value"
+          (after)="getLists(true)"
+        />
+      </nz-input-group>
+      <ng-template #nzAddOnAfter>
+        <button
+          nz-button
+          nzType="primary"
+          nzSearch
+          [bitSearchStart]="lists"
+          (after)="getLists(true)"
+        >
+          <i nz-icon nzType="search"></i>
+        </button>
+      </ng-template>
+    </nz-space-item>
+    <nz-space-item *ngIf="lists.hasSearch('time')">
+      <nz-range-picker
+        nzFormat="yyyy-MM-dd HH:mm:ss"
+        [bitSearchChange]="lists"
+        [nzShowTime]="{ nzFormat: 'HH:mm:ss' }"
+        [nzPlaceHolder]="[bit.l['startTime'], bit.l['endTime']]"
+        [(ngModel)]="lists.search['time'].value"
+        (after)="getLists(true)"
+      >
+      </nz-range-picker>
+    </nz-space-item>
+    <nz-space-item>
+      <button nz-button nzType="default" (click)="getLists(true)">
+        <i nz-icon nzType="sync"></i> {{ bit.l["refreshLists"] }}
+      </button>
+    </nz-space-item>
+    <nz-space-item>
+      <button nz-button nzType="default" [bitSearchClear]="lists" (after)="getLists(true)">
+        <i nz-icon nzType="clear"></i> {{ bit.l["clearSearch"] }}
+      </button>
+    </nz-space-item>
+  </nz-space>
+</ng-template>
+
+<nz-card [nzTitle]="title">
+  <nz-table
+    #table
+    [nzData]="lists.data"
+    [nzLoading]="lists.loading"
+    [nzTotal]="lists.totals"
+    [nzPageSize]="lists.limit"
+    [nzFrontPagination]="false"
+    [(nzPageIndex)]="lists.index"
+    (nzPageIndexChange)="getLists(false, $event)"
+    nzSize="middle"
+  >
+    <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        nzWidth="65px"
+        [(nzChecked)]="lists.checked"
+        [nzIndeterminate]="lists.indeterminate"
+        (nzCheckedChange)="lists.checkedAll($event)"
+      ></th>
+      <th nzWidth="240px">{{ bit.l["time"] }}</th>
+      <th nzWidth="240px">
+        {{ bit.l["mode"] }} / {{ bit.l["username"] }} / {{ bit.l["realname"] }}
+      </th>
+      <th nzWidth="240px">ISP</th>
+      <th>{{ bit.l["note"] }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of table.data">
+      <td
+        nzShowCheckbox
+        [(nzChecked)]="data.checked"
+        (nzCheckedChange)="lists.refreshStatus()"
+      ></td>
+      <td>{{ data.time * 1000 | date: "yyyy-MM-dd HH:mm:ss" }}</td>
+      <td>
+        <ng-container *ngIf="data.mode === 0">
+          {{ bit.l["adminMode"] }}
+        </ng-container>
+        <ng-container *ngIf="data.mode === 1">
+          {{ bit.l["staffMode"] }}
+        </ng-container>
+        /
+        {{ data.username }}
+        /
+        <ng-container>-</ng-container>
+      </td>
+      <td>
+        {{ data.ip }} / {{ data.isp.country }} / {{ data.isp.province }} / {{ data.isp.city }}
+      </td>
+      <td>
+        <ng-container *ngIf="data.logged">
+          <i nz-icon nzType="check"></i>
+          {{ bit.l["loginSuccess"] }}
+        </ng-container>
+        <ng-container *ngIf="!data.logged">
+          <a nz-typography nzType="danger" [nz-tooltip]="dangerTip">
+            <i nz-icon nzType="close"></i>
+            {{ bit.l["loginError"] }}
+          </a>
+          <ng-template #dangerTip> {{ bit.l["attack"] }}: {{ data.password }} </ng-template>
+        </ng-container>
+        <nz-divider nzType="vertical"></nz-divider>
+        <ng-container *ngIf="data.note">
+          {{ data.note }}
+        </ng-container>
+        <ng-container *ngIf="!data.note"> -</ng-container>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<nz-drawer
+  [nzWidth]="640"
+  [nzVisible]="detailVisible"
+  [nzClosable]="false"
+  (nzOnClose)="closeDetailPanel()"
+>
+  <ng-container *nzDrawerContent>
+    <nz-descriptions *ngIf="detailData" nzBordered [nzColumn]="1">
+      <nz-descriptions-item [nzTitle]="bit.l['time']">
+        {{ detailData.time * 1000 | date: "yyyy-MM-dd hh:mm:ss" }}
+      </nz-descriptions-item>
+      <nz-descriptions-item [nzTitle]="bit.l['userinfo']">
+        <ng-container *ngIf="detailData.mode === 0">
+          {{ bit.l["adminMode"] }}
+        </ng-container>
+        <ng-container *ngIf="detailData.mode === 1">
+          {{ bit.l["staffMode"] }}
+        </ng-container>
+        /
+        {{ detailData.username }}
+        /
+        <ng-container>-</ng-container>
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </ng-container>
+</nz-drawer>
