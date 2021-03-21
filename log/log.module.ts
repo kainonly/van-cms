@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RequestLogComponent } from './request-log.component';
 import { ShareModule } from 'van-skeleton';
+import { RequestLogComponent } from './request-log/request-log.component';
 
 @NgModule({
   imports: [
@@ -9,5 +9,5 @@ import { ShareModule } from 'van-skeleton';
   declarations: [RequestLogComponent],
   exports: [RequestLogComponent]
 })
-export class RequestLogModule {
+export class LogModule {
 }
