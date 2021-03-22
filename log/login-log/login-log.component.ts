@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BitService } from 'ngx-bit';
 import { ListByPage } from 'ngx-bit/factory';
 import * as packer from './language';
+import { LoginLogService } from './login-log.service';
 
 @Component({
   selector: 'van-login-log',
@@ -13,7 +14,8 @@ export class LoginLogComponent implements OnInit {
   detailData: any;
 
   constructor(
-    public bit: BitService
+    public bit: BitService,
+    private loginLogService: LoginLogService
   ) {
   }
 
@@ -35,12 +37,12 @@ export class LoginLogComponent implements OnInit {
    * 获取列表数据
    */
   getLists(refresh = false, event?: any): void {
-    // this.loginLogService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
-    //   this.lists.setData(data.map(v => {
-    //     v.isp = JSON.parse(v.isp);
-    //     return v;
-    //   }));
-    // });
+    this.loginLogService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
+      this.lists.setData(data.map(v => {
+        v.isp = JSON.parse(v.isp);
+        return v;
+      }));
+    });
   }
 
   openDetailPanel(data: any): void {
