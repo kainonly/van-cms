@@ -138,7 +138,12 @@
         {{ bit.l["icon"] }}
       </nz-form-label>
       <nz-form-control bitCol="control">
-        <input type="text" nz-input formControlName="icon" />
+        <input
+          type="text"
+          nz-input
+          formControlName="icon"
+          [placeholder]="bit.l['iconPlaceholder']"
+        />
       </nz-form-control>
     </nz-form-item>
 
