@@ -99,7 +99,7 @@
               {{ x.name | object: bit.locale }}
             </ng-container>
             <ng-template #notLast>
-              <a *ngIf="x.router; else notRouterlink" [bitCrossLevel]="x.key">
+              <a *ngIf="x.router; else notRouterlink" [bitOpen]="[x.key]">
                 {{ x.name | object: bit.locale }}
               </a>
               <ng-template #notRouterlink>{{ x.name | object: bit.locale }}</ng-template>
