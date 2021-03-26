@@ -94,12 +94,12 @@
           <nz-breadcrumb-item>
             <a routerLink="/">{{ bit.l["dashboard"] }}</a>
           </nz-breadcrumb-item>
-          <nz-breadcrumb-item *ngFor="let x of support.breadcrumb; last as islast">
+          <nz-breadcrumb-item *ngFor="let x of support.breadcrumb;index as i; last as islast">
             <ng-container *ngIf="islast; else notLast">
               {{ x.name | object: bit.locale }}
             </ng-container>
             <ng-template #notLast>
-              <a *ngIf="x.router; else notRouterlink" [bitOpen]="[x.key]">
+              <a *ngIf="x.router; else notRouterlink" [bitHistory]="x.key">
                 {{ x.name | object: bit.locale }}
               </a>
               <ng-template #notRouterlink>{{ x.name | object: bit.locale }}</ng-template>
