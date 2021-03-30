@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       move: {
         enable: true,
         outMode: 'bounce',
-        speed: 3
+        speed: 1.5
       },
       number: {
         density: {

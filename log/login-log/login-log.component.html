@@ -1,7 +1,7 @@
 <ng-template #title>
   <nz-space>
-    <nz-space-item *ngIf="lists.hasSearch('username')">
-      <nz-input-group nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 320px">
+    <ng-container *ngIf="lists.hasSearch('username')">
+      <nz-input-group *nzSpaceItem nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 320px">
         <input
           nz-input
           [bitSearchStart]="lists"
@@ -21,9 +21,10 @@
           <i nz-icon nzType="search"></i>
         </button>
       </ng-template>
-    </nz-space-item>
-    <nz-space-item *ngIf="lists.hasSearch('time')">
+    </ng-container>
+    <ng-container *ngIf="lists.hasSearch('time')">
       <nz-range-picker
+        *nzSpaceItem
         nzFormat="yyyy-MM-dd HH:mm:ss"
         [bitSearchChange]="lists"
         [nzShowTime]="{ nzFormat: 'HH:mm:ss' }"
@@ -32,17 +33,13 @@
         (after)="getLists(true)"
       >
       </nz-range-picker>
-    </nz-space-item>
-    <nz-space-item>
-      <button nz-button nzType="default" (click)="getLists(true)">
-        <i nz-icon nzType="sync"></i> {{ bit.l["refreshLists"] }}
-      </button>
-    </nz-space-item>
-    <nz-space-item>
-      <button nz-button nzType="default" [bitSearchClear]="lists" (after)="getLists(true)">
-        <i nz-icon nzType="clear"></i> {{ bit.l["clearSearch"] }}
-      </button>
-    </nz-space-item>
+    </ng-container>
+    <button *nzSpaceItem nz-button nzType="default" (click)="getLists(true)">
+      <i nz-icon nzType="sync"></i> {{ bit.l["refreshLists"] }}
+    </button>
+    <button *nzSpaceItem nz-button nzType="default" [bitSearchClear]="lists" (after)="getLists(true)">
+      <i nz-icon nzType="clear"></i> {{ bit.l["clearSearch"] }}
+    </button>
   </nz-space>
 </ng-template>
 

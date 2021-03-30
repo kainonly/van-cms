@@ -101,30 +101,26 @@
       </nz-form-label>
       <nz-form-control bitCol="control">
         <nz-space>
-          <nz-space-item>
-            <nz-button-group>
-              <button nz-button type="button" (click)="allChecked()">
-                <i nz-icon nzType="check-square"></i>
-                {{ bit.l["checked"] }}
-              </button>
-              <button nz-button type="button" (click)="allUnchecked()">
-                <i nz-icon nzType="close-square"></i>
-                {{ bit.l["unchecked"] }}
-              </button>
-            </nz-button-group>
-          </nz-space-item>
-          <nz-space-item>
-            <nz-button-group>
-              <button nz-button type="button" (click)="allExpand()">
-                <i nz-icon nzType="node-expand"></i>
-                {{ bit.l["expand"] }}
-              </button>
-              <button nz-button type="button" (click)="allClose()">
-                <i nz-icon nzType="node-collapse"></i>
-                {{ bit.l["close"] }}
-              </button>
-            </nz-button-group>
-          </nz-space-item>
+          <nz-button-group *nzSpaceItem>
+            <button nz-button type="button" (click)="allChecked()">
+              <i nz-icon nzType="check-square"></i>
+              {{ bit.l["checked"] }}
+            </button>
+            <button nz-button type="button" (click)="allUnchecked()">
+              <i nz-icon nzType="close-square"></i>
+              {{ bit.l["unchecked"] }}
+            </button>
+          </nz-button-group>
+          <nz-button-group *nzSpaceItem>
+            <button nz-button type="button" (click)="allExpand()">
+              <i nz-icon nzType="node-expand"></i>
+              {{ bit.l["expand"] }}
+            </button>
+            <button nz-button type="button" (click)="allClose()">
+              <i nz-icon nzType="node-collapse"></i>
+              {{ bit.l["close"] }}
+            </button>
+          </nz-button-group>
         </nz-space>
 
         <nz-divider [nzDashed]="true"></nz-divider>
@@ -230,16 +226,12 @@
     <nz-form-item>
       <nz-form-control bitCol="submit">
         <nz-space>
-          <nz-space-item>
-            <button nz-button nzType="primary" [disabled]="!form.valid">
-              <i nz-icon nzType="check"></i> {{ bit.l["submit"] }}
-            </button>
-          </nz-space-item>
-          <nz-space-item>
-            <button nz-button type="button" bitBack>
-              <i nz-icon nzType="close"></i> {{ bit.l["cancel"] }}
-            </button>
-          </nz-space-item>
+          <button *nzSpaceItem nz-button nzType="primary" [disabled]="!form.valid">
+            <i nz-icon nzType="check"></i> {{ bit.l["submit"] }}
+          </button>
+          <button *nzSpaceItem nz-button type="button" bitBack>
+            <i nz-icon nzType="close"></i> {{ bit.l["cancel"] }}
+          </button>
         </nz-space>
       </nz-form-control>
     </nz-form-item>

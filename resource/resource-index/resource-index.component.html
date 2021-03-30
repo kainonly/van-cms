@@ -25,45 +25,35 @@
 
 <ng-template #title>
   <nz-space>
-    <nz-space-item>
-      <nz-button-group>
-        <button nz-button [nz-tooltip]="bit.l['close']" (click)="setExpand(false)">
-          <i nz-icon nzType="node-collapse"></i>
-        </button>
-        <button nz-button [nz-tooltip]="bit.l['expand']" (click)="setExpand(true)">
-          <i nz-icon nzType="node-expand"></i>
-        </button>
-      </nz-button-group>
-    </nz-space-item>
-    <nz-space-item>
-      <nz-input-group [nzSuffix]="suffixIcon" style="width: 320px">
-        <input type="text" nz-input [placeholder]="bit.l['search']" [(ngModel)]="search" />
-      </nz-input-group>
-      <ng-template #suffixIcon>
-        <i nz-icon nzType="search"></i>
-      </ng-template>
-    </nz-space-item>
+    <nz-button-group *nzSpaceItem>
+      <button nz-button [nz-tooltip]="bit.l['close']" (click)="setExpand(false)">
+        <i nz-icon nzType="node-collapse"></i>
+      </button>
+      <button nz-button [nz-tooltip]="bit.l['expand']" (click)="setExpand(true)">
+        <i nz-icon nzType="node-expand"></i>
+      </button>
+    </nz-button-group>
+    <nz-input-group *nzSpaceItem [nzSuffix]="suffixIcon" style="width: 320px">
+      <input type="text" nz-input [placeholder]="bit.l['search']" [(ngModel)]="search" />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
     <ng-container *ngIf="!isSort">
-      <nz-space-item>
-        <button nz-button nzType="primary" (click)="openSort()">
-          <i nz-icon nzType="sort-ascending"></i>
-          {{ bit.l["sort"] }}
-        </button>
-      </nz-space-item>
+      <button *nzSpaceItem nz-button nzType="primary" (click)="openSort()">
+        <i nz-icon nzType="sort-ascending"></i>
+        {{ bit.l["sort"] }}
+      </button>
     </ng-container>
     <ng-container *ngIf="isSort">
-      <nz-space-item>
-        <button nz-button (click)="closeSort()">
-          <i nz-icon nzType="close"></i>
-          {{ bit.l["sortCancel"] }}
-        </button>
-      </nz-space-item>
-      <nz-space-item>
-        <button nz-button nzType="primary" (click)="sortSubmit()">
-          <i nz-icon nzType="check"></i>
-          {{ bit.l["sortYes"] }}
-        </button>
-      </nz-space-item>
+      <button *nzSpaceItem nz-button (click)="closeSort()">
+        <i nz-icon nzType="close"></i>
+        {{ bit.l["sortCancel"] }}
+      </button>
+      <button *nzSpaceItem nz-button nzType="primary" (click)="sortSubmit()">
+        <i nz-icon nzType="check"></i>
+        {{ bit.l["sortYes"] }}
+      </button>
     </ng-container>
   </nz-space>
 </ng-template>
@@ -107,50 +97,53 @@
     </ng-template>
     <ng-template #nzTreeTemplate let-node>
       <nz-space>
-        <nz-space-item class="title">
+        <div *nzSpaceItem class="title">
           <ng-container *ngIf="node.origin.icon">
             <i nz-icon [nzType]="node.origin.icon"></i>
           </ng-container>
           <mark *ngIf="node.isMatched">{{ node.title }} [ {{ node.key }} ]</mark>
           <span *ngIf="!node.isMatched">{{ node.title }} [ {{ node.key }} ]</span>
-        </nz-space-item>
-        <nz-space-item *ngIf="node.origin.nav || node.origin.router || node.origin.policy">
-          <nz-tag>
-            <ng-container *ngIf="node.origin.nav">
-              <i nz-icon nzType="flag"></i>
-            </ng-container>
-            <ng-container
-              *ngIf="
+        </div>
+
+        <ng-container *ngIf="node.origin.nav || node.origin.router || node.origin.policy">
+          <ng-container *nzSpaceItem>
+            <nz-tag>
+              <ng-container *ngIf="node.origin.nav">
+                <i nz-icon nzType="flag"></i>
+              </ng-container>
+              <ng-container
+                *ngIf="
                 (node.origin.nav && node.origin.router) ||
                 (node.origin.nav && !node.origin.router && node.origin.policy)
               "
-            >
-              <nz-divider nzType="vertical"></nz-divider>
-            </ng-container>
-            <ng-container *ngIf="node.origin.router">
-              <i nz-icon nzType="file-done"></i>
-            </ng-container>
-            <ng-container *ngIf="node.origin.router && node.origin.policy">
-              <nz-divider nzType="vertical"></nz-divider>
-            </ng-container>
-            <ng-container *ngIf="node.origin.policy">
-              <i nz-icon nzType="control"></i>
-            </ng-container>
-          </nz-tag>
-          <nz-tag *ngIf="node.origin.policy && policy.has(node.key)" nzColor="blue">
-            <ng-container *ngIf="policy.has(node.key)">
-              <ng-container *ngFor="let x of policy.get(node.key); last as isLast; index as i">
-                <ng-container *ngIf="i < 10">
-                  {{ x.acl_key }}:
-                  <ng-container *ngIf="x.policy === 0"> r</ng-container>
-                  <ng-container *ngIf="x.policy === 1"> rw</ng-container>
-                  <nz-divider *ngIf="!isLast" nzType="vertical"></nz-divider>
-                </ng-container>
+              >
+                <nz-divider nzType="vertical"></nz-divider>
               </ng-container>
-              <ng-container *ngIf="policy.get(node.key).length >= 10"> ...</ng-container>
-            </ng-container>
-          </nz-tag>
-        </nz-space-item>
+              <ng-container *ngIf="node.origin.router">
+                <i nz-icon nzType="file-done"></i>
+              </ng-container>
+              <ng-container *ngIf="node.origin.router && node.origin.policy">
+                <nz-divider nzType="vertical"></nz-divider>
+              </ng-container>
+              <ng-container *ngIf="node.origin.policy">
+                <i nz-icon nzType="control"></i>
+              </ng-container>
+            </nz-tag>
+            <nz-tag *ngIf="node.origin.policy && policy.has(node.key)" nzColor="blue">
+              <ng-container *ngIf="policy.has(node.key)">
+                <ng-container *ngFor="let x of policy.get(node.key); last as isLast; index as i">
+                  <ng-container *ngIf="i < 10">
+                    {{ x.acl_key }}:
+                    <ng-container *ngIf="x.policy === 0"> r</ng-container>
+                    <ng-container *ngIf="x.policy === 1"> rw</ng-container>
+                    <nz-divider *ngIf="!isLast" nzType="vertical"></nz-divider>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="policy.get(node.key).length >= 10"> ...</ng-container>
+              </ng-container>
+            </nz-tag>
+          </ng-container>
+        </ng-container>
       </nz-space>
     </ng-template>
     <nz-dropdown-menu #actionsMenu>
@@ -189,43 +182,41 @@
 >
   <ng-template #nzTitle>
     <nz-space>
-      <nz-space-item *ngIf="activeNode">
-        {{ activeNode.title }}
-      </nz-space-item>
-      <nz-space-item>
-        <nz-input-group nzCompact>
-          <nz-select
-            style="width: 160px"
-            nzAllowClear
-            [(ngModel)]="policyAclKey"
-            [nzShowSearch]="true"
-            [nzPlaceHolder]="bit.l['aclKeyPlaceHolder']"
-            [nzDropdownMatchSelectWidth]="false"
-          >
-            <ng-container *ngFor="let x of policyAcl">
-              <nz-option
-                [nzLabel]="(x.name | object: bit.locale) + '[' + x.key + ']'"
-                [nzDisabled]="disabledAclKey(x.key)"
-                [nzValue]="x.key"
-              >
-              </nz-option>
-            </ng-container>
-          </nz-select>
-          <nz-select
-            style="width: 80px"
-            [(ngModel)]="policyValue"
-            [nzDropdownMatchSelectWidth]="false"
-          >
-            <nz-option [nzLabel]="bit.l['policyRead']" [nzValue]="0"></nz-option>
-            <nz-option [nzLabel]="bit.l['policyReadAndWrite']" [nzValue]="1"></nz-option>
-          </nz-select>
-        </nz-input-group>
-      </nz-space-item>
-      <nz-space-item>
-        <button nz-button nzType="primary" (click)="policySubmit()" [disabled]="!policyAclKey">
-          <i nz-icon nzType="check"></i> {{ bit.l["add"] }}
-        </button>
-      </nz-space-item>
+      <ng-container *nzSpaceItem>
+        <ng-container *ngIf="activeNode">
+          {{ activeNode.title }}
+        </ng-container>
+      </ng-container>
+      <nz-input-group *nzSpaceItem nzCompact>
+        <nz-select
+          style="width: 160px"
+          nzAllowClear
+          [(ngModel)]="policyAclKey"
+          [nzShowSearch]="true"
+          [nzPlaceHolder]="bit.l['aclKeyPlaceHolder']"
+          [nzDropdownMatchSelectWidth]="false"
+        >
+          <ng-container *ngFor="let x of policyAcl">
+            <nz-option
+              [nzLabel]="(x.name | object: bit.locale) + '[' + x.key + ']'"
+              [nzDisabled]="disabledAclKey(x.key)"
+              [nzValue]="x.key"
+            >
+            </nz-option>
+          </ng-container>
+        </nz-select>
+        <nz-select
+          style="width: 80px"
+          [(ngModel)]="policyValue"
+          [nzDropdownMatchSelectWidth]="false"
+        >
+          <nz-option [nzLabel]="bit.l['policyRead']" [nzValue]="0"></nz-option>
+          <nz-option [nzLabel]="bit.l['policyReadAndWrite']" [nzValue]="1"></nz-option>
+        </nz-select>
+      </nz-input-group>
+      <button *nzSpaceItem nz-button nzType="primary" (click)="policySubmit()" [disabled]="!policyAclKey">
+        <i nz-icon nzType="check"></i> {{ bit.l["add"] }}
+      </button>
     </nz-space>
   </ng-template>
   <ng-container *nzDrawerContent>
