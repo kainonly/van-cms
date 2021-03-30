@@ -1,7 +1,7 @@
 export default {
   name: ['资源名称', 'Resource Name'],
-  name_zh_cn: ['中文为空', 'Chinese empty'],
-  name_en_us: ['英文为空', 'English empty'],
+  // name_zh_cn: ['中文为空', 'Chinese empty'],
+  // name_en_us: ['英文为空', 'English empty'],
   namePlaceholder: ['请输入资源名称', 'Please Enter Resource Name'],
   nameRequire: ['当前资源名称不能为空', 'Current route name cannot be empty'],
   key: ['资源控制键', 'Resource Key'],
