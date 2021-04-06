@@ -10,8 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BitService, BitEventsService, BitSupportService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription, timer } from 'rxjs';
-import { SystemService } from 'van-skeleton';
-import { MainService } from '../main.service';
+import { MainService, SystemService } from 'van-skeleton';
 
 @Component({
   selector: 'van-dashboards',

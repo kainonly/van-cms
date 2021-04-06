@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BitService } from 'ngx-bit';
 import { ListByPage } from 'ngx-bit/factory';
-import { RequestLogService } from './request-log.service';
+import { RequestLogService } from '../request-log.service';
 import * as packer from './language';
 
 @Component({

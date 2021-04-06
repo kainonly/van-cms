@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BitService } from 'ngx-bit';
 import { ListByPage } from 'ngx-bit/factory';
 import * as packer from './language';
-import { LoginLogService } from './login-log.service';
+import { LoginLogService } from '../login-log.service';
 
 @Component({
   selector: 'van-login-log',
