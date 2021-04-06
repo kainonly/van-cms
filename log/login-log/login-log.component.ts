@@ -38,6 +38,9 @@ export class LoginLogComponent implements OnInit {
    */
   getLists(refresh = false, event?: any): void {
     this.loginLogService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
+      if (!data) {
+        return;
+      }
       this.lists.setData(data.map(v => {
         v.isp = JSON.parse(v.isp);
         return v;
