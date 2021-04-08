@@ -2,7 +2,7 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { ListByPage } from 'ngx-bit/factory';
-import { MediaService } from 'van-skeleton/media';
+import { MediaService } from './media.service';
 
 export class MediaDataSource extends DataSource<any> {
   lists: ListByPage;
