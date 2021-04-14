@@ -17,7 +17,7 @@
               nz-input
               formControlName="username"
               [nzAutocomplete]="auto"
-              [placeholder]="bit.l['usernameRequire']"
+              [placeholder]="bit.l['usernamePlaceholder']"
             />
             <nz-autocomplete #auto>
               <ng-container *ngFor="let x of users">
@@ -43,9 +43,7 @@
           <bit-error-tip
             #username
             [hasError]="{
-              required: bit.l['usernameRequire'],
-              minlength: bit.l['usernameCorrectly'],
-              maxlength: bit.l['usernameCorrectly']
+              required: bit.l['usernameRequire']
             }"
           >
           </bit-error-tip>
@@ -60,7 +58,7 @@
               type="password"
               formControlName="password"
               autocomplete="new-password"
-              [placeholder]="bit.l['passwordRequire']"
+              [placeholder]="bit.l['passwordPlaceholder']"
             />
           </nz-input-group>
           <ng-template #passwordPrefix>
@@ -102,7 +100,6 @@
             [nzLoading]="logining"
             nzType="primary"
             [nzBlock]="true"
-            [disabled]="!form.valid"
           >
             {{ bit.l["login"] }}
           </button>

@@ -1,24 +1,25 @@
 import { IParticlesParams } from 'ng-particles';
 
 export const particles: IParticlesParams = {
-  fpsLimit: 60,
+  motion: {
+    reduce: {
+      factor: 10
+    }
+  },
   particles: {
     color: {
-      value: '#333'
+      animation: {
+        enable: true,
+        speed: 2
+      },
+      value: ['#f5222d', '#2f54eb', '#0050b3']
     },
-    // links: {
-    //   color: '#ddd',
-    //   distance: 150,
-    //   enable: true,
-    //   opacity: 0.5,
-    //   width: 1
-    // },
     collisions: {
       enable: true
     },
     move: {
       enable: true,
-      direction: 'bottom-right',
+      direction: 'top-right',
       speed: 1.5
     },
     number: {
@@ -26,7 +27,7 @@ export const particles: IParticlesParams = {
         enable: true,
         value_area: 1000
       },
-      value: 80
+      value: 25
     },
     opacity: {
       value: 0.5
@@ -35,9 +36,15 @@ export const particles: IParticlesParams = {
       type: 'circle'
     },
     size: {
+      animation: {
+        enable: true,
+        speed: 3,
+        startValue: 'random'
+      },
       random: true,
-      value: 4
+      value: 5
     }
   },
-  detectRetina: true
+  detectRetina: true,
+  fpsLimit: 120
 };
