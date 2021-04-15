@@ -25,12 +25,20 @@
   h1 {
     padding-bottom: 25px;
     text-align: center;
+    transition: 1s;
 
     img {
       height: 120px;
       width: 120px;
     }
+
+    &:hover {
+      cursor: pointer;
+      animation: heartBeat;
+      animation-duration: 2s;
+    }
   }
+
 }
 
 .user-del {

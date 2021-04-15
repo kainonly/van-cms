@@ -5,9 +5,19 @@
   >
   </Particles>
   <div class="login-wrapper">
-    <h1>
+    <h1 class="animate__animated animate__rubberBand  ">
       <img src="assets/login.svg" alt="ant-design" />
     </h1>
+    <nz-tabset>
+      <nz-tab [nzTitle]="staffTitle"></nz-tab>
+      <ng-template #staffTitle>
+        <i nz-icon nzType="team"></i> {{bit.l['staffMode']}}
+      </ng-template>
+      <nz-tab [nzTitle]="adminTitle"></nz-tab>
+      <ng-template #adminTitle>
+        <i nz-icon nzType="key"></i> {{bit.l['adminMode']}}
+      </ng-template>
+    </nz-tabset>
     <form [formGroup]="form" (bitFormSubmit)="submit($event)">
       <nz-form-item>
         <nz-form-control [nzErrorTip]="username.ref">

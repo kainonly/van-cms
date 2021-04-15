@@ -45,6 +45,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 @NgModule({
   exports: [
@@ -94,6 +95,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     NzDescriptionsModule,
     NzTreeViewModule,
     NzDatePickerModule,
+    NzTabsModule,
     BitExtModule,
     BitPipeModule,
     BitDirectiveModule

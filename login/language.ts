@@ -1,4 +1,6 @@
 export default {
+  staffMode: ['我是员工', 'Staff'],
+  adminMode: ['管理员', 'Admin'],
   usernamePlaceholder: ['用户名', 'Username'],
   usernameRequire: ['用户名是必填项', 'Username is required'],
   passwordPlaceholder: ['口令', 'password'],
