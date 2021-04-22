@@ -38,10 +38,22 @@
       animation-duration: 2s;
     }
   }
+}
 
+.login-title {
+  text-align: center;
+  padding-bottom: 25px;
 }
 
 .user-del {
   float: right;
   margin-top: 3px;
+}
+
+footer {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
 }

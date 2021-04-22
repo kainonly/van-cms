@@ -1,23 +1,25 @@
 <div class="container-login">
-  <Particles
-    id="tsparticles"
-    [options]="particlesOptions"
-  >
-  </Particles>
+  <Particles id="tsparticles" [options]="particlesOptions"></Particles>
+  <div class="i18n-btn">
+    <button nz-button nzType="text" nzSize="large" nz-dropdown [nzDropdownMenu]="i18nMenu">
+      <i nz-icon nzType="translation"></i> {{ bit.l["language"] }}
+    </button>
+    <nz-dropdown-menu #i18nMenu>
+      <ul nz-menu>
+        <li nz-menu-item (click)="bit.setLocale('zh_cn')">
+          <a title>中文</a>
+        </li>
+        <li nz-menu-item (click)="bit.setLocale('en_us')">
+          <a title>English(US)</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+  </div>
   <div class="login-wrapper">
-    <h1 class="animate__animated animate__rubberBand  ">
+    <h1 class="animate__animated animate__rubberBand">
       <img src="assets/login.svg" alt="ant-design" />
     </h1>
-    <nz-tabset>
-      <nz-tab [nzTitle]="staffTitle"></nz-tab>
-      <ng-template #staffTitle>
-        <i nz-icon nzType="team"></i> {{bit.l['staffMode']}}
-      </ng-template>
-      <nz-tab [nzTitle]="adminTitle"></nz-tab>
-      <ng-template #adminTitle>
-        <i nz-icon nzType="key"></i> {{bit.l['adminMode']}}
-      </ng-template>
-    </nz-tabset>
+    <h3 class="login-title">{{ bit.l["welcome"] }}</h3>
     <form [formGroup]="form" (bitFormSubmit)="submit($event)">
       <nz-form-item>
         <nz-form-control [nzErrorTip]="username.ref">
@@ -33,7 +35,12 @@
               <ng-container *ngFor="let x of users">
                 <nz-auto-option [nzValue]="x">
                   {{ x }}
-                  <i class="user-del" nz-icon nzType="delete" (click)="deleteUsername($event, x)"></i>
+                  <i
+                    class="user-del"
+                    nz-icon
+                    nzType="delete"
+                    (click)="deleteUsername($event, x)"
+                  ></i>
                 </nz-auto-option>
               </ng-container>
             </nz-autocomplete>
@@ -105,16 +112,18 @@
 
       <nz-form-item>
         <nz-form-control>
-          <button
-            nz-button
-            [nzLoading]="logining"
-            nzType="primary"
-            [nzBlock]="true"
-          >
+          <button nz-button [nzLoading]="logining" nzType="primary" [nzBlock]="true">
             {{ bit.l["login"] }}
           </button>
         </nz-form-control>
       </nz-form-item>
     </form>
   </div>
+
+  <footer>
+    <span nz-typography><strong>{{ bit.l["subTitle"] }}</strong></span>
+    <br>
+    <span nz-typography>{{ bit.l["footer"] }}</span>
+  </footer>
+
 </div>
