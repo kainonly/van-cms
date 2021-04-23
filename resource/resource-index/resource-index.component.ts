@@ -195,6 +195,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     ).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.deleteSuccess);
+        this.events.publish('refresh-menu');
         this.getNodes();
       } else {
         this.message.error(this.bit.l.deleteError);
