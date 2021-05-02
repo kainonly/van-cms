@@ -66,7 +66,7 @@
       ></th>
       <th nzWidth="240px">{{ bit.l["time"] }}</th>
       <th nzWidth="300px">
-        {{ bit.l["mode"] }} / {{ bit.l["username"] }} / {{ bit.l["realname"] }}
+        {{ bit.l["username"] }}
       </th>
       <th>{{ bit.l["path"] }}</th>
     </tr>
@@ -79,20 +79,8 @@
         (nzCheckedChange)="lists.refreshStatus()"
       ></td>
       <td>{{ data.time * 1000 | date: "yyyy-MM-dd HH:mm:ss" }}</td>
+      <td>{{ data.username }}</td>
       <td>
-        <ng-container *ngIf="data.mode === 0">
-          {{ bit.l["adminMode"] }}
-        </ng-container>
-        <ng-container *ngIf="data.mode === 1">
-          {{ bit.l["staffMode"] }}
-        </ng-container>
-        /
-        {{ data.username }}
-        /
-        <ng-container>-</ng-container>
-      </td>
-      <td>
-        <a (click)="openApiPanel(data)"> <i nz-icon nzType="api"></i> </a>
         <nz-divider nzType="vertical"></nz-divider>
         {{ data.path }}
       </td>
@@ -100,34 +88,3 @@
     </tbody>
   </nz-table>
 </nz-card>
-
-<nz-drawer
-  [nzWidth]="640"
-  [nzVisible]="apiVisible"
-  [nzClosable]="false"
-  (nzOnClose)="closeApiPanel()"
->
-  <ng-container *nzDrawerContent>
-    <nz-descriptions *ngIf="apiData" nzBordered [nzColumn]="1">
-      <nz-descriptions-item [nzTitle]="bit.l['time']">
-        {{ apiData.time * 1000 | date: "yyyy-MM-dd HH:mm:ss" }}
-      </nz-descriptions-item>
-      <nz-descriptions-item [nzTitle]="bit.l['path']">{{ apiData.path }}</nz-descriptions-item>
-      <nz-descriptions-item [nzTitle]="bit.l['userinfo']">
-        <ng-container *ngIf="apiData.mode === 0">
-          {{ bit.l["adminMode"] }}
-        </ng-container>
-        <ng-container *ngIf="apiData.mode === 1">
-          {{ bit.l["staffMode"] }}
-        </ng-container>
-        /
-        {{ apiData.username }}
-        /
-        <ng-container>-</ng-container>
-      </nz-descriptions-item>
-      <nz-descriptions-item [nzTitle]="bit.l['controller']">
-        {{ apiData.controller }} / {{ apiData.action }}
-      </nz-descriptions-item>
-    </nz-descriptions>
-  </ng-container>
-</nz-drawer>

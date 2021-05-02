@@ -10,8 +10,6 @@ import * as packer from './language';
 })
 export class RequestLogComponent implements OnInit {
   lists: ListByPage;
-  apiVisible = false;
-  apiData: any;
 
   constructor(
     public bit: BitService,
@@ -33,22 +31,9 @@ export class RequestLogComponent implements OnInit {
     });
   }
 
-  /**
-   * 获取列表数据
-   */
   getLists(refresh = false, event?: any): void {
     this.requestLogService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
       this.lists.setData(data);
     });
-  }
-
-  openApiPanel(data: any): void {
-    this.apiVisible = true;
-    this.apiData = data;
-  }
-
-  closeApiPanel(): void {
-    this.apiVisible = false;
-    this.apiData = undefined;
   }
 }
