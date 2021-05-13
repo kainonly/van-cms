@@ -1,6 +1,6 @@
 {
-  "name": "van-skeleton",
-  "version": "0.1.0",
+  "name": "@vanx/framework",
+  "version": "11.0.0",
   "peerDependencies": {
     "@angular/common": "^11.0.0",
     "@angular/core": "^11.0.0"
