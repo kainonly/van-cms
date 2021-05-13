@@ -4,12 +4,13 @@ import { BitSwalService, BitService, BitEventsService } from 'ngx-bit';
 import { switchMap } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ActivatedRoute } from '@angular/router';
-import { AdminService } from '../admin.service';
-import { RoleService } from 'van-skeleton/role';
-import * as packer from './language';
-import { PermissionService } from 'van-skeleton/permission';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
-import { ResourceService } from 'van-skeleton/resource';
+import { RoleService } from '@vanx/framework/role';
+import { PermissionService } from '@vanx/framework/permission';
+import { ResourceService } from '@vanx/framework/resource';
+import { AdminService } from '../admin.service';
+import * as packer from './language';
+
 import { AsyncSubject } from 'rxjs';
 
 @Component({

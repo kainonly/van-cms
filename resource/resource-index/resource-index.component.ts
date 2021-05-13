@@ -5,7 +5,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BitService, BitEventsService, BitSwalService } from 'ngx-bit';
 import { Observable, of } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
-import { AclService } from 'van-skeleton/acl';
+import { AclService } from '@vanx/framework/acl';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ResourceService } from '../resource.service';
 import { PolicyService } from '../policy.service';

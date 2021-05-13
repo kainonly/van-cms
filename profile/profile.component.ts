@@ -3,7 +3,7 @@ import { BitService } from 'ngx-bit';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
-import { MainService } from 'van-skeleton';
+import { MainService } from '@vanx/framework';
 import * as packer from './language';
 
 @Component({

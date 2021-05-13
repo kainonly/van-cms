@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
-import { ShareModule } from 'van-skeleton';
+import { ShareModule } from '@vanx/framework';
 import { ResourceIndexComponent } from './resource-index/resource-index.component';
 import { ResourceAddComponent } from './resource-add/resource-add.component';
 import { ResourceEditComponent } from './resource-edit/resource-edit.component';
+import { ResourceService } from './resource.service';
+import { PolicyService } from './policy.service';
 
 @NgModule({
   imports: [
@@ -17,6 +19,10 @@ import { ResourceEditComponent } from './resource-edit/resource-edit.component';
     ResourceIndexComponent,
     ResourceAddComponent,
     ResourceEditComponent
+  ],
+  providers: [
+    ResourceService,
+    PolicyService
   ]
 })
 export class ResourceModule {

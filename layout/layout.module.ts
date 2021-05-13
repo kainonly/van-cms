@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { ShareModule } from 'van-skeleton';
 import { RouterModule } from '@angular/router';
-import { DashboardsComponent } from './dashboards.component';
+import { ShareModule } from '@vanx/framework';
+import { LayoutComponent } from './layout.component';
 
 @NgModule({
   imports: [
@@ -9,11 +9,11 @@ import { DashboardsComponent } from './dashboards.component';
     RouterModule
   ],
   declarations: [
-    DashboardsComponent
+    LayoutComponent
   ],
   exports: [
-    DashboardsComponent
+    LayoutComponent
   ]
 })
-export class DashboardsModule {
+export class LayoutModule {
 }

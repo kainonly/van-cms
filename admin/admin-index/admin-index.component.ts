@@ -3,8 +3,8 @@ import { BitSwalService, BitService } from 'ngx-bit';
 import { ListByPage } from 'ngx-bit/factory';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AdminService } from '../admin.service';
-import { RoleService } from 'van-skeleton/role';
-import { PermissionService } from 'van-skeleton/permission';
+import { RoleService } from '@vanx/framework/role';
+import { PermissionService } from '@vanx/framework/permission';
 import * as packer from './language';
 
 @Component({

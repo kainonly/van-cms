@@ -5,10 +5,10 @@ import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AdminService } from '../admin.service';
-import { RoleService } from 'van-skeleton/role';
-import { PermissionService } from 'van-skeleton/permission';
+import { RoleService } from '@vanx/framework/role';
+import { PermissionService } from '@vanx/framework/permission';
+import { ResourceService } from '@vanx/framework/resource';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
-import { ResourceService } from 'van-skeleton/resource';
 import * as packer from './language';
 
 @Component({

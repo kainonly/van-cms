@@ -4,3 +4,4 @@ export * from './common/system.service';
 export * from './common/main.service';
 
 export * from './share.module';
+export * from './framework.module';

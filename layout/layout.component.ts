@@ -10,14 +10,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BitService, BitEventsService, BitSupportService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription, timer } from 'rxjs';
-import { MainService, SystemService } from 'van-skeleton';
+import { MainService, SystemService } from '@vanx/framework';
 
 @Component({
-  selector: 'van-dashboards',
-  templateUrl: './dashboards.component.html',
-  styleUrls: ['./dashboards.component.scss']
+  selector: 'van-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss']
 })
-export class DashboardsComponent implements OnInit, OnDestroy {
+export class LayoutComponent implements OnInit, OnDestroy {
   @ViewChild('header') header: ElementRef;
   @ViewChild('warpper') warpper: ElementRef;
 

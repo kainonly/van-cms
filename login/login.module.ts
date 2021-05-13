@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ShareModule } from 'van-skeleton';
 import { NgParticlesModule } from 'ng-particles';
+import { ShareModule } from '@vanx/framework';
 import { LoginComponent } from './login.component';
 
 

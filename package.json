@@ -1,11 +1,29 @@
 {
   "name": "@vanx/framework",
   "version": "11.0.0",
+  "private": false,
   "peerDependencies": {
     "@angular/common": "^11.0.0",
     "@angular/core": "^11.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
+  },
+  "keywords": [
+    "angular",
+    "ng-zorro",
+    "ngx"
+  ],
+  "author": {
+    "name": "kain",
+    "email": "zhangtqx@vip.qq.com"
+  },
+  "license": "BSD-3-Clause License",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/van-skeleton/framework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/van-skeleton/framework/issues"
   }
 }

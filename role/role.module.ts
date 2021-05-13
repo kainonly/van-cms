@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { ShareModule } from 'van-skeleton';
+import { ShareModule } from '@vanx/framework';
 import { RoleIndexComponent } from './role-index/role-index.component';
 import { RoleAddComponent } from './role-add/role-add.component';
 import { RoleEditComponent } from './role-edit/role-edit.component';
+import { RoleService } from './role.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { RoleEditComponent } from './role-edit/role-edit.component';
     RoleIndexComponent,
     RoleAddComponent,
     RoleEditComponent
+  ],
+  providers: [
+    RoleService
   ]
 })
 export class RoleModule {

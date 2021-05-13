@@ -5,7 +5,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BitService, BitSupportService } from 'ngx-bit';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { switchMap } from 'rxjs/operators';
-import { MainService } from 'van-skeleton';
+import { MainService } from '@vanx/framework';
 import { particles } from './particles';
 import * as packer from './language';
 

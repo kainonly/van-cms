@@ -7,10 +7,10 @@ import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncSubject } from 'rxjs';
-import { ResourceService } from 'van-skeleton/resource';
+import { ResourceService } from '@vanx/framework/resource';
+import { PermissionService } from '@vanx/framework/permission';
 import { RoleService } from '../role.service';
 import * as packer from './language';
-import { PermissionService } from 'van-skeleton/permission';
 
 @Component({
   selector: 'van-role-edit',

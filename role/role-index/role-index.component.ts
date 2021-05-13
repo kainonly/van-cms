@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BitSwalService, BitService } from 'ngx-bit';
 import { ListByPage } from 'ngx-bit/factory';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { PermissionService } from '@vanx/framework/permission';
 import { RoleService } from '../role.service';
 import * as packer from './language';
-import { PermissionService } from 'van-skeleton/permission';
+
 
 @Component({
   selector: 'van-role-index',
