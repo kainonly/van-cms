@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ListByPage } from 'ngx-bit/factory';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { BitHttpService } from 'ngx-bit';
+import { BitHttpService, ListByPage } from 'ngx-bit';
 
 @Injectable()
 export class AclService {

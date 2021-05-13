@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BitHttpService } from 'ngx-bit';
+import { BitHttpService, ListByPage } from 'ngx-bit';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -16,8 +16,8 @@ export class AdminService {
     return this.http.originLists(this.model);
   }
 
-  lists(search: any, refresh: boolean, persistence: boolean): Observable<any> {
-    return this.http.lists(this.model, search, {
+  lists(factory: ListByPage, refresh: boolean, persistence: boolean): Observable<any> {
+    return this.http.lists(this.model, factory, {
       refresh,
       persistence
     });

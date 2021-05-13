@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BitHttpService } from 'ngx-bit';
+import { BitHttpService, ListByPage } from 'ngx-bit';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -14,8 +14,8 @@ export class RoleService {
     return this.http.originLists(this.model);
   }
 
-  lists(search: any, refresh: boolean, persistence: boolean): Observable<any> {
-    return this.http.lists(this.model, search, {
+  lists(factory: ListByPage, refresh: boolean, persistence: boolean): Observable<any> {
+    return this.http.lists(this.model, factory, {
       refresh,
       persistence
     });

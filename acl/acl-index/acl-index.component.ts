@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BitSwalService, BitService } from 'ngx-bit';
-import { ListByPage } from 'ngx-bit/factory';
+import { BitSwalService, BitService, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AclService } from '../acl.service';
 import * as packer from './language';

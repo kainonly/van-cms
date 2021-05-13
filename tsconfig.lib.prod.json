@@ -16,10 +16,6 @@
         "dist/ngx-bit/directive",
         "dist/ngx-bit/directive/*"
       ],
-      "ngx-bit/factory": [
-        "dist/ngx-bit/factory",
-        "dist/ngx-bit/factory/*"
-      ],
       "ngx-bit/operates": [
         "dist/ngx-bit/operates",
         "dist/ngx-bit/operates/*"
@@ -27,10 +23,6 @@
       "ngx-bit/pipe": [
         "dist/ngx-bit/pipe",
         "dist/ngx-bit/pipe/*"
-      ],
-      "ngx-bit/types": [
-        "dist/ngx-bit/types",
-        "dist/ngx-bit/types/*"
       ]
     }
   },

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ListByPage } from 'ngx-bit/factory';
 import { Observable } from 'rxjs';
-import { BitHttpService } from 'ngx-bit';
+import { BitHttpService, ListByPage } from 'ngx-bit';
 
 @Injectable()
 export class LoginLogService {
