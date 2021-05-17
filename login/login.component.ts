@@ -10,7 +10,7 @@ import { particles } from './particles';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-login',
+  selector: 'v-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

@@ -14,7 +14,7 @@ import * as packer from './language';
 import { AsyncSubject } from 'rxjs';
 
 @Component({
-  selector: 'van-admin-edit',
+  selector: 'v-admin-edit',
   templateUrl: './admin-edit.component.html'
 })
 export class AdminEditComponent implements OnInit, AfterViewInit {

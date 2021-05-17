@@ -5,10 +5,10 @@ import { BitHttpService, ListByPage } from 'ngx-bit';
 
 @Injectable()
 export class PermissionService {
-  private model = 'permission';
+  protected model = 'permission';
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 

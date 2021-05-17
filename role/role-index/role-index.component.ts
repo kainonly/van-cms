@@ -7,7 +7,7 @@ import * as packer from './language';
 
 
 @Component({
-  selector: 'van-role-index',
+  selector: 'v-role-index',
   templateUrl: './role-index.component.html'
 })
 export class RoleIndexComponent implements OnInit {

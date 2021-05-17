@@ -5,9 +5,11 @@ import { BitHttpService } from 'ngx-bit';
 
 @Injectable()
 export class ResourceService {
-  private model = 'resource';
+  protected model = 'resource';
 
-  constructor(private http: BitHttpService) {
+  constructor(
+    protected http: BitHttpService
+  ) {
   }
 
   originLists(): Observable<any> {

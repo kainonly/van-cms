@@ -8,8 +8,8 @@ import { BitHttpService } from 'ngx-bit';
 export class TokenService implements CanActivate {
 
   constructor(
-    private http: BitHttpService,
-    private router: Router
+    protected http: BitHttpService,
+    protected router: Router
   ) {
   }
 

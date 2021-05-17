@@ -3,12 +3,12 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { BitSwalService, BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { asyncValidator } from 'ngx-bit/operates';
-import { map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { PermissionService } from '../permission.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-permission-add',
+  selector: 'v-permission-add',
   templateUrl: './permission-add.component.html'
 })
 export class PermissionAddComponent implements OnInit {

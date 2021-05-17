@@ -8,7 +8,7 @@ import { AclService } from '../acl.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-acl-add',
+  selector: 'v-acl-add',
   templateUrl: './acl-add.component.html'
 })
 export class AclAddComponent implements OnInit {

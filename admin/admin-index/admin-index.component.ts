@@ -7,7 +7,7 @@ import { PermissionService } from '@vanx/framework/permission';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-admin-index',
+  selector: 'v-admin-index',
   templateUrl: './admin-index.component.html'
 })
 export class AdminIndexComponent implements OnInit {

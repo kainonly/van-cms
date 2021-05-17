@@ -4,7 +4,7 @@ import { RequestLogService } from '../request-log.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-request-log',
+  selector: 'v-request-log',
   templateUrl: './request-log.component.html'
 })
 export class RequestLogComponent implements OnInit {

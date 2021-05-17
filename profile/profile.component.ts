@@ -7,7 +7,7 @@ import { MainService } from '@vanx/framework';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-profile',
+  selector: 'v-profile',
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {

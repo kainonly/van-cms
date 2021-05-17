@@ -5,10 +5,10 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MainService {
-  private model = 'main';
+  protected model = 'main';
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 

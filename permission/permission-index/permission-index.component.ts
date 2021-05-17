@@ -5,7 +5,7 @@ import { PermissionService } from '../permission.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-permission-index',
+  selector: 'v-permission-index',
   templateUrl: './permission-index.component.html'
 })
 export class PermissionIndexComponent implements OnInit {

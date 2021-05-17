@@ -13,7 +13,7 @@ import { Subscription, timer } from 'rxjs';
 import { MainService, SystemService } from '@vanx/framework';
 
 @Component({
-  selector: 'van-layout',
+  selector: 'v-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })

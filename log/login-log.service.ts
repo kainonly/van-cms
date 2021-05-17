@@ -4,10 +4,10 @@ import { BitHttpService, ListByPage } from 'ngx-bit';
 
 @Injectable()
 export class LoginLogService {
-  private model = 'login_log';
+  protected model = 'login_log';
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 

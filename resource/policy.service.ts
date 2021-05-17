@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class PolicyService {
-  private model = 'policy';
+  protected model = 'policy';
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 

@@ -10,7 +10,7 @@ import { ResourceService } from '../resource.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-resource-edit',
+  selector: 'v-resource-edit',
   templateUrl: './resource-edit.component.html'
 })
 export class ResourceEditComponent implements OnInit, OnDestroy {

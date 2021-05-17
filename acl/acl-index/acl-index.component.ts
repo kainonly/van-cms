@@ -5,7 +5,7 @@ import { AclService } from '../acl.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-acl-index',
+  selector: 'v-acl-index',
   templateUrl: './acl-index.component.html'
 })
 export class AclIndexComponent implements OnInit {

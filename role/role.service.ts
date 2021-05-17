@@ -5,9 +5,11 @@ import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class RoleService {
-  private model = 'role';
+  protected model = 'role';
 
-  constructor(private http: BitHttpService) {
+  constructor(
+    protected http: BitHttpService
+  ) {
   }
 
   originLists(): Observable<any> {

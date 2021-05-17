@@ -11,7 +11,7 @@ import { RoleService } from '../role.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-role-add',
+  selector: 'v-role-add',
   templateUrl: './role-add.component.html'
 })
 export class RoleAddComponent implements OnInit, OnDestroy {

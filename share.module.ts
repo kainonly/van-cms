@@ -47,6 +47,7 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @NgModule({
   exports: [
@@ -98,6 +99,7 @@ import { NzTimelineModule } from 'ng-zorro-antd/timeline';
     NzDatePickerModule,
     NzTabsModule,
     NzTimelineModule,
+    NzInputNumberModule,
     BitExtModule,
     BitPipeModule,
     BitDirectiveModule

@@ -4,7 +4,7 @@ import { LoginLogService } from '../login-log.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-login-log',
+  selector: 'v-login-log',
   templateUrl: './login-log.component.html'
 })
 export class LoginLogComponent implements OnInit {

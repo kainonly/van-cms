@@ -10,7 +10,7 @@ import { PermissionService } from '../permission.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-permission-edit',
+  selector: 'v-permission-edit',
   templateUrl: './permission-edit.component.html'
 })
 export class PermissionEditComponent implements OnInit {

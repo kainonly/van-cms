@@ -12,7 +12,7 @@ import { PolicyService } from '../policy.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-resource-index',
+  selector: 'v-resource-index',
   templateUrl: './resource-index.component.html',
   styleUrls: ['./resource-index.component.scss']
 })

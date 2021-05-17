@@ -12,7 +12,7 @@ import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-admin-add',
+  selector: 'v-admin-add',
   templateUrl: './admin-add.component.html'
 })
 export class AdminAddComponent implements OnInit {

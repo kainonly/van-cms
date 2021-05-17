@@ -10,7 +10,7 @@ import { AclService } from '../acl.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-acl-edit',
+  selector: 'v-acl-edit',
   templateUrl: './acl-edit.component.html'
 })
 export class AclEditComponent implements OnInit {

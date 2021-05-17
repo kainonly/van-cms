@@ -13,7 +13,7 @@ import { RoleService } from '../role.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-role-edit',
+  selector: 'v-role-edit',
   templateUrl: './role-edit.component.html'
 })
 export class RoleEditComponent implements OnInit, AfterViewInit, OnDestroy {

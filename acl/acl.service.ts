@@ -5,10 +5,10 @@ import { BitHttpService, ListByPage } from 'ngx-bit';
 
 @Injectable()
 export class AclService {
-  private model = 'acl';
+  protected model = 'acl';
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 
