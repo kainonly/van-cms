@@ -64,6 +64,7 @@
     <thead>
     <tr>
       <th nzWidth="160px">{{ bit.l["user"] }}</th>
+      <th nzWidth="160px">{{ bit.l["type"] }}</th>
       <th>{{ bit.l["content"] }}</th>
       <th nzWidth="160px" nzRight>{{ bit.l["time"] }}</th>
     </tr>
@@ -71,6 +72,7 @@
     <tbody>
     <tr *ngFor="let data of table.data">
       <td>{{ data.username }}</td>
+      <td></td>
       <td>
         {{ data.content }}
       </td>
