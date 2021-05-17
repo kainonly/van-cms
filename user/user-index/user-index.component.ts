@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { BitSwalService, BitService, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { AdminService } from '../admin.service';
 import { RoleService } from '@vanx/framework/role';
 import { PermissionService } from '@vanx/framework/permission';
+import { UserService } from '../user.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'v-admin-index',
-  templateUrl: './admin-index.component.html'
+  selector: 'v-user-index',
+  templateUrl: './user-index.component.html'
 })
-export class AdminIndexComponent implements OnInit {
+export class UserIndexComponent implements OnInit {
   lists: ListByPage;
   role: any = {};
   permission: any = {};
@@ -20,7 +20,7 @@ export class AdminIndexComponent implements OnInit {
   constructor(
     private swal: BitSwalService,
     public bit: BitService,
-    public adminService: AdminService,
+    public userService: UserService,
     private roleService: RoleService,
     private message: NzMessageService,
     private permissionService: PermissionService
@@ -28,6 +28,7 @@ export class AdminIndexComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.setModel('admin');
     this.bit.registerLocales(packer);
     this.lists = this.bit.listByPage({
       id: 'admin-index',
@@ -44,7 +45,7 @@ export class AdminIndexComponent implements OnInit {
    * 获取列表数据
    */
   getLists(refresh = false, event?: number): void {
-    this.adminService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
+    this.userService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
       this.lists.setData(data);
     });
   }
@@ -86,7 +87,7 @@ export class AdminIndexComponent implements OnInit {
    */
   deleteData(id: any[]): void {
     this.swal.deleteAlert(
-      this.adminService.delete(id)
+      this.userService.delete(id)
     ).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.deleteSuccess);

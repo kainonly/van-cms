@@ -1,7 +1,7 @@
 <ng-template #title>
   <nz-space>
     <ng-container *ngIf="lists.hasSearch('username')">
-      <nz-input-group *nzSpaceItem nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 320px">
+      <nz-input-group *nzSpaceItem nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 240px">
         <input
           nz-input
           [bitSearchStart]="lists"
@@ -9,18 +9,18 @@
           [(ngModel)]="lists.search['username'].value"
           (after)="getLists(true)"
         />
+        <ng-template #nzAddOnAfter>
+          <button
+            nz-button
+            nzType="primary"
+            nzSearch
+            [bitSearchStart]="lists"
+            (after)="getLists(true)"
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
       </nz-input-group>
-      <ng-template #nzAddOnAfter>
-        <button
-          nz-button
-          nzType="primary"
-          nzSearch
-          [bitSearchStart]="lists"
-          (after)="getLists(true)"
-        >
-          <i nz-icon nzType="search"></i>
-        </button>
-      </ng-template>
     </ng-container>
     <ng-container *ngIf="lists.hasSearch('time')">
       <nz-range-picker
@@ -37,7 +37,13 @@
     <button *nzSpaceItem nz-button nzType="default" (click)="getLists(true)">
       <i nz-icon nzType="sync"></i> {{ bit.l["refreshLists"] }}
     </button>
-    <button *nzSpaceItem nz-button nzType="default" [bitSearchClear]="lists" (after)="getLists(true)">
+    <button
+      *nzSpaceItem
+      nz-button
+      nzType="default"
+      [bitSearchClear]="lists"
+      (after)="getLists(true)"
+    >
       <i nz-icon nzType="clear"></i> {{ bit.l["clearSearch"] }}
     </button>
   </nz-space>
@@ -57,33 +63,18 @@
   >
     <thead>
     <tr>
-      <th
-        nzShowCheckbox
-        nzWidth="65px"
-        [(nzChecked)]="lists.checked"
-        [nzIndeterminate]="lists.indeterminate"
-        (nzCheckedChange)="lists.checkedAll($event)"
-      ></th>
-      <th nzWidth="240px">{{ bit.l["time"] }}</th>
-      <th nzWidth="300px">
-        {{ bit.l["username"] }}
-      </th>
-      <th>{{ bit.l["path"] }}</th>
+      <th nzWidth="160px">{{ bit.l["user"] }}</th>
+      <th>{{ bit.l["content"] }}</th>
+      <th nzWidth="160px" nzRight>{{ bit.l["time"] }}</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let data of table.data">
-      <td
-        nzShowCheckbox
-        [(nzChecked)]="data.checked"
-        (nzCheckedChange)="lists.refreshStatus()"
-      ></td>
-      <td>{{ data.time * 1000 | date: "yyyy-MM-dd HH:mm:ss" }}</td>
       <td>{{ data.username }}</td>
       <td>
-        <nz-divider nzType="vertical"></nz-divider>
-        {{ data.path }}
+        {{ data.content }}
       </td>
+      <td>{{ data.time * 1000 | date: "yyyy-MM-dd HH:mm:ss" }}</td>
     </tr>
     </tbody>
   </nz-table>

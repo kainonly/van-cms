@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BitSwalService, BitService, BitEventsService } from 'ngx-bit';
+import { AsyncSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ActivatedRoute } from '@angular/router';
@@ -8,16 +9,14 @@ import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { RoleService } from '@vanx/framework/role';
 import { PermissionService } from '@vanx/framework/permission';
 import { ResourceService } from '@vanx/framework/resource';
-import { AdminService } from '../admin.service';
+import { UserService } from '../user.service';
 import * as packer from './language';
 
-import { AsyncSubject } from 'rxjs';
-
 @Component({
-  selector: 'v-admin-edit',
-  templateUrl: './admin-edit.component.html'
+  selector: 'v-user-edit',
+  templateUrl: './user-edit.component.html'
 })
-export class AdminEditComponent implements OnInit, AfterViewInit {
+export class UserEditComponent implements OnInit, AfterViewInit {
   @ViewChild('nzTree', { static: true }) nzTree: NzTreeComponent;
   private id: number;
   private resource: string[] = [];
@@ -36,7 +35,7 @@ export class AdminEditComponent implements OnInit, AfterViewInit {
     private events: BitEventsService,
     private route: ActivatedRoute,
     private notification: NzNotificationService,
-    private adminService: AdminService,
+    private userService: UserService,
     private roleService: RoleService,
     private resourceService: ResourceService,
     private permissionService: PermissionService
@@ -44,6 +43,7 @@ export class AdminEditComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.userService.setModel('admin');
     this.bit.registerLocales(packer);
     this.form = this.fb.group({
       password: [null, [this.validedPassword]],
@@ -138,7 +138,7 @@ export class AdminEditComponent implements OnInit, AfterViewInit {
    * 获取数据
    */
   getData(): void {
-    this.adminService.get(this.id).subscribe(data => {
+    this.userService.get(this.id).subscribe(data => {
       if (data.self) {
         this.swal.create({
           title: this.bit.l.auth,
@@ -321,7 +321,7 @@ export class AdminEditComponent implements OnInit, AfterViewInit {
     Reflect.deleteProperty(data, 'password_check');
     Reflect.set(data, 'resource', this.resource);
     Reflect.set(data, 'avatar', this.avatar);
-    this.adminService.edit(data).pipe(
+    this.userService.edit(data).pipe(
       switchMap(res => this.swal.editAlert(res))
     ).subscribe(status => {
       if (status) {

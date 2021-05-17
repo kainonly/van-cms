@@ -101,7 +101,7 @@
           [(ngModel)]="data.status"
           [nzCheckedChildren]="bit.l['on']"
           [nzUnCheckedChildren]="bit.l['off']"
-          [bitStatusChange]="adminService.status(data)"
+          [bitStatusChange]="userService.status(data)"
           [bitControl]="true"
           (response)="statusFeedback($event)"
         >

@@ -4,18 +4,18 @@ import { BitSwalService, BitService, BitEventsService } from 'ngx-bit';
 import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { AdminService } from '../admin.service';
 import { RoleService } from '@vanx/framework/role';
 import { PermissionService } from '@vanx/framework/permission';
 import { ResourceService } from '@vanx/framework/resource';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { UserService } from '../user.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'v-admin-add',
-  templateUrl: './admin-add.component.html'
+  selector: 'v-user-add',
+  templateUrl: './user-add.component.html'
 })
-export class AdminAddComponent implements OnInit {
+export class UserAddComponent implements OnInit {
   @ViewChild('nzTree', { static: true }) nzTree: NzTreeComponent;
   private resource: string[] = [];
   nodes: NzTreeNodeOptions[] = [];
@@ -30,7 +30,7 @@ export class AdminAddComponent implements OnInit {
     public bit: BitService,
     private events: BitEventsService,
     private notification: NzNotificationService,
-    private adminService: AdminService,
+    private userService: UserService,
     private roleService: RoleService,
     private resourceService: ResourceService,
     private permissionService: PermissionService
@@ -38,6 +38,7 @@ export class AdminAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.setModel('admin');
     this.bit.registerLocales(packer);
     this.form = this.fb.group({
       username: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(20)], [this.validedUsername]],
@@ -59,7 +60,7 @@ export class AdminAddComponent implements OnInit {
   }
 
   validedUsername = (control: AbstractControl) => {
-    return asyncValidator(this.adminService.validedUsername(control.value));
+    return asyncValidator(this.userService.validedUsername(control.value));
   };
 
   validedPassword = (control: AbstractControl) => {
@@ -260,7 +261,7 @@ export class AdminAddComponent implements OnInit {
     if (this.avatar) {
       Reflect.set(data, 'avatar', this.avatar);
     }
-    this.adminService.add(data).pipe(
+    this.userService.add(data).pipe(
       switchMap(res =>
         this.swal.addAlert(res, this.form, {
           status: true

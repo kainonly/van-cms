@@ -4,12 +4,16 @@ import { BitHttpService, ListByPage } from 'ngx-bit';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class AdminService {
-  protected model = 'admin';
+export class UserService {
+  protected model: string;
 
   constructor(
     protected http: BitHttpService
   ) {
+  }
+
+  setModel(value: string): void {
+    this.model = value;
   }
 
   originLists(): Observable<any> {
