@@ -3,12 +3,16 @@ import { Observable } from 'rxjs';
 import { BitHttpService, ListByPage } from 'ngx-bit';
 
 @Injectable()
-export class LoginLogService {
-  protected model = 'login_log';
+export class LogService {
+  protected model: string;
 
   constructor(
     protected http: BitHttpService
   ) {
+  }
+
+  setModel(value: string): void {
+    this.model = value;
   }
 
   lists(factory: ListByPage, refresh: boolean, persistence: boolean): Observable<any> {
