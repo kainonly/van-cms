@@ -21,6 +21,7 @@ export class ActivitiesComponent implements OnInit {
     this.bit.registerLocales(packer);
     this.lists = this.bit.listByPage({
       id: 'activities',
+      limit: 8,
       query: [
         { field: 'username', op: 'like', value: '' },
         { field: 'time', op: 'between', value: [], format: 'unixtime' }

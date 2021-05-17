@@ -1,7 +1,7 @@
 <ng-template #title>
   <nz-space>
     <ng-container *ngIf="lists.hasSearch('username')">
-      <nz-input-group *nzSpaceItem nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 320px">
+      <nz-input-group *nzSpaceItem nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 240px">
         <input
           nz-input
           [bitSearchStart]="lists"
@@ -9,18 +9,18 @@
           [(ngModel)]="lists.search['username'].value"
           (after)="getLists(true)"
         />
+        <ng-template #nzAddOnAfter>
+          <button
+            nz-button
+            nzType="primary"
+            nzSearch
+            [bitSearchStart]="lists"
+            (after)="getLists(true)"
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
       </nz-input-group>
-      <ng-template #nzAddOnAfter>
-        <button
-          nz-button
-          nzType="primary"
-          nzSearch
-          [bitSearchStart]="lists"
-          (after)="getLists(true)"
-        >
-          <i nz-icon nzType="search"></i>
-        </button>
-      </ng-template>
     </ng-container>
     <ng-container *ngIf="lists.hasSearch('time')">
       <nz-range-picker
@@ -63,32 +63,34 @@
   >
     <thead>
     <tr>
-      <th
-        nzShowCheckbox
-        nzWidth="65px"
-        [(nzChecked)]="lists.checked"
-        [nzIndeterminate]="lists.indeterminate"
-        (nzCheckedChange)="lists.checkedAll($event)"
-      ></th>
-      <th nzWidth="240px">{{ bit.l["time"] }}</th>
-      <th nzWidth="240px">{{ bit.l["username"] }}</th>
-      <th nzWidth="240px">{{ bit.l["detail"] }}</th>
-      <th>{{ bit.l["note"] }}</th>
+      <th nzWidth="160px">{{ bit.l["user"] }}</th>
+      <th nzWidth="160px">{{ bit.l["ip"] }}</th>
+      <th nzWidth="160px">{{ bit.l["platform"] }}</th>
+      <th>{{ bit.l["device"] }}</th>
+      <th nzWidth="200px">{{ bit.l["risk"] }}</th>
+      <th nzWidth="160px" nzRight>{{ bit.l["time"] }}</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let data of table.data">
-      <td
-        nzShowCheckbox
-        [(nzChecked)]="data.checked"
-        (nzCheckedChange)="lists.refreshStatus()"
-      ></td>
-      <td>{{ data.time * 1000 | date: "yyyy-MM-dd HH:mm:ss" }}</td>
       <td>
         {{ data.username }}
       </td>
       <td>
-        {{ data.ip }} / {{ data.country }} / {{ data.province }} / {{ data.city }}
+        <ng-container *ngIf="data.country !== '0'"> {{ data.country }} /</ng-container>
+        <ng-container *ngIf="data.province !== '0'"> {{ data.province }} /</ng-container>
+        <a nz-typography [nz-tooltip]="ispTip">
+          {{ data.city }}
+          <ng-template #ispTip>
+            {{ data.isp }}
+          </ng-template>
+        </a>
+        <br />
+        <b>( {{ data.ip }} )</b>
+      </td>
+      <td>管理后台</td>
+      <td nzBreakWord>
+        {{ data.device }}
       </td>
       <td>
         <ng-container *ngIf="data.logged">
@@ -96,18 +98,16 @@
           {{ bit.l["loginSuccess"] }}
         </ng-container>
         <ng-container *ngIf="!data.logged">
-          <a nz-typography nzType="danger" [nz-tooltip]="dangerTip">
+          <a nz-typography nzType="danger" [nz-tooltip]="riskTip">
             <i nz-icon nzType="close"></i>
             {{ bit.l["loginError"] }}
+            <ng-template #riskTip> {{ bit.l["attack"] }}: {{ data.password }} </ng-template>
           </a>
-          <ng-template #dangerTip> {{ bit.l["attack"] }}: {{ data.password }} </ng-template>
         </ng-container>
-        <nz-divider nzType="vertical"></nz-divider>
-        <ng-container *ngIf="data.note">
-          {{ data.note }}
-        </ng-container>
-        <ng-container *ngIf="!data.note"> -</ng-container>
+        <br />
+        <i>{{ data.risk }}</i>
       </td>
+      <td>{{ data.time * 1000 | date: "yyyy-MM-dd HH:mm:ss" }}</td>
     </tr>
     </tbody>
   </nz-table>
