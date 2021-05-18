@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BitService, ListByPage } from 'ngx-bit';
 import { PageTableColumn } from '@vanx/framework';
-import * as packer from './language';
 import { LogsService } from '../logs.service';
+import * as packer from './language';
 
 @Component({
   selector: 'v-logs',
@@ -12,8 +12,9 @@ export class LogsComponent implements OnInit {
   lists: ListByPage;
   columns: PageTableColumn[] = [
     { key: 'username', width: '160px' },
-    { key: 'type', width: '160px' },
-    { key: 'content', breakWord: true },
+    // { key: 'type', width: '160px' },
+    // { key: 'content', breakWord: true },
+    { key: 'path', breakWord: true },
     { key: 'time', width: '160px', right: true, format: 'datetime' }
   ];
 
