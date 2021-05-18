@@ -18,27 +18,11 @@
       </ng-template>
     </bit-print>
   </nz-alert>
-  <button nz-button nzType="primary" [bitOpen]="['resource-add']">
-    <span>{{ bit.l["add"] }}</span>
-  </button>
-</bit-header>
-
-<ng-template #title>
   <nz-space>
-    <nz-button-group *nzSpaceItem>
-      <button nz-button [nz-tooltip]="bit.l['close']" (click)="setExpand(false)">
-        <i nz-icon nzType="node-collapse"></i>
-      </button>
-      <button nz-button [nz-tooltip]="bit.l['expand']" (click)="setExpand(true)">
-        <i nz-icon nzType="node-expand"></i>
-      </button>
-    </nz-button-group>
-    <nz-input-group *nzSpaceItem [nzSuffix]="suffixIcon" style="width: 320px">
-      <input type="text" nz-input [placeholder]="bit.l['search']" [(ngModel)]="search" />
-    </nz-input-group>
-    <ng-template #suffixIcon>
-      <i nz-icon nzType="search"></i>
-    </ng-template>
+    <button *nzSpaceItem nz-button nzType="primary" [bitOpen]="['resource-add']">
+      <i nz-icon nzType="plus"></i>
+      <span>{{ bit.l["add"] }}</span>
+    </button>
     <ng-container *ngIf="!isSort">
       <button *nzSpaceItem nz-button nzType="primary" (click)="openSort()">
         <i nz-icon nzType="sort-ascending"></i>
@@ -56,10 +40,29 @@
       </button>
     </ng-container>
   </nz-space>
+</bit-header>
+
+<ng-template #search>
+  <nz-space>
+    <nz-button-group *nzSpaceItem>
+      <button nz-button [nz-tooltip]="bit.l['close']" (click)="setExpand(false)">
+        <i nz-icon nzType="node-collapse"></i>
+      </button>
+      <button nz-button [nz-tooltip]="bit.l['expand']" (click)="setExpand(true)">
+        <i nz-icon nzType="node-expand"></i>
+      </button>
+    </nz-button-group>
+    <nz-input-group *nzSpaceItem [nzSuffix]="suffixIcon" style="width: 320px">
+      <input type="text" nz-input [placeholder]="bit.l['search']" [(ngModel)]="keyword" />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+  </nz-space>
 </ng-template>
 
 <nz-ribbon [nzText]="isSort ? bit.l['isSort'] : null">
-  <nz-card [nzTitle]="title">
+  <nz-card [nzTitle]="search">
     <nz-tree
       *ngIf="isSort"
       #nzTree
@@ -84,7 +87,7 @@
       (nzExpandChange)="onExpanded()"
       (nzContextMenu)="actions($event, actionsMenu)"
       [nzTreeTemplate]="nzTreeTemplate"
-      [nzSearchValue]="search"
+      [nzSearchValue]="keyword"
     >
     </nz-tree>
     <ng-template #nzExpandedIcon let-node>

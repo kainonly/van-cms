@@ -19,7 +19,7 @@ import * as packer from './language';
 export class ResourceIndexComponent implements OnInit, OnDestroy {
   @ViewChild('nzTree') nzTree: NzTreeComponent;
 
-  search = '';
+  keyword = '';
   resource: NzTreeNodeOptions[] = [];
   activeNode: NzTreeNode;
   isSort = false;

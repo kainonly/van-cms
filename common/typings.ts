@@ -2,14 +2,14 @@ import { ListByPage } from 'ngx-bit';
 import { Observable } from 'rxjs';
 
 export interface PageTableServiceInterface {
-  lists(factory: ListByPage, refresh: boolean, persistence: boolean): Observable<any>;
+  lists?(factory: ListByPage, refresh: boolean, persistence: boolean): Observable<any>;
 
-  delete(id: any[]): Observable<any>;
+  delete?(id: any[]): Observable<any>;
 
-  status(data: any): Observable<any>;
+  status?(data: any): Observable<any>;
 }
 
-export type PageTableColumnFormat = 'i18n' | 'status' | 'action';
+export type PageTableColumnFormat = 'i18n' | 'date' | 'datetime' | 'status' | 'action';
 
 export interface PageTableColumn {
   key: string;

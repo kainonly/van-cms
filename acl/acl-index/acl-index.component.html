@@ -5,20 +5,15 @@
   </button>
 </bit-header>
 
-<v-page-table
-  #pageTable
-  [lists]="lists"
-  [columns]="columns"
-  [service]="aclService"
->
+<v-page-table #pageTable [lists]="lists" [columns]="columns" [service]="aclService">
   <nz-input-group
     *vPageTableSearch="'name->' + bit.locale"
     [nzSuffixIcon]="'search'"
-    style="width: 240px"
+    style="width: 320px"
   >
     <input
       nz-input
-      [placeholder]="bit.l['name']"
+      [placeholder]="bit.l['search']"
       [(ngModel)]="lists.search['name->' + bit.locale].value"
       [bitSearchStart]="lists"
       (after)="pageTable.getLists(true)"

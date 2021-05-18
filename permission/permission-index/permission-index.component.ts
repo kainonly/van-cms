@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BitSwalService, BitService, ListByPage } from 'ngx-bit';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { BitService, ListByPage } from 'ngx-bit';
 import { PermissionService } from '../permission.service';
+import { PageTableColumn } from '@vanx/framework';
 import * as packer from './language';
 
 @Component({
@@ -10,12 +10,17 @@ import * as packer from './language';
 })
 export class PermissionIndexComponent implements OnInit {
   lists: ListByPage;
+  columns: PageTableColumn[] = [
+    { key: 'name', width: '200px', format: 'i18n' },
+    { key: 'key', width: '200px' },
+    { key: 'note', breakWord: true },
+    { key: 'status', format: 'status' },
+    { key: 'action', width: '300px', left: true, format: 'action', extra: { edit: 'permission-edit' } }
+  ];
 
   constructor(
-    private swal: BitSwalService,
     public bit: BitService,
-    public permissionService: PermissionService,
-    private message: NzMessageService
+    public permissionService: PermissionService
   ) {
   }
 
@@ -28,41 +33,5 @@ export class PermissionIndexComponent implements OnInit {
         { field: 'name->en_us', op: 'like', value: '' }
       ]
     });
-    this.lists.ready.subscribe(() => {
-      this.getLists();
-    });
-  }
-
-  /**
-   * 获取列表数据
-   */
-  getLists(refresh = false, event?: number): void {
-    this.permissionService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
-      this.lists.setData(data);
-    });
-  }
-
-  /**
-   * 删除单操作
-   */
-  deleteData(id: any[]): void {
-    this.swal.deleteAlert(
-      this.permissionService.delete(id)
-    ).subscribe(res => {
-      if (!res.error) {
-        this.message.success(this.bit.l.deleteSuccess);
-        this.getLists(true);
-      } else {
-        this.message.error(this.bit.l.deleteError);
-      }
-    });
-  }
-
-  /**
-   * 选中删除
-   */
-  deleteCheckData(): void {
-    const id = this.lists.getChecked().map(v => v.id);
-    this.deleteData(id);
   }
 }

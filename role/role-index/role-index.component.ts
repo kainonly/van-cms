@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BitSwalService, BitService, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PermissionService } from '@vanx/framework/permission';
+import { PageTableColumn } from '@vanx/framework';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { RoleService } from '../role.service';
 import * as packer from './language';
-
 
 @Component({
   selector: 'v-role-index',
@@ -13,6 +15,13 @@ import * as packer from './language';
 export class RoleIndexComponent implements OnInit {
   lists: ListByPage;
   permission: any = {};
+  columns: PageTableColumn[] = [
+    { key: 'name', width: '200px', format: 'i18n' },
+    { key: 'key', width: '200px' },
+    { key: 'permission', width: '300px', breakWord: true },
+    { key: 'status', format: 'status' },
+    { key: 'action', width: '300px', left: true, format: 'action', extra: { edit: 'role-edit' } }
+  ];
 
   constructor(
     public bit: BitService,
@@ -34,24 +43,18 @@ export class RoleIndexComponent implements OnInit {
     });
     this.lists.ready.subscribe(() => {
       this.getPermission();
-      this.getLists();
     });
   }
 
-  /**
-   * 获取列表数据
-   */
-  getLists(refresh = false, event?: number): void {
-    this.roleService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
-      this.lists.setData(
-        data.map(v => {
-          v.acl = !v.acl ? [] : v.acl.split(',').map(c => c.split(':'));
-          v.resource = !v.resource ? [] : v.resource.split(',');
-          return v;
-        })
-      );
-    });
-  }
+  listsOperate = (observable: Observable<any>): Observable<any> => {
+    return observable.pipe(
+      map(data => data.map(v => {
+        v.acl = !v.acl ? [] : v.acl.split(',').map(c => c.split(':'));
+        v.resource = !v.resource ? [] : v.resource.split(',');
+        return v;
+      }))
+    );
+  };
 
   getPermission(): void {
     this.permissionService.originLists().subscribe(data => {
@@ -59,29 +62,5 @@ export class RoleIndexComponent implements OnInit {
         this.permission[x.key] = x.name;
       }
     });
-  }
-
-  /**
-   * 删除单操作
-   */
-  deleteData(id: any[]): void {
-    this.swal.deleteAlert(
-      this.roleService.delete(id)
-    ).subscribe(res => {
-      if (!res.error) {
-        this.message.success(this.bit.l.deleteSuccess);
-        this.getLists(true);
-      } else {
-        this.message.error(this.bit.l.deleteError);
-      }
-    });
-  }
-
-  /**
-   * 选中删除
-   */
-  deleteCheckData(): void {
-    const id = this.lists.getChecked().map(v => v.id);
-    this.deleteData(id);
   }
 }

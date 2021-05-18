@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BitService, ListByPage } from 'ngx-bit';
-import { LogService } from '../log.service';
+import { PageTableColumn } from '@vanx/framework';
 import * as packer from './language';
+import { LogsService } from '../logs.service';
 
 @Component({
   selector: 'v-logs',
@@ -9,15 +10,20 @@ import * as packer from './language';
 })
 export class LogsComponent implements OnInit {
   lists: ListByPage;
+  columns: PageTableColumn[] = [
+    { key: 'username', width: '160px' },
+    { key: 'type', width: '160px' },
+    { key: 'content', breakWord: true },
+    { key: 'time', width: '160px', right: true, format: 'datetime' }
+  ];
 
   constructor(
     public bit: BitService,
-    private logService: LogService
+    public logsService: LogsService
   ) {
   }
 
   ngOnInit(): void {
-    this.logService.setModel('logs');
     this.bit.registerLocales(packer);
     this.lists = this.bit.listByPage({
       id: 'logs',
@@ -25,15 +31,6 @@ export class LogsComponent implements OnInit {
         { field: 'username', op: 'like', value: '' },
         { field: 'time', op: 'between', value: [], format: 'unixtime' }
       ]
-    });
-    this.lists.ready.subscribe(() => {
-      this.getLists();
-    });
-  }
-
-  getLists(refresh = false, event?: any): void {
-    this.logService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
-      this.lists.setData(data);
     });
   }
 }

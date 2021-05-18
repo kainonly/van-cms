@@ -1,115 +1,55 @@
-<ng-template #title>
-  <nz-space>
-    <ng-container *ngIf="lists.hasSearch('username')">
-      <nz-input-group *nzSpaceItem nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 240px">
-        <input
-          nz-input
-          [bitSearchStart]="lists"
-          [placeholder]="bit.l['search']"
-          [(ngModel)]="lists.search['username'].value"
-          (after)="getLists(true)"
-        />
-        <ng-template #nzAddOnAfter>
-          <button
-            nz-button
-            nzType="primary"
-            nzSearch
-            [bitSearchStart]="lists"
-            (after)="getLists(true)"
-          >
-            <i nz-icon nzType="search"></i>
-          </button>
-        </ng-template>
-      </nz-input-group>
-    </ng-container>
-    <ng-container *ngIf="lists.hasSearch('time')">
-      <nz-range-picker
-        style="width: 350px"
-        *nzSpaceItem
-        nzFormat="yyyy-MM-dd HH:mm:ss"
-        [bitSearchChange]="lists"
-        [nzShowTime]="{ nzFormat: 'HH:mm:ss' }"
-        [nzPlaceHolder]="[bit.l['startTime'], bit.l['endTime']]"
-        [(ngModel)]="lists.search['time'].value"
-        (after)="getLists(true)"
-      >
-      </nz-range-picker>
-    </ng-container>
-    <button *nzSpaceItem nz-button nzType="default" (click)="getLists(true)">
-      <i nz-icon nzType="sync"></i> {{ bit.l["refreshLists"] }}
-    </button>
-    <button
-      *nzSpaceItem
-      nz-button
-      nzType="default"
-      [bitSearchClear]="lists"
-      (after)="getLists(true)"
-    >
-      <i nz-icon nzType="clear"></i> {{ bit.l["clearSearch"] }}
-    </button>
-  </nz-space>
-</ng-template>
-
-<nz-card [nzTitle]="title">
-  <nz-table
-    #table
-    [nzData]="lists.data"
-    [nzLoading]="lists.loading"
-    [nzTotal]="lists.totals"
-    [nzPageSize]="lists.limit"
-    [nzFrontPagination]="false"
-    [(nzPageIndex)]="lists.index"
-    (nzPageIndexChange)="getLists(false, $event)"
-    nzSize="middle"
+<v-page-table #pageTable [lists]="lists" [columns]="columns" [service]="activitiesService">
+  <nz-input-group
+    *vPageTableSearch="'username'"
+    [nzSuffixIcon]="'search'"
+    style="width: 320px"
   >
-    <thead>
-    <tr>
-      <th nzWidth="160px">{{ bit.l["user"] }}</th>
-      <th nzWidth="160px">{{ bit.l["ip"] }}</th>
-      <th nzWidth="160px">{{ bit.l["platform"] }}</th>
-      <th>{{ bit.l["device"] }}</th>
-      <th nzWidth="200px">{{ bit.l["risk"] }}</th>
-      <th nzWidth="160px" nzRight>{{ bit.l["time"] }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of table.data">
-      <td>
-        {{ data.username }}
-      </td>
-      <td>
-        <ng-container *ngIf="data.country !== '0'"> {{ data.country }} /</ng-container>
-        <ng-container *ngIf="data.province !== '0'"> {{ data.province }} /</ng-container>
-        <a nz-typography [nz-tooltip]="ispTip">
-          {{ data.city }}
-          <ng-template #ispTip>
-            {{ data.isp }}
-          </ng-template>
-        </a>
-        <br />
-        <b>( {{ data.ip }} )</b>
-      </td>
-      <td>管理后台</td>
-      <td nzBreakWord>
-        {{ data.device }}
-      </td>
-      <td>
-        <ng-container *ngIf="data.logged">
-          <i nz-icon nzType="check"></i>
-          {{ bit.l["loginSuccess"] }}
-        </ng-container>
-        <ng-container *ngIf="!data.logged">
-          <a nz-typography nzType="danger" [nz-tooltip]="riskTip">
-            <i nz-icon nzType="close"></i>
-            {{ bit.l["loginError"] }}
-            <ng-template #riskTip> {{ bit.l["attack"] }}: {{ data.password }} </ng-template>
-          </a>
-        </ng-container>
-        <br />
-        <i>{{ data.risk }}</i>
-      </td>
-      <td>{{ data.time * 1000 | date: "yyyy-MM-dd HH:mm:ss" }}</td>
-    </tr>
-    </tbody>
-  </nz-table>
-</nz-card>
+    <input
+      nz-input
+      [placeholder]="bit.l['search']"
+      [(ngModel)]="lists.search['username'].value"
+      [bitSearchStart]="lists"
+      (after)="pageTable.getLists(true)"
+    />
+  </nz-input-group>
+  <nz-range-picker
+    *vPageTableSearch="'time'"
+    nzFormat="yyyy-MM-dd HH:mm:ss"
+    [bitSearchChange]="lists"
+    [nzShowTime]="{ nzFormat: 'HH:mm:ss' }"
+    [nzPlaceHolder]="[bit.l['startTime'], bit.l['endTime']]"
+    [(ngModel)]="lists.search['time'].value"
+    (after)="pageTable.getLists(true)"
+  >
+  </nz-range-picker>
+  <ng-container *vPageTableCell="'ip';let data">
+    <ng-container *ngIf="data.country !== '0'"> {{ data.country }} /</ng-container>
+    <ng-container *ngIf="data.province !== '0'"> {{ data.province }} /</ng-container>
+    <a nz-typography [nz-tooltip]="ispTip">
+      {{ data.city }}
+      <ng-template #ispTip>
+        {{ data.isp }}
+      </ng-template>
+    </a>
+    <br />
+    <b>( {{ data.ip }} )</b>
+  </ng-container>
+  <ng-container *vPageTableCell="'platform'">
+    管理后台
+  </ng-container>
+  <ng-container *vPageTableCell="'risk';let data">
+    <ng-container *ngIf="data.logged">
+      <i nz-icon nzType="check"></i>
+      {{ bit.l["loginSuccess"] }}
+    </ng-container>
+    <ng-container *ngIf="!data.logged">
+      <a nz-typography nzType="danger" [nz-tooltip]="riskTip">
+        <i nz-icon nzType="close"></i>
+        {{ bit.l["loginError"] }}
+        <ng-template #riskTip> {{ bit.l["attack"] }}: {{ data.password }} </ng-template>
+      </a>
+    </ng-container>
+    <br />
+    <i>{{ data.risk }}</i>
+  </ng-container>
+</v-page-table>

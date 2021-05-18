@@ -4,6 +4,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { RoleService } from '@vanx/framework/role';
 import { PermissionService } from '@vanx/framework/permission';
 import { UserService } from '../user.service';
+import { PageTableColumn } from '@vanx/framework';
 import * as packer from './language';
 
 @Component({
@@ -16,6 +17,13 @@ export class UserIndexComponent implements OnInit {
   permission: any = {};
   adminVisible = false;
   adminData: any;
+  columns: PageTableColumn[] = [
+    { key: 'username', width: '200px' },
+    { key: 'role', width: '200px' },
+    { key: 'permission', breakWord: true },
+    { key: 'status', format: 'status' },
+    { key: 'action', width: '300px', left: true, format: 'action', extra: { edit: 'acl-edit' } }
+  ];
 
   constructor(
     private swal: BitSwalService,
@@ -35,18 +43,8 @@ export class UserIndexComponent implements OnInit {
       query: [{ field: 'username', op: 'like', value: '' }]
     });
     this.lists.ready.subscribe(() => {
-      this.getLists();
       this.getRole();
       this.getPermission();
-    });
-  }
-
-  /**
-   * 获取列表数据
-   */
-  getLists(refresh = false, event?: number): void {
-    this.userService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
-      this.lists.setData(data);
     });
   }
 
@@ -82,33 +80,25 @@ export class UserIndexComponent implements OnInit {
     this.adminData = undefined;
   }
 
-  /**
-   * 删除单操作
-   */
-  deleteData(id: any[]): void {
-    this.swal.deleteAlert(
-      this.userService.delete(id)
-    ).subscribe(res => {
-      if (!res.error) {
-        this.message.success(this.bit.l.deleteSuccess);
-        this.getLists(true);
-      } else {
-        if (res.msg === 'error:self') {
-          this.message.error(this.bit.l.deleteSelfError);
-        } else {
-          this.message.error(this.bit.l.deleteError);
-        }
-      }
-    });
-  }
-
-  /**
-   * 选中删除
-   */
-  deleteCheckData(): void {
-    const id = this.lists.getChecked().map(v => v.id);
-    this.deleteData(id);
-  }
+  // /**
+  //  * 删除单操作
+  //  */
+  // deleteData(id: any[]): void {
+  //   this.swal.deleteAlert(
+  //     this.userService.delete(id)
+  //   ).subscribe(res => {
+  //     if (!res.error) {
+  //       this.message.success(this.bit.l.deleteSuccess);
+  //       this.getLists(true);
+  //     } else {
+  //       if (res.msg === 'error:self') {
+  //         this.message.error(this.bit.l.deleteSelfError);
+  //       } else {
+  //         this.message.error(this.bit.l.deleteError);
+  //       }
+  //     }
+  //   });
+  // }
 
   /**
    * 自定义返回结果

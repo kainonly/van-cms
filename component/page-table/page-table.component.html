@@ -1,6 +1,6 @@
 <nz-card [nzTitle]="search" [nzExtra]="extra ? null : extraDefault">
   <ng-template #search>
-    <nz-space nzWrap>
+    <nz-space class="page-table-head" nzWrap>
       <ng-container *ngFor="let item of searchItems">
         <ng-container *ngIf="lists.hasSearch(item.vPageTableSearch)">
           <ng-container *nzSpaceItem [ngTemplateOutlet]="item.templateRef"></ng-container>
@@ -35,6 +35,7 @@
   <nz-table
     #contentTable
     [nzData]="lists.data"
+    [nzLoadingDelay]="300"
     [nzLoading]="lists.loading"
     [nzTotal]="lists.totals"
     [nzPageSize]="lists.limit"
@@ -85,9 +86,15 @@
             ></ng-container>
           </ng-container>
           <ng-template #normal>
-            <ng-container [ngSwitch]="column.format">
+            <ng-container *ngIf="data.hasOwnProperty(column.key)" [ngSwitch]="column.format">
               <ng-container *ngSwitchCase="'i18n'">
                 {{ data[column.key] | object: bit.locale }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'date'">
+                {{ data[column.key] * 1000 |  date: "yyyy-MM-dd" }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'datetime'">
+                {{ data[column.key] * 1000 |  date: "yyyy-MM-dd HH:mm:ss" }}
               </ng-container>
               <ng-container *ngSwitchCase="'status'">
                 <nz-switch

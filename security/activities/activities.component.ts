@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BitService, ListByPage } from 'ngx-bit';
-import { LogService } from '../log.service';
+import { PageTableColumn } from '@vanx/framework';
 import * as packer from './language';
+import { ActivitiesService } from '../activities.service';
 
 @Component({
   selector: 'v-activities',
@@ -9,15 +10,22 @@ import * as packer from './language';
 })
 export class ActivitiesComponent implements OnInit {
   lists: ListByPage;
+  columns: PageTableColumn[] = [
+    { key: 'username', width: '160px' },
+    { key: 'ip', width: '160px' },
+    { key: 'platform', width: '160px' },
+    { key: 'device', breakWord: true },
+    { key: 'risk', width: '200px' },
+    { key: 'time', width: '160px', right: true, format: 'datetime' }
+  ];
 
   constructor(
     public bit: BitService,
-    private logService: LogService
+    public activitiesService: ActivitiesService
   ) {
   }
 
   ngOnInit(): void {
-    this.logService.setModel('activities');
     this.bit.registerLocales(packer);
     this.lists = this.bit.listByPage({
       id: 'activities',
@@ -26,18 +34,6 @@ export class ActivitiesComponent implements OnInit {
         { field: 'username', op: 'like', value: '' },
         { field: 'time', op: 'between', value: [], format: 'unixtime' }
       ]
-    });
-    this.lists.ready.subscribe(() => {
-      this.getLists();
-    });
-  }
-
-  /**
-   * 获取列表数据
-   */
-  getLists(refresh = false, event?: any): void {
-    this.logService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
-      this.lists.setData(data);
     });
   }
 }
