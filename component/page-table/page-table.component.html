@@ -103,6 +103,8 @@
                     [nzCheckedChildren]="bit.l['on']"
                     [nzUnCheckedChildren]="bit.l['off']"
                     [bitStatusChange]="service.status(data)"
+                    [bitControl]="!column.extra.control"
+                    (response)="!column.extra.response($event)"
                   >
                   </nz-switch>
                 </ng-container>

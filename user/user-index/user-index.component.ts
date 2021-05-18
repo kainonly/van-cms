@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BitSwalService, BitService, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { RoleService } from '@vanx/framework/role';
 import { PermissionService } from '@vanx/framework/permission';
-import { UserService } from '../user.service';
-import { PageTableColumn } from '@vanx/framework';
-import * as packer from './language';
 import { columnType } from '@vanx/framework/component';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { PageTableColumn } from '@vanx/framework';
+import { UserService } from '../user.service';
+import * as packer from './language';
 
 @Component({
   selector: 'v-user-index',
@@ -14,25 +17,33 @@ import { columnType } from '@vanx/framework/component';
 })
 export class UserIndexComponent implements OnInit {
   lists: ListByPage;
-  role: any = {};
-  permission: any = {};
-  adminVisible = false;
-  adminData: any;
   columns: PageTableColumn[] = [
     { key: 'username', width: '200px' },
     { key: 'role', width: '200px' },
     { key: 'permission', breakWord: true },
-    columnType.status('status'),
+    columnType.status('status', true, (res) => {
+      if (res.error === 1) {
+        this.message.error(this.bit.l.StatusError);
+      }
+      if (res.error === 2) {
+        this.message.error(this.bit.l.statusSelfError);
+      }
+    }),
     columnType.action('admin-edit')
   ];
+  role: any = {};
+  permission: any = {};
+  userData: any;
+  @ViewChild('userDataInfoTpl') userDataInfoTpl: TemplateRef<any>;
 
   constructor(
     private swal: BitSwalService,
     public bit: BitService,
     public userService: UserService,
     private roleService: RoleService,
+    private permissionService: PermissionService,
     private message: NzMessageService,
-    private permissionService: PermissionService
+    private drawer: NzDrawerService
   ) {
   }
 
@@ -71,45 +82,27 @@ export class UserIndexComponent implements OnInit {
     });
   }
 
-  openAdminVisable(data: any): void {
-    this.adminVisible = true;
-    this.adminData = data;
+  openUserVisable(data: any): void {
+    this.userData = data;
+    this.drawer.create({
+      nzContent: this.userDataInfoTpl,
+      nzWidth: 540
+    });
   }
 
-  closeAdminVisable(): void {
-    this.adminVisible = false;
-    this.adminData = undefined;
-  }
-
-  // /**
-  //  * 删除单操作
-  //  */
-  // deleteData(id: any[]): void {
-  //   this.swal.deleteAlert(
-  //     this.userService.delete(id)
-  //   ).subscribe(res => {
-  //     if (!res.error) {
-  //       this.message.success(this.bit.l.deleteSuccess);
-  //       this.getLists(true);
-  //     } else {
-  //       if (res.msg === 'error:self') {
-  //         this.message.error(this.bit.l.deleteSelfError);
-  //       } else {
-  //         this.message.error(this.bit.l.deleteError);
-  //       }
-  //     }
-  //   });
-  // }
-
-  /**
-   * 自定义返回结果
-   */
-  statusFeedback(res: any): void {
-    if (res.error === 1) {
-      this.message.error(this.bit.l.StatusError);
-    }
-    if (res.error === 2) {
-      this.message.error(this.bit.l.statusSelfError);
-    }
-  }
+  deleteOperate = (observable: Observable<any>) => {
+    return observable.pipe(
+      map(res => {
+        if (res.error) {
+          if (res.msg === 'error:self') {
+            this.message.error(this.bit.l.deleteSelfError);
+          } else {
+            this.message.error(this.bit.l.deleteError);
+          }
+          return;
+        }
+        return res;
+      })
+    );
+  };
 }
