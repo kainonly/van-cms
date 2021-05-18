@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BitService, ListByPage } from 'ngx-bit';
 import { PageTableColumn } from '@vanx/framework';
+import { columnType } from '@vanx/framework/component';
 import { AclService } from '../acl.service';
 import * as packer from './language';
+
 
 @Component({
   selector: 'v-acl-index',
@@ -15,8 +17,8 @@ export class AclIndexComponent implements OnInit {
     { key: 'key', width: '200px' },
     { key: 'read', width: '300px', breakWord: true },
     { key: 'write', width: '300px', breakWord: true },
-    { key: 'status', format: 'status' },
-    { key: 'action', width: '300px', left: true, format: 'action', extra: { edit: 'acl-edit' } }
+    columnType.status('status'),
+    columnType.action('acl-edit')
   ];
 
   constructor(

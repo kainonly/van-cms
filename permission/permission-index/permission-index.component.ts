@@ -3,6 +3,7 @@ import { BitService, ListByPage } from 'ngx-bit';
 import { PermissionService } from '../permission.service';
 import { PageTableColumn } from '@vanx/framework';
 import * as packer from './language';
+import { columnType } from '@vanx/framework/component';
 
 @Component({
   selector: 'v-permission-index',
@@ -14,8 +15,8 @@ export class PermissionIndexComponent implements OnInit {
     { key: 'name', width: '200px', format: 'i18n' },
     { key: 'key', width: '200px' },
     { key: 'note', breakWord: true },
-    { key: 'status', format: 'status' },
-    { key: 'action', width: '300px', left: true, format: 'action', extra: { edit: 'permission-edit' } }
+    columnType.status('status'),
+    columnType.action('permission-edit')
   ];
 
   constructor(

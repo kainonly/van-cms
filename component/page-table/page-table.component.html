@@ -86,24 +86,29 @@
             ></ng-container>
           </ng-container>
           <ng-template #normal>
-            <ng-container *ngIf="data.hasOwnProperty(column.key)" [ngSwitch]="column.format">
-              <ng-container *ngSwitchCase="'i18n'">
-                {{ data[column.key] | object: bit.locale }}
-              </ng-container>
-              <ng-container *ngSwitchCase="'date'">
-                {{ data[column.key] * 1000 |  date: "yyyy-MM-dd" }}
-              </ng-container>
-              <ng-container *ngSwitchCase="'datetime'">
-                {{ data[column.key] * 1000 |  date: "yyyy-MM-dd HH:mm:ss" }}
-              </ng-container>
-              <ng-container *ngSwitchCase="'status'">
-                <nz-switch
-                  [(ngModel)]="data.status"
-                  [nzCheckedChildren]="bit.l['on']"
-                  [nzUnCheckedChildren]="bit.l['off']"
-                  [bitStatusChange]="service.status(data)"
-                >
-                </nz-switch>
+            <ng-container [ngSwitch]="column.format">
+              <ng-container *ngIf="data.hasOwnProperty(column.key)">
+                <ng-container *ngSwitchCase="'i18n'">
+                  {{ data[column.key] | object: bit.locale }}
+                </ng-container>
+                <ng-container *ngSwitchCase="'date'">
+                  {{ data[column.key] * 1000 |  date: "yyyy-MM-dd" }}
+                </ng-container>
+                <ng-container *ngSwitchCase="'datetime'">
+                  {{ data[column.key] * 1000 |  date: "yyyy-MM-dd HH:mm:ss" }}
+                </ng-container>
+                <ng-container *ngSwitchCase="'status'">
+                  <nz-switch
+                    [(ngModel)]="data.status"
+                    [nzCheckedChildren]="bit.l['on']"
+                    [nzUnCheckedChildren]="bit.l['off']"
+                    [bitStatusChange]="service.status(data)"
+                  >
+                  </nz-switch>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  {{ data[column.key] }}
+                </ng-container>
               </ng-container>
               <ng-container *ngSwitchCase="'action'">
                 <a
@@ -116,9 +121,6 @@
                 <a (click)="delete([data.id])">
                   <i nz-icon nzType="delete"></i> {{ bit.l["delete"] }}
                 </a>
-              </ng-container>
-              <ng-container *ngSwitchDefault>
-                {{ data[column.key] }}
               </ng-container>
             </ng-container>
           </ng-template>

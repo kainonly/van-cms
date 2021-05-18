@@ -6,6 +6,7 @@ import { PermissionService } from '@vanx/framework/permission';
 import { UserService } from '../user.service';
 import { PageTableColumn } from '@vanx/framework';
 import * as packer from './language';
+import { columnType } from '@vanx/framework/component';
 
 @Component({
   selector: 'v-user-index',
@@ -21,8 +22,8 @@ export class UserIndexComponent implements OnInit {
     { key: 'username', width: '200px' },
     { key: 'role', width: '200px' },
     { key: 'permission', breakWord: true },
-    { key: 'status', format: 'status' },
-    { key: 'action', width: '300px', left: true, format: 'action', extra: { edit: 'acl-edit' } }
+    columnType.status('status'),
+    columnType.action('admin-edit')
   ];
 
   constructor(

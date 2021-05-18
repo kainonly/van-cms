@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RoleService } from '../role.service';
 import * as packer from './language';
+import { columnType } from '@vanx/framework/component';
 
 @Component({
   selector: 'v-role-index',
@@ -19,8 +20,8 @@ export class RoleIndexComponent implements OnInit {
     { key: 'name', width: '200px', format: 'i18n' },
     { key: 'key', width: '200px' },
     { key: 'permission', width: '300px', breakWord: true },
-    { key: 'status', format: 'status' },
-    { key: 'action', width: '300px', left: true, format: 'action', extra: { edit: 'role-edit' } }
+    columnType.status('status'),
+    columnType.action('role-edit')
   ];
 
   constructor(
