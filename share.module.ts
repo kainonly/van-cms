@@ -48,6 +48,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule({
   exports: [
@@ -100,6 +101,7 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
     NzTabsModule,
     NzTimelineModule,
     NzInputNumberModule,
+    PortalModule,
     BitExtModule,
     BitPipeModule,
     BitDirectiveModule

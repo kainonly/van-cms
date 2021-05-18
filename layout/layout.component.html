@@ -82,6 +82,7 @@
     <nz-content>
       <ng-container *ngTemplateOutlet="support.banner"></ng-container>
       <nz-page-header
+        [nzGhost]="false"
         [nzTitle]="support.title | object: bit.locale"
         [nzSubtitle]="!support.subTitle ? null : support.subTitle"
         [nzBackIcon]="!support.back ? null : ''"
@@ -110,9 +111,9 @@
           <ng-container *ngTemplateOutlet="support.actions"></ng-container>
         </nz-page-header-extra>
       </nz-page-header>
-      <div #warpper class="app-warpper">
+      <nz-page-header-content #warpper class="page-header-content">
         <router-outlet></router-outlet>
-      </div>
+      </nz-page-header-content>
     </nz-content>
   </nz-layout>
 </nz-layout>

@@ -34,7 +34,6 @@ nz-sider {
 }
 
 nz-layout {
-
   &.right-layout {
     transition: margin-left .2s;
     margin-left: 200px;
@@ -45,13 +44,6 @@ nz-layout {
   }
 }
 
-nz-content {
-  .app-breadcrumb {
-    background-color: #fff;
-    padding: 16px 24px;
-  }
-
-  .app-warpper {
-    padding: 15px 12px;
-  }
+.page-header-content {
+  padding: 15px 12px;
 }

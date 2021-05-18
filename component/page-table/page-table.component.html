@@ -1,0 +1,102 @@
+<nz-card [nzTitle]="search" [nzExtra]="extra ? null : extraDefault">
+  <ng-template #search>
+    <nz-space nzWrap>
+      <ng-container *ngFor="let item of searchItems">
+        <ng-container *ngIf="lists.hasSearch(item.vPageTableSearch)">
+          <ng-container *nzSpaceItem [ngTemplateOutlet]="item.templateRef"></ng-container>
+        </ng-container>
+      </ng-container>
+    </nz-space>
+  </ng-template>
+  <ng-template #extraDefault>
+    <nz-button-group>
+      <button nz-button (click)="getLists(true)" [nz-tooltip]="bit.l['refreshLists']">
+        <i nz-icon nzType="sync"></i>
+      </button>
+      <button
+        nz-button
+        [bitSearchClear]="lists"
+        (after)="getLists(true)"
+        [nz-tooltip]="bit.l['clearSearch']"
+      >
+        <i nz-icon nzType="clear"></i>
+      </button>
+      <button
+        nz-button
+        nzDanger
+        [disabled]="!lists.batch"
+        (click)="bulkDelete()"
+        [nz-tooltip]="bit.l['bulkDelete']"
+      >
+        <i nz-icon nzType="rest"></i>
+      </button>
+    </nz-button-group>
+  </ng-template>
+  <nz-table
+    #contentTable
+    [nzData]="lists.data"
+    [nzLoading]="lists.loading"
+    [nzTotal]="lists.totals"
+    [nzPageSize]="lists.limit"
+    [(nzPageIndex)]="lists.index"
+    (nzPageIndexChange)="getLists(false, $event)"
+    [nzFrontPagination]="false"
+    [nzSize]="'middle'"
+  >
+    <thead>
+    <tr>
+      <th
+        *ngIf="batch"
+        nzWidth="65px"
+        nzShowCheckbox
+        [(nzChecked)]="lists.checked"
+        [nzIndeterminate]="lists.indeterminate"
+        (nzCheckedChange)="lists.checkedAll($event)"
+      ></th>
+      <ng-container *ngFor="let column of columns">
+        <th [nzWidth]="column.width">{{ bit.l[column.name] }}</th>
+      </ng-container>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of contentTable.data">
+      <td
+        *ngIf="batch"
+        nzShowCheckbox
+        [(nzChecked)]="data.checked"
+        (nzCheckedChange)="lists.refreshStatus()"
+      ></td>
+      <ng-container *ngFor="let column of columns">
+        <td>
+          <ng-container *ngTemplateOutlet="column.template; context: {$implicit: data}"></ng-container>
+          <ng-container *ngIf="column.key" [ngSwitch]="column.format">
+            <ng-container *ngSwitchCase="'i18n'">
+              {{ data[column.key] | object: bit.locale }}
+            </ng-container>
+            <ng-container *ngSwitchCase="'status'">
+              <nz-switch
+                [(ngModel)]="data.status"
+                [nzCheckedChildren]="bit.l['on']"
+                [nzUnCheckedChildren]="bit.l['off']"
+                [bitStatusChange]="service.status(data)"
+              >
+              </nz-switch>
+            </ng-container>
+            <ng-container *ngSwitchCase="'action'">
+              <a [bitOpen]="[column.edit, data.id]">
+                <i nz-icon nzType="edit"></i> {{ bit.l["edit"] }}
+              </a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a (click)="delete([data.id])"> <i nz-icon nzType="delete"></i> {{ bit.l["delete"] }} </a>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              {{ data[column.key] }}
+            </ng-container>
+          </ng-container>
+        </td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+

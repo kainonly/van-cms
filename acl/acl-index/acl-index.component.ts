@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { BitSwalService, BitService, ListByPage } from 'ngx-bit';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { BitService, ListByPage } from 'ngx-bit';
+import { PageTableColumn } from '@vanx/framework';
 import { AclService } from '../acl.service';
 import * as packer from './language';
 
@@ -8,15 +8,25 @@ import * as packer from './language';
   selector: 'v-acl-index',
   templateUrl: './acl-index.component.html'
 })
-export class AclIndexComponent implements OnInit {
+export class AclIndexComponent implements OnInit, AfterViewInit {
   lists: ListByPage;
+  columnMap: Map<string, PageTableColumn> = new Map([
+    ['name', { name: 'name', width: '200px', key: 'name', format: 'i18n' }],
+    ['key', { name: 'key', width: '200px', key: 'key' }],
+    ['read', { name: 'read', width: '300px', key: 'read' }],
+    ['write', { name: 'write', width: '300px', key: 'write' }],
+    ['status', { name: 'status', key: 'status', format: 'status' }],
+    ['action', { name: 'action', width: '300px', key: 'action', format: 'action', edit: 'acl-edit' }]
+  ]);
 
   constructor(
-    private swal: BitSwalService,
     public bit: BitService,
-    public aclService: AclService,
-    private message: NzMessageService
+    public aclService: AclService
   ) {
+  }
+
+  get columns(): PageTableColumn[] {
+    return [...this.columnMap.values()];
   }
 
   ngOnInit(): void {
@@ -28,41 +38,8 @@ export class AclIndexComponent implements OnInit {
         { field: 'name->en_us', op: 'like', value: '' }
       ]
     });
-    this.lists.ready.subscribe(() => {
-      this.getLists();
-    });
   }
 
-  /**
-   * 获取列表数据
-   */
-  getLists(refresh = false, event?: number): void {
-    this.aclService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
-      this.lists.setData(data);
-    });
-  }
-
-  /**
-   * 删除单操作
-   */
-  deleteData(id: any[]): void {
-    this.swal.deleteAlert(
-      this.aclService.delete(id)
-    ).subscribe(res => {
-      if (!res.error) {
-        this.message.success(this.bit.l.deleteSuccess);
-        this.getLists(true);
-      } else {
-        this.message.error(this.bit.l.deleteError);
-      }
-    });
-  }
-
-  /**
-   * 选中删除
-   */
-  deleteCheckData(): void {
-    const id = this.lists.getChecked().map(v => v.id);
-    this.deleteData(id);
+  ngAfterViewInit(): void {
   }
 }
