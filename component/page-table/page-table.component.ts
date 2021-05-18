@@ -14,6 +14,7 @@ export class PageTableComponent implements OnInit, AfterViewInit {
   @Input() extra: TemplateRef<any>;
   @Input() columns: PageTableColumn[] = [];
   @Input() service: PageTableServiceInterface;
+  @Input() scroll: any;
   @Input() batch = true;
   @ContentChildren(PageTableSearchDirective) searchItems: QueryList<PageTableSearchDirective>;
   @ContentChildren(PageTableCellDirective) items: QueryList<PageTableCellDirective>;

@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BitService, ListByPage } from 'ngx-bit';
+import { PageTableColumn } from '@vanx/framework';
 import { AclService } from '../acl.service';
 import * as packer from './language';
-import { PageTableColumn } from '@vanx/framework';
 
 @Component({
   selector: 'v-acl-index',
@@ -11,12 +11,12 @@ import { PageTableColumn } from '@vanx/framework';
 export class AclIndexComponent implements OnInit {
   lists: ListByPage;
   columns: PageTableColumn[] = [
-    { key: 'name', style: { width: '200px' }, format: 'i18n' },
-    { key: 'key', style: { width: '200px' } },
-    { key: 'read', style: { width: '300px' } },
-    { key: 'write', style: { width: '300px' } },
-    { key: 'status', style: { width: '200px' }, format: 'status' },
-    { key: 'action', style: { width: '300px' }, format: 'action', extra: { edit: 'acl-edit' } }
+    { key: 'name', width: '200px', format: 'i18n' },
+    { key: 'key', width: '200px' },
+    { key: 'read', width: '300px', breakWord: true },
+    { key: 'write', width: '300px', breakWord: true },
+    { key: 'status', format: 'status' },
+    { key: 'action', width: '300px', left: true, format: 'action', extra: { edit: 'acl-edit' } }
   ];
 
   constructor(

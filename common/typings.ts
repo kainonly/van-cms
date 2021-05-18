@@ -9,15 +9,15 @@ export interface PageTableServiceInterface {
   status(data: any): Observable<any>;
 }
 
-export interface PageTableColumnStyle {
-  width?: string;
-}
-
 export type PageTableColumnFormat = 'i18n' | 'status' | 'action';
 
 export interface PageTableColumn {
   key: string;
-  style?: PageTableColumnStyle;
+  width?: string;
+  left?: boolean;
+  right?: boolean;
+  align?: 'left' | 'right' | 'center';
+  breakWord?: boolean;
   format?: PageTableColumnFormat;
   extra?: any;
 }

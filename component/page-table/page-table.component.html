@@ -41,6 +41,7 @@
     [(nzPageIndex)]="lists.index"
     (nzPageIndexChange)="getLists(false, $event)"
     [nzFrontPagination]="false"
+    [nzScroll]="scroll"
     [nzSize]="'middle'"
   >
     <thead>
@@ -54,7 +55,12 @@
         (nzCheckedChange)="lists.checkedAll($event)"
       ></th>
       <ng-container *ngFor="let column of columns">
-        <th>{{ bit.l[column.key] }}</th>
+        <th
+          [nzWidth]="column.width"
+          [nzLeft]="column.left"
+          [nzRight]="column.right"
+          [nzAlign]="column.align"
+        >{{ bit.l[column.key] }}</th>
       </ng-container>
     </tr>
     </thead>
@@ -67,7 +73,12 @@
         (nzCheckedChange)="lists.refreshStatus()"
       ></td>
       <ng-container *ngFor="let column of columns">
-        <td>
+        <td
+          [nzLeft]="column.left"
+          [nzRight]="column.right"
+          [nzAlign]="column.align"
+          [nzBreakWord]="column.breakWord"
+        >
           <ng-container *ngIf="columnDef && columnDef.has(column.key); else normal">
             <ng-container
               *ngTemplateOutlet="columnDef.get(column.key); context: context(data, column)"
