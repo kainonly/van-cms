@@ -1,32 +1,28 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { BitService, ListByPage } from 'ngx-bit';
-import { PageTableColumn } from '@vanx/framework';
 import { AclService } from '../acl.service';
 import * as packer from './language';
+import { PageTableColumn } from '@vanx/framework';
 
 @Component({
   selector: 'v-acl-index',
   templateUrl: './acl-index.component.html'
 })
-export class AclIndexComponent implements OnInit, AfterViewInit {
+export class AclIndexComponent implements OnInit {
   lists: ListByPage;
-  columnMap: Map<string, PageTableColumn> = new Map([
-    ['name', { name: 'name', width: '200px', key: 'name', format: 'i18n' }],
-    ['key', { name: 'key', width: '200px', key: 'key' }],
-    ['read', { name: 'read', width: '300px', key: 'read' }],
-    ['write', { name: 'write', width: '300px', key: 'write' }],
-    ['status', { name: 'status', key: 'status', format: 'status' }],
-    ['action', { name: 'action', width: '300px', key: 'action', format: 'action', edit: 'acl-edit' }]
-  ]);
+  columns: PageTableColumn[] = [
+    { key: 'name', style: { width: '200px' }, format: 'i18n' },
+    { key: 'key', style: { width: '200px' } },
+    { key: 'read', style: { width: '300px' } },
+    { key: 'write', style: { width: '300px' } },
+    { key: 'status', style: { width: '200px' }, format: 'status' },
+    { key: 'action', style: { width: '300px' }, format: 'action', extra: { edit: 'acl-edit' } }
+  ];
 
   constructor(
     public bit: BitService,
     public aclService: AclService
   ) {
-  }
-
-  get columns(): PageTableColumn[] {
-    return [...this.columnMap.values()];
   }
 
   ngOnInit(): void {
@@ -38,8 +34,5 @@ export class AclIndexComponent implements OnInit, AfterViewInit {
         { field: 'name->en_us', op: 'like', value: '' }
       ]
     });
-  }
-
-  ngAfterViewInit(): void {
   }
 }

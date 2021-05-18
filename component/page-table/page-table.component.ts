@@ -12,11 +12,12 @@ import { PageTableSearchDirective } from './page-table-search.directive';
 export class PageTableComponent implements OnInit, AfterViewInit {
   @Input() lists: ListByPage;
   @Input() extra: TemplateRef<any>;
-  @Input() service: PageTableServiceInterface;
   @Input() columns: PageTableColumn[] = [];
+  @Input() service: PageTableServiceInterface;
   @Input() batch = true;
   @ContentChildren(PageTableSearchDirective) searchItems: QueryList<PageTableSearchDirective>;
-  @ContentChildren(PageTableCellDirective) cellItems: QueryList<PageTableCellDirective>;
+  @ContentChildren(PageTableCellDirective) items: QueryList<PageTableCellDirective>;
+  columnDef: Map<string, TemplateRef<any>>;
 
   constructor(
     public bit: BitService,
@@ -33,7 +34,11 @@ export class PageTableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.cellItems);
+    this.columnDef = new Map(this.items.map(v => [v.vPageTableCell, v.templateRef]));
+  }
+
+  context(data: any, column: any): any {
+    return { $implicit: data, column };
   }
 
   getLists(refresh = false, event?: number): void {
