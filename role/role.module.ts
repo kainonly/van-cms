@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { ShareModule } from '@vanx/framework';
 import { FrameworkComponentModule } from '@vanx/framework/component';
 import { RoleIndexComponent } from './role-index/role-index.component';
-import { RoleAddComponent } from './role-add/role-add.component';
-import { RoleEditComponent } from './role-edit/role-edit.component';
+import { RolePageComponent } from './role-page/role-page.component';
 import { RoleService } from './role.service';
 
 @NgModule({
@@ -13,13 +12,11 @@ import { RoleService } from './role.service';
   ],
   declarations: [
     RoleIndexComponent,
-    RoleAddComponent,
-    RoleEditComponent
+    RolePageComponent
   ],
   exports: [
     RoleIndexComponent,
-    RoleAddComponent,
-    RoleEditComponent
+    RolePageComponent
   ],
   providers: [
     RoleService

@@ -1,21 +1,27 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BitSwalService, BitService, BitEventsService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { asyncValidator } from 'ngx-bit/operates';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, throttleTime } from 'rxjs/operators';
 import { ResourceService } from '@vanx/framework/resource';
 import { PermissionService } from '@vanx/framework/permission';
 import { RoleService } from '../role.service';
 import * as packer from './language';
+import { ActivatedRoute } from '@angular/router';
+import { AsyncSubject } from 'rxjs';
 
 @Component({
-  selector: 'v-role-add',
-  templateUrl: './role-add.component.html'
+  selector: 'v-role-page',
+  templateUrl: './role-page.component.html'
 })
-export class RoleAddComponent implements OnInit, OnDestroy {
-  @ViewChild('nzTree', { static: true }) nzTree: NzTreeComponent;
+export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
+  private id: number;
+  private dataAsync: AsyncSubject<void> = new AsyncSubject();
+  private keyAsync: AsyncSubject<any>;
+
+  @ViewChild('nzTree') nzTree: NzTreeComponent;
   private resource: string[] = [];
   nodes: NzTreeNodeOptions[] = [];
   permissionLists: any[] = [];
@@ -29,7 +35,8 @@ export class RoleAddComponent implements OnInit, OnDestroy {
     private swal: BitSwalService,
     private roleService: RoleService,
     private resourceService: ResourceService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -53,6 +60,34 @@ export class RoleAddComponent implements OnInit, OnDestroy {
     this.events.on('locale').subscribe(() => {
       this.getNodes();
     });
+    this.route.params.subscribe(param => {
+      this.id = param.id;
+      if (this.id) {
+        this.getData();
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataAsync.pipe(
+      throttleTime(200)
+    ).subscribe(() => {
+      const resource = this.resource;
+      const queue = [...this.nzTree.getTreeNodes()];
+      while (queue.length !== 0) {
+        const node = queue.pop();
+        node.isChecked = resource.indexOf(node.key) !== -1;
+        const parent = node.parentNode;
+        if (parent) {
+          parent.isChecked = parent.getChildren().every(v => resource.indexOf(v.key) !== -1);
+          parent.isHalfChecked = !parent.isChecked && parent.getChildren().some(v => resource.indexOf(v.key) !== -1);
+        }
+        const children = node.getChildren();
+        if (children.length !== 0) {
+          queue.push(...children);
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -60,8 +95,26 @@ export class RoleAddComponent implements OnInit, OnDestroy {
   }
 
   existsKey = (control: AbstractControl) => {
-    return asyncValidator(this.roleService.validedKey(control.value));
+    return asyncValidator(this.roleService.validedKey(control.value, this.keyAsync));
   };
+
+  getData(): void {
+    this.keyAsync = new AsyncSubject();
+    this.roleService.get(this.id).subscribe(data => {
+      this.resource = data.resource ? data.resource.split(',') : '';
+      this.dataAsync.next();
+      this.dataAsync.complete();
+      this.keyAsync.next(data.key);
+      this.keyAsync.complete();
+      this.form.patchValue({
+        name: JSON.parse(data.name),
+        key: data.key,
+        permission: data.permission ? data.permission.split(',') : [],
+        note: data.note,
+        status: data.status
+      });
+    });
+  }
 
   /**
    * 获取资源策略节点
@@ -185,18 +238,27 @@ export class RoleAddComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * 提交
-   */
-  submit(data): void {
+  submit = (data): void => {
     Reflect.set(data, 'resource', this.resource);
-    this.roleService.add(data).pipe(
-      switchMap(res =>
-        this.swal.addAlert(res, this.form, {
-          status: true
-        })
-      )
-    ).subscribe(() => {
-    });
-  }
+    if (!this.id) {
+      this.roleService.add(data).pipe(
+        switchMap(res =>
+          this.swal.addAlert(res, this.form, {
+            status: true
+          })
+        )
+      ).subscribe(() => {
+      });
+    } else {
+      Reflect.set(data, 'id', this.id);
+      this.roleService.edit(data).pipe(
+        switchMap(res => this.swal.editAlert(res))
+      ).subscribe(status => {
+        if (status) {
+          this.getData();
+        }
+        this.events.publish('refresh-menu');
+      });
+    }
+  };
 }

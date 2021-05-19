@@ -159,10 +159,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  /**
-   * 提交
-   */
-  submit(data): void {
+  submit = (data): void => {
     if (this.avatar) {
       data.avatar = this.avatar;
     }
@@ -187,5 +184,5 @@ export class ProfileComponent implements OnInit {
           break;
       }
     });
-  }
+  };
 }
