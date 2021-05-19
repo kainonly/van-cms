@@ -5,14 +5,18 @@ import { ActivatedRoute } from '@angular/router';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap } from 'rxjs/operators';
+import { AsyncSubject } from 'rxjs';
 import { ResourceService } from '../resource.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'v-resource-add',
-  templateUrl: './resource-add.component.html'
+  selector: 'v-resource-page',
+  templateUrl: './resource-page.component.html'
 })
-export class ResourceAddComponent implements OnInit, OnDestroy {
+export class ResourcePageComponent implements OnInit, OnDestroy {
+  private id: number;
+  private keyAsync: AsyncSubject<any>;
+
   form: FormGroup;
   parentId: number;
   parentLists: any[] = [];
@@ -22,8 +26,8 @@ export class ResourceAddComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private events: BitEventsService,
     private swal: BitSwalService,
-    private route: ActivatedRoute,
-    private resourceService: ResourceService
+    private resourceService: ResourceService,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -50,6 +54,10 @@ export class ResourceAddComponent implements OnInit, OnDestroy {
       if (params.parentId) {
         this.parentId = parseInt(params.parentId, 0);
       }
+      if (params.id) {
+        this.id = params.id;
+        this.getData();
+      }
       this.getParentNodes();
     });
     this.events.on('locale').subscribe(() => {
@@ -62,12 +70,30 @@ export class ResourceAddComponent implements OnInit, OnDestroy {
   }
 
   existsKey = (control: AbstractControl) => {
-    return asyncValidator(this.resourceService.validedKey(control.value));
+    return asyncValidator(this.resourceService.validedKey(control.value, this.keyAsync));
   };
 
-  /**
-   * 获取父级节点
-   */
+  getData(): void {
+    this.keyAsync = new AsyncSubject();
+    this.resourceService.get(this.id).subscribe(data => {
+      if (!data) {
+        return;
+      }
+      this.keyAsync.next(data.key);
+      this.keyAsync.complete();
+      this.form.setValue({
+        name: JSON.parse(data.name),
+        key: data.key,
+        parent: data.parent,
+        nav: data.nav,
+        router: data.router,
+        policy: data.policy,
+        icon: data.icon,
+        status: data.status
+      });
+    });
+  }
+
   getParentNodes(): void {
     this.resourceService.originLists().subscribe(data => {
       const refer: Map<string, NzTreeNodeOptions> = new Map();
@@ -75,7 +101,6 @@ export class ResourceAddComponent implements OnInit, OnDestroy {
         if (this.parentId && v.id === this.parentId) {
           this.form.get('parent').setValue(v.key);
         }
-
         const rows = {
           title: JSON.parse(v.name)[this.bit.locale] + ' [' + v.key + ']',
           key: v.key,
@@ -114,21 +139,33 @@ export class ResourceAddComponent implements OnInit, OnDestroy {
     });
   }
 
-  submit(data): void {
-    this.resourceService.add(data).pipe(
-      switchMap(res =>
-        this.swal.addAlert(res, this.form, {
-          nav: false,
-          router: false,
-          policy: false,
-          status: true
-        })
-      )
-    ).subscribe(status => {
-      if (status) {
-        this.getParentNodes();
-      }
-      this.events.publish('refresh-menu');
-    });
-  }
+  submit = (data): void => {
+    if (!this.id) {
+      this.resourceService.add(data).pipe(
+        switchMap(res =>
+          this.swal.addAlert(res, this.form, {
+            nav: false,
+            router: false,
+            policy: false,
+            status: true
+          })
+        )
+      ).subscribe(status => {
+        if (status) {
+          this.getParentNodes();
+        }
+        this.events.publish('refresh-menu');
+      });
+    } else {
+      Reflect.set(data, 'id', this.id);
+      this.resourceService.edit(data).pipe(
+        switchMap(res => this.swal.editAlert(res))
+      ).subscribe(status => {
+        if (status) {
+          this.getParentNodes();
+        }
+        this.events.publish('refresh-menu');
+      });
+    }
+  };
 }
