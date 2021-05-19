@@ -7,7 +7,7 @@ export class PageFormItemDirective {
   @Input() vPageFormItem: string;
 
   constructor(
-    public template: TemplateRef<any>
+    public ref: TemplateRef<any>
   ) {
   }
 }

@@ -21,3 +21,8 @@ export interface PageTableColumn {
   format?: PageTableColumnFormat;
   extra?: any;
 }
+
+export interface PageFormSchema {
+  disabled?: boolean;
+  weight?: number;
+}

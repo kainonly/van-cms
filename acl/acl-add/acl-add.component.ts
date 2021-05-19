@@ -1,9 +1,9 @@
-import { Component, ContentChildren, OnInit, QueryList } from '@angular/core';
+import { Component, ContentChildren, OnInit, QueryList, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BitSwalService, BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { asyncValidator } from 'ngx-bit/operates';
-import { PageFormItemDirective } from '@vanx/framework/component';
+import { PageFormComponent, PageFormItemDirective } from '@vanx/framework/component';
 import { AclService } from '../acl.service';
 import * as packer from './language';
 
@@ -15,6 +15,7 @@ export class AclAddComponent implements OnInit {
   form: FormGroup;
   writeLists: string[] = ['add', 'edit', 'delete'];
   readLists: string[] = ['get', 'originLists', 'lists'];
+  @ViewChild('pf') pf: PageFormComponent;
   @ContentChildren(PageFormItemDirective) items: QueryList<PageFormItemDirective>;
 
   constructor(

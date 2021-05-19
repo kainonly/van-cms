@@ -1,43 +1,35 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Input, QueryList } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  Input,
+  OnChanges,
+  QueryList,
+  SimpleChanges,
+  TemplateRef
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BitService } from 'ngx-bit';
 import { PageFormItemDirective } from './page-form-item.directive';
+import { any } from 'codelyzer/util/function';
+import { PageFormSchema } from '@vanx/framework';
 
 @Component({
   selector: 'v-page-form',
-  template: `
-    <nz-card>
-      <form nz-form [formGroup]="formGroup" (bitFormSubmit)="submit($event)">
-        <ng-container *ngFor="let data of dataset">
-          <ng-container *ngTemplateOutlet="data.template"></ng-container>
-        </ng-container>
-        <nz-divider></nz-divider>
-        <nz-form-item>
-          <nz-form-control bitCol="submit">
-            <nz-space>
-              <button *nzSpaceItem nz-button nzType="primary" [disabled]="!formGroup.valid">
-                <i nz-icon nzType="check"></i> {{ bit.l["submit"] }}
-              </button>
-
-              <ng-container *ngIf="!cancelDisabled">
-                <button *nzSpaceItem nz-button type="button" bitBack>
-                  <i nz-icon nzType="close"></i> {{ bit.l["cancel"] }}
-                </button>
-              </ng-container>
-            </nz-space>
-          </nz-form-control>
-        </nz-form-item>
-      </form>
-    </nz-card>
-  `
+  templateUrl: './page-form.component.html'
 })
 export class PageFormComponent implements AfterViewInit {
+  templates: TemplateRef<any>[] = [];
+
   @Input() formGroup: FormGroup;
   @Input() submit: (data: any) => void;
   @Input() cancelDisabled = false;
   @Input() innerItems: QueryList<PageFormItemDirective>;
+  @Input() options: Map<string, any>;
   @ContentChildren(PageFormItemDirective) items: QueryList<PageFormItemDirective>;
-  dataset: PageFormItemDirective[] = [];
+
+  private dataset: any[];
 
   constructor(
     public bit: BitService,
@@ -50,6 +42,24 @@ export class PageFormComponent implements AfterViewInit {
       ...this.items.toArray(),
       ...(!this.innerItems ? [] : this.innerItems.toArray())
     ];
+    this.templates = this.dataset.map(v => v.ref);
+    this.changeDetectorRef.detectChanges();
+  }
+
+  plan(schema: { [key: string]: PageFormSchema }): void {
+    this.dataset = this.dataset
+      .filter((v: PageFormItemDirective) => {
+        if (!schema.hasOwnProperty(v.vPageFormItem)) {
+          return true;
+        }
+        return !schema[v.vPageFormItem].disabled;
+      })
+      .sort((a: PageFormItemDirective, b: PageFormItemDirective) => {
+        const n1 = !schema.hasOwnProperty(a.vPageFormItem) ? 0 : schema[a.vPageFormItem].weight;
+        const n2 = !schema.hasOwnProperty(b.vPageFormItem) ? 0 : schema[b.vPageFormItem].weight;
+        return n1 > n2 ? -1 : 1;
+      });
+    this.templates = this.dataset.map(v => v.ref);
     this.changeDetectorRef.detectChanges();
   }
 }

@@ -1,16 +1,18 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BitSwalService, BitService } from 'ngx-bit';
 import { FormBuilder } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncSubject } from 'rxjs';
 import { AclService } from '../acl.service';
+import { AclAddComponent } from '../acl-add/acl-add.component';
 
 @Component({
   selector: 'v-acl-edit',
   templateUrl: './acl-edit.component.html'
 })
 export class AclEditComponent implements OnInit, AfterViewInit {
+  @ViewChild('component') component: AclAddComponent;
   private id: number;
   private keyAsync: AsyncSubject<string> = new AsyncSubject();
 
@@ -40,7 +42,6 @@ export class AclEditComponent implements OnInit, AfterViewInit {
     //   read: [[]],
     //   status: [true, [Validators.required]]
     // });
-
     this.route.params.subscribe(param => {
       this.id = param.id;
       this.getData();
@@ -48,6 +49,9 @@ export class AclEditComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.component.pf.plan({
+      write: { weight: 1 }
+    });
   }
 
   // existsKey = (control: AbstractControl) => {
