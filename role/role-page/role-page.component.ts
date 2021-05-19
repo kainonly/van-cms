@@ -61,8 +61,8 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getNodes();
     });
     this.route.params.subscribe(param => {
-      this.id = param.id;
-      if (this.id) {
+      if (param.id) {
+        this.id = param.id;
         this.getData();
       }
     });

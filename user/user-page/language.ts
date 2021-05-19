@@ -6,12 +6,14 @@ export default {
   usernameDuplicated: ['当前用户名称已存在', 'Current user name already exists'],
   role: ['权限组', 'Role Group'],
   rolePlaceholder: ['请选择权限组', 'Please Enter Role Group'],
+  personalRole: ['个人权限', 'Personal Role'],
   password: ['用户密码', 'Password'],
   passwordTips: [
     '密码最小为12位，由大写字母、小写字母、符号、数字组合',
     'The password must be at least 12 digits and be composed of uppercase letters, lowercase letters, symbols, and numbers'
   ],
-  passwordPlaceholder: ['请输入用户密码', 'Please Enter Password'],
+  passwordPlaceholderMust: ['请输入用户密码', 'Please enter password'],
+  passwordPlaceholder: ['请输入用户密码（选填，为空不更新）', 'Please enter password(Do not update if it is empty)'],
   passwordRequire: ['请输入用户密码', 'Please Enter Password!'],
   passwordMinLength: ['密码长度必须大于12位', 'Password length must be greater than 12 digits'],
   passwordMaxLength: ['密码长度已超出20位', 'Password length has exceeded 20 digits'],
@@ -19,7 +21,6 @@ export default {
   passwordUppercase: ['密码必须包含大写字母A-Z', 'Password must contain uppercase letters A-Z'],
   passwordNumber: ['密码必须包含数字0-9', 'Password must contain numbers 0-9'],
   passwordSymbol: ['密码必须包含符号@$!%*?&-+', 'Password must contain the symbol @$!%*?&-+'],
-  passwordCheck: ['再次验证', 'Password Check'],
   passwordCorrectly: ['请输入正确的用户密码', 'Please enter the correct user password'],
   resource: ['资源策略', 'Resource Policy'],
   checked: ['选中', 'Checked'],

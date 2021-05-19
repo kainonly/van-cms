@@ -3,8 +3,7 @@ import { ShareModule } from '@vanx/framework';
 import { FrameworkComponentModule } from '@vanx/framework/component';
 import { UserService } from './user.service';
 import { UserIndexComponent } from './user-index/user-index.component';
-import { UserAddComponent } from './user-add/user-add.component';
-import { UserEditComponent } from './user-edit/user-edit.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 @NgModule({
   imports: [
@@ -13,13 +12,11 @@ import { UserEditComponent } from './user-edit/user-edit.component';
   ],
   declarations: [
     UserIndexComponent,
-    UserAddComponent,
-    UserEditComponent
+    UserPageComponent
   ],
   exports: [
     UserIndexComponent,
-    UserAddComponent,
-    UserEditComponent
+    UserPageComponent
   ],
   providers: [
     UserService

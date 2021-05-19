@@ -44,8 +44,8 @@ export class PermissionPageComponent implements OnInit {
       status: [true, [Validators.required]]
     });
     this.route.params.subscribe(param => {
-      this.id = param.id;
-      if (this.id) {
+      if (param.id) {
+        this.id = param.id;
         this.getData();
       }
     });

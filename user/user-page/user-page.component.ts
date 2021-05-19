@@ -1,25 +1,33 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BitSwalService, BitService, BitEventsService } from 'ngx-bit';
 import { asyncValidator } from 'ngx-bit/operates';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, throttleTime } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { RoleService } from '@vanx/framework/role';
 import { PermissionService } from '@vanx/framework/permission';
 import { ResourceService } from '@vanx/framework/resource';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { validedPassword } from './valided-password';
+import { AsyncSubject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'v-user-add',
-  templateUrl: './user-add.component.html'
+  selector: 'v-user-page',
+  templateUrl: './user-page.component.html'
 })
-export class UserAddComponent implements OnInit {
-  @ViewChild('nzTree', { static: true }) nzTree: NzTreeComponent;
+export class UserPageComponent implements OnInit, AfterViewInit {
+  private id: number;
+  private dataAsync: AsyncSubject<void> = new AsyncSubject<void>();
+
+  @ViewChild('nzTree') nzTree: NzTreeComponent;
   private resource: string[] = [];
   nodes: NzTreeNodeOptions[] = [];
   form: FormGroup;
+  pwd = true;
+  pwdMust = true;
   avatar = '';
   roleLists: any[] = [];
   permissionLists: any[] = [];
@@ -33,7 +41,8 @@ export class UserAddComponent implements OnInit {
     private userService: UserService,
     private roleService: RoleService,
     private resourceService: ResourceService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -41,9 +50,12 @@ export class UserAddComponent implements OnInit {
     this.userService.setModel('admin');
     this.bit.registerLocales(packer);
     this.form = this.fb.group({
-      username: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(20)], [this.validedUsername]],
+      username: [null, [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(20)
+      ], [this.validedUsername]],
       password: [null, this.validedPassword],
-      password_check: [null, [this.checkPassword]],
       role: [null, [Validators.required]],
       permission: [[]],
       call: [null],
@@ -54,6 +66,12 @@ export class UserAddComponent implements OnInit {
     this.getRole();
     this.getNodes();
     this.getPermission();
+    this.route.params.subscribe(param => {
+      if (param.id) {
+        this.id = param.id;
+        this.getData();
+      }
+    });
     this.events.on('locale').subscribe(() => {
       this.getNodes();
     });
@@ -62,64 +80,75 @@ export class UserAddComponent implements OnInit {
   validedUsername = (control: AbstractControl) => {
     return asyncValidator(this.userService.validedUsername(control.value));
   };
-
   validedPassword = (control: AbstractControl) => {
-    if (control.parent === undefined) {
-      return;
-    }
     if (!control.value) {
-      return { required: true };
+      return this.pwdMust ? { required: true } : null;
     }
-    control.parent.get('password_check').updateValueAndValidity();
-    const value = control.value;
-    const len = value.length;
-    if (len < 12) {
-      return { min: true, error: true };
-    }
-    if (len > 20) {
-      return { max: true, error: true };
-    }
-    if (value.match(/^(?=.*[a-z])[\w|@$!%*?&-+]+$/) === null) {
-      return { lowercase: true, error: true };
-    }
-    if (value.match(/^(?=.*[A-Z])[\w|@$!%*?&-+]+$/) === null) {
-      return { uppercase: true, error: true };
-    }
-    if (value.match(/^(?=.*[0-9])[\w|@$!%*?&-+]+$/) === null) {
-      return { number: true, error: true };
-    }
-    if (value.match(/^(?=.*[@$!%*?&-+])[\w|@$!%*?&-+]+$/) === null) {
-      return { symbol: true, error: true };
-    }
-    return null;
+    return validedPassword(control.value);
   };
 
-  checkPassword = (control: AbstractControl) => {
-    if (control.parent === undefined) {
-      return;
-    }
-    if (!control.value) {
-      return { required: true };
-    }
-    const password = control.parent.get('password').value;
-    if (control.value !== password) {
-      return { correctly: true, error: true };
-    }
-    return null;
-  };
+  ngAfterViewInit(): void {
+    this.dataAsync.pipe(
+      throttleTime(200)
+    ).subscribe(() => {
+      const resource = this.resource;
+      const queue = [...this.nzTree.getTreeNodes()];
+      while (queue.length !== 0) {
+        const node = queue.pop();
+        node.isChecked = resource.indexOf(node.key) !== -1;
+        const parent = node.parentNode;
+        if (parent) {
+          parent.isChecked = parent.getChildren().every(v => resource.indexOf(v.key) !== -1);
+          parent.isHalfChecked = !parent.isChecked && parent.getChildren().some(v => resource.indexOf(v.key) !== -1);
+        }
+        const children = node.getChildren();
+        if (children.length !== 0) {
+          queue.push(...children);
+        }
+      }
+    });
+  }
 
-  /**
-   * 获取权限组
-   */
+  getData(): void {
+    this.pwdMust = false;
+    this.form.get('username').disable();
+    this.userService.get(this.id).subscribe(data => {
+      if (data.self) {
+        this.swal.create({
+          title: this.bit.l.auth,
+          content: this.bit.l.selfTip,
+          type: 'info',
+          okText: this.bit.l.goProfile,
+          cancelText: this.bit.l.back
+        }).subscribe((status) => {
+          if (status) {
+            this.bit.open(['profile']);
+          } else {
+            this.bit.back();
+          }
+        });
+      }
+      this.resource = data.resource ? data.resource.split(',') : [];
+      this.dataAsync.next();
+      this.dataAsync.complete();
+      this.form.patchValue({
+        username: data.username,
+        role: data.role.split(','),
+        permission: data.permission ? data.permission.split(',') : [],
+        call: data.call,
+        email: data.email,
+        phone: data.phone,
+        status: data.status
+      });
+    });
+  }
+
   getRole(): void {
     this.roleService.originLists().subscribe(data => {
       this.roleLists = data;
     });
   }
 
-  /**
-   * 获取资源策略节点
-   */
   getNodes(): void {
     this.resourceService.originLists().subscribe(data => {
       const refer: Map<string, NzTreeNodeOptions> = new Map();
@@ -215,9 +244,6 @@ export class UserAddComponent implements OnInit {
     this.allExpandStatus(false);
   }
 
-  /**
-   * 设置展开状态
-   */
   private allExpandStatus(status: boolean): void {
     const queue = [...this.nzTree.getTreeNodes()];
     while (queue.length !== 0) {
@@ -230,18 +256,12 @@ export class UserAddComponent implements OnInit {
     }
   }
 
-  /**
-   * 获取特殊授权
-   */
   getPermission(): void {
     this.permissionService.originLists().subscribe(data => {
       this.permissionLists = data;
     });
   }
 
-  /**
-   * 上传
-   */
   upload(info): void {
     if (info.type === 'success') {
       this.avatar = info.file.response.data.save_name;
@@ -252,22 +272,30 @@ export class UserAddComponent implements OnInit {
     }
   }
 
-  /**
-   * 提交
-   */
-  submit(data): void {
-    Reflect.deleteProperty(data, 'password_check');
+  submit = (data): void => {
     Reflect.set(data, 'resource', this.resource);
     if (this.avatar) {
       Reflect.set(data, 'avatar', this.avatar);
     }
-    this.userService.add(data).pipe(
-      switchMap(res =>
-        this.swal.addAlert(res, this.form, {
-          status: true
-        })
-      )
-    ).subscribe(() => {
-    });
-  }
+    if (!this.id) {
+      this.userService.add(data).pipe(
+        switchMap(res =>
+          this.swal.addAlert(res, this.form, {
+            status: true
+          })
+        )
+      ).subscribe(() => {
+      });
+    } else {
+      Reflect.set(data, 'id', this.id);
+      this.userService.edit(data).pipe(
+        switchMap(res => this.swal.editAlert(res))
+      ).subscribe(status => {
+        if (status) {
+          this.form.reset();
+          this.getData();
+        }
+      });
+    }
+  };
 }
