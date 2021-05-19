@@ -46,7 +46,7 @@ export class AclService {
   /**
    * Validate Acl Key
    */
-  validedKey(key: string, edit: Observable<string> = of(null)): Observable<any> {
+  validedKey(key: string, edit: Observable<any> = of(null)): Observable<any> {
     return edit.pipe(
       switchMap(editKey => {
         if (key !== editKey) {

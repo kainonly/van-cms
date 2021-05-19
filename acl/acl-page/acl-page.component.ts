@@ -15,7 +15,7 @@ import * as packer from './language';
 })
 export class AclPageComponent implements OnInit {
   private id: number;
-  private keyAsync: AsyncSubject<string>;
+  private keyAsync: AsyncSubject<any>;
 
   form: FormGroup;
   readonly default: any = {

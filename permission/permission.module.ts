@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { ShareModule } from '@vanx/framework';
 import { FrameworkComponentModule } from '@vanx/framework/component';
 import { PermissionIndexComponent } from './permission-index/permission-index.component';
-import { PermissionAddComponent } from './permission-add/permission-add.component';
-import { PermissionEditComponent } from './permission-edit/permission-edit.component';
+import { PermissionPageComponent } from './permission-page/permission-page.component';
 import { PermissionService } from './permission.service';
 
 @NgModule({
@@ -13,13 +12,11 @@ import { PermissionService } from './permission.service';
   ],
   declarations: [
     PermissionIndexComponent,
-    PermissionAddComponent,
-    PermissionEditComponent
+    PermissionPageComponent
   ],
   exports: [
     PermissionIndexComponent,
-    PermissionAddComponent,
-    PermissionEditComponent
+    PermissionPageComponent
   ],
   providers: [
     PermissionService
