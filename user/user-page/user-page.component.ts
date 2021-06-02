@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitSwalService, BitService, BitEventsService } from 'ngx-bit';
+import { BitSwalService, BitService } from 'ngx-bit';
 import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap, throttleTime } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -9,7 +9,7 @@ import { PermissionService } from '@vanx/framework/permission';
 import { ResourceService } from '@vanx/framework/resource';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { validedPassword } from './valided-password';
-import { AsyncSubject } from 'rxjs';
+import { AsyncSubject, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import * as packer from './language';
@@ -18,7 +18,7 @@ import * as packer from './language';
   selector: 'v-user-page',
   templateUrl: './user-page.component.html'
 })
-export class UserPageComponent implements OnInit, AfterViewInit {
+export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private id: number;
   private dataAsync: AsyncSubject<void> = new AsyncSubject<void>();
 
@@ -32,11 +32,12 @@ export class UserPageComponent implements OnInit, AfterViewInit {
   roleLists: any[] = [];
   permissionLists: any[] = [];
 
+  private localeChanged: Subscription;
+
   constructor(
     private swal: BitSwalService,
     private fb: FormBuilder,
     public bit: BitService,
-    private events: BitEventsService,
     private notification: NzNotificationService,
     private userService: UserService,
     private roleService: RoleService,
@@ -72,7 +73,7 @@ export class UserPageComponent implements OnInit, AfterViewInit {
         this.getData();
       }
     });
-    this.events.on('locale').subscribe(() => {
+    this.localeChanged = this.bit.localeChanged.subscribe(() => {
       this.getNodes();
     });
   }
@@ -107,6 +108,10 @@ export class UserPageComponent implements OnInit, AfterViewInit {
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.localeChanged.unsubscribe();
   }
 
   getData(): void {

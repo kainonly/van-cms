@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService, BitEventsService, BitSwalService } from 'ngx-bit';
+import { BitService, BitSwalService } from 'ngx-bit';
 import { ActivatedRoute } from '@angular/router';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap } from 'rxjs/operators';
-import { AsyncSubject } from 'rxjs';
+import { AsyncSubject, Subscription } from 'rxjs';
 import { ResourceService } from '../resource.service';
 import * as packer from './language';
+import { SystemService } from '@vanx/framework';
 
 @Component({
   selector: 'v-resource-page',
@@ -21,13 +22,15 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
   parentId: number;
   parentLists: any[] = [];
 
+  private localeChanged: Subscription;
+
   constructor(
     public bit: BitService,
     private fb: FormBuilder,
-    private events: BitEventsService,
     private swal: BitSwalService,
     private resourceService: ResourceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private system: SystemService
   ) {
   }
 
@@ -60,13 +63,13 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
       }
       this.getParentNodes();
     });
-    this.events.on('locale').subscribe(() => {
+    this.localeChanged = this.bit.localeChanged.subscribe(() => {
       this.getParentNodes();
     });
   }
 
   ngOnDestroy(): void {
-    this.events.off('locale');
+    this.localeChanged.unsubscribe();
   }
 
   existsKey = (control: AbstractControl) => {
@@ -154,7 +157,7 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
         if (status) {
           this.getParentNodes();
         }
-        this.events.publish('refresh-menu');
+        this.system.refreshMenuStart();
       });
     } else {
       Reflect.set(data, 'id', this.id);
@@ -164,7 +167,7 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
         if (status) {
           this.getParentNodes();
         }
-        this.events.publish('refresh-menu');
+        this.system.refreshMenuStart();
       });
     }
   };

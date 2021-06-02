@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable()
 export class SystemService {
   /**
    * 图层
    */
-  layout = new BehaviorSubject([]);
+  readonly layout = new BehaviorSubject([]);
 
   /**
    * 登录状态
    */
-  login = new BehaviorSubject(false);
+  readonly login = new BehaviorSubject(false);
+
+  readonly refreshMenu = new Subject();
+
+  refreshMenuStart(): void {
+    this.refreshMenu.next(1);
+  }
 }

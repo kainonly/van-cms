@@ -7,7 +7,7 @@ import {
   ElementRef
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BitService, BitEventsService, BitSupportService } from 'ngx-bit';
+import { BitService, BitSupportService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription, timer } from 'rxjs';
 import { MainService, SystemService } from '@vanx/framework';
@@ -24,6 +24,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   collapsed = false;
   navLists: any[] = [];
 
+  private refreshMenu: Subscription;
   private statusSubscription: Subscription;
   private firstDispatch = true;
 
@@ -32,7 +33,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private system: SystemService,
     private mainService: MainService,
-    private events: BitEventsService,
     private notification: NzNotificationService,
     public support: BitSupportService,
     public bit: BitService,
@@ -44,7 +44,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.bit.registerLocales({});
     this.getMenuLists();
     this.support.setup(this.router);
-    this.events.on('refresh-menu').subscribe(() => {
+    this.refreshMenu = this.system.refreshMenu.subscribe(() => {
       this.getMenuLists();
     });
     this.statusSubscription = this.support.status.subscribe(() => {
@@ -54,7 +54,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.events.off('refresh-menu');
+    this.refreshMenu.unsubscribe();
     this.support.unsubscribe();
     this.statusSubscription.unsubscribe();
   }

@@ -2,14 +2,15 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzFormatBeforeDropEvent, NzFormatEmitEvent, NzTreeComponent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { BitService, BitEventsService, BitSwalService } from 'ngx-bit';
-import { Observable, of } from 'rxjs';
+import { BitService, BitSwalService } from 'ngx-bit';
+import { Observable, of, Subscription } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { AclService } from '@vanx/framework/acl';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ResourceService } from '../resource.service';
 import { PolicyService } from '../policy.service';
 import * as packer from './language';
+import { SystemService } from '@vanx/framework';
 
 @Component({
   selector: 'v-resource-index',
@@ -33,9 +34,10 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
   policyAclKey: string;
   policyValue = 0;
 
+  private localeChanged: Subscription;
+
   constructor(
     public bit: BitService,
-    private events: BitEventsService,
     private fb: FormBuilder,
     private swal: BitSwalService,
     private message: NzMessageService,
@@ -43,7 +45,8 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     private contextMenu: NzContextMenuService,
     private resourceService: ResourceService,
     public policyService: PolicyService,
-    private aclService: AclService
+    private aclService: AclService,
+    private system: SystemService
   ) {
   }
 
@@ -51,13 +54,13 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     this.bit.registerLocales(packer);
     this.getNodes();
     this.getPolicy();
-    this.events.on('locale').subscribe(() => {
+    this.localeChanged = this.bit.localeChanged.subscribe(() => {
       this.getNodes();
     });
   }
 
   ngOnDestroy(): void {
-    this.events.off('locale');
+    this.localeChanged.unsubscribe();
   }
 
   /**
@@ -195,7 +198,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     ).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.deleteSuccess);
-        this.events.publish('refresh-menu');
+        this.system.refreshMenuStart();
         this.getNodes();
       } else {
         this.message.error(this.bit.l.deleteError);
@@ -272,7 +275,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     ).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.sortSuccess);
-        this.events.publish('refresh-menu');
+        this.system.refreshMenuStart();
         this.closeSort();
       } else {
         this.message.error(this.bit.l.sortError);
