@@ -21,18 +21,6 @@
   }
 }
 
-nz-sider {
-  overflow: hidden;
-  height: 100%;
-  position: fixed;
-  left: 0;
-
-  .scroll-bar {
-    height: calc(100% - 48px);
-    overflow: auto;
-  }
-}
-
 nz-layout {
   &.right-layout {
     transition: margin-left .2s;
@@ -42,8 +30,4 @@ nz-layout {
   &.collapsed {
     margin-left: 80px;
   }
-}
-
-.page-header-content {
-  padding: 15px 12px;
 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService, BitSwalService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { ActivatedRoute } from '@angular/router';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import { asyncValidator } from 'ngx-bit/operates';
@@ -9,6 +9,7 @@ import { AsyncSubject, Subscription } from 'rxjs';
 import { ResourceService } from '../resource.service';
 import * as packer from './language';
 import { SystemService } from '@vanx/framework';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-resource-page',

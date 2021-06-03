@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzFormatBeforeDropEvent, NzFormatEmitEvent, NzTreeComponent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { BitService, BitSwalService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { AclService } from '@vanx/framework/acl';
@@ -11,6 +11,7 @@ import { ResourceService } from '../resource.service';
 import { PolicyService } from '../policy.service';
 import * as packer from './language';
 import { SystemService } from '@vanx/framework';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-resource-index',

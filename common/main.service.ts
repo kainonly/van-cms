@@ -37,28 +37,27 @@ export class MainService {
   resource(): Observable<any> {
     return this.http.req(this.model + '/resource').pipe(
       map(res => {
-        const resource: Map<string, any> = new Map<string, any>();
-        const router: Map<string, any> = new Map<string, any>();
+        const resource: object = {};
+        const router: object = {};
         const nav: any = [];
 
         if (!res.error) {
           for (const x of res.data) {
-            resource.set(x.key, x);
+            resource[x.key] = x;
             if (x.router === 1 || x.router === true) {
-              router.set(x.key, x);
+              router[x.key] = x;
             }
           }
           for (const x of res.data) {
             if (!x.nav) {
               continue;
             }
-
             if (x.parent === 'origin') {
               nav.push(x);
             } else {
               const parent = x.parent;
-              if (resource.has(parent)) {
-                const rows = resource.get(parent);
+              if (resource.hasOwnProperty(parent)) {
+                const rows = resource[parent];
                 if (!rows.hasOwnProperty('children')) {
                   rows.children = [];
                 }

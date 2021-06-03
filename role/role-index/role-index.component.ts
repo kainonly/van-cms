@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BitSwalService, BitService, ListByPage } from 'ngx-bit';
+import { BitService, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PermissionService } from '@vanx/framework/permission';
 import { PageTableColumn } from '@vanx/framework';
@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { RoleService } from '../role.service';
 import * as packer from './language';
 import { columnType } from '@vanx/framework/component';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-role-index',

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitSwalService, BitService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap, throttleTime } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -13,6 +13,7 @@ import { AsyncSubject, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import * as packer from './language';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-user-page',

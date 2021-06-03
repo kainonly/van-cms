@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitSwalService, BitService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { asyncValidator } from 'ngx-bit/operates';
@@ -12,6 +12,7 @@ import { AsyncSubject, Subscription } from 'rxjs';
 import { SystemService } from '@vanx/framework';
 import { RoleService } from '../role.service';
 import * as packer from './language';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-role-page',

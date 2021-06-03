@@ -7,10 +7,11 @@ import {
   ElementRef
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BitService, BitSupportService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription, timer } from 'rxjs';
 import { MainService, SystemService } from '@vanx/framework';
+import { BitRouterService } from 'ngx-bit/router';
 
 @Component({
   selector: 'v-layout',
@@ -34,7 +35,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private system: SystemService,
     private mainService: MainService,
     private notification: NzNotificationService,
-    public support: BitSupportService,
+    public bitRouter: BitRouterService,
     public bit: BitService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
@@ -43,11 +44,11 @@ export class LayoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.bit.registerLocales({});
     this.getMenuLists();
-    this.support.setup(this.router);
+    this.bitRouter.setup();
     this.refreshMenu = this.system.refreshMenu.subscribe(() => {
       this.getMenuLists();
     });
-    this.statusSubscription = this.support.status.subscribe(() => {
+    this.statusSubscription = this.bitRouter.changed.subscribe(() => {
       this.changeDetectorRef.detectChanges();
       this.dispatch();
     });
@@ -55,7 +56,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.refreshMenu.unsubscribe();
-    this.support.unsubscribe();
     this.statusSubscription.unsubscribe();
   }
 
@@ -64,32 +64,26 @@ export class LayoutComponent implements OnInit, OnDestroy {
    */
   private getMenuLists(): void {
     this.mainService.resource().subscribe(data => {
-      this.support.setResource(data.resource, data.router);
+      this.bitRouter.setData({
+        resource: data.resource,
+        router: data.router
+      });
       this.navLists = data.nav;
     });
   }
 
   private dispatch(): void {
-    timer(this.firstDispatch ? 150 : 0).subscribe(() => {
-      const node = this.warpper.nativeElement;
-      let sibling = node.previousElementSibling;
-      const container = [this.header.nativeElement];
-      while (sibling) {
-        container.push(sibling);
-        sibling = sibling.previousElementSibling;
-      }
-      this.system.layout.next(container);
-    });
-    this.firstDispatch = false;
-  }
-
-  level(data: any): number {
-    let deep = 0;
-    while (data.hasOwnProperty('parentNode')) {
-      deep++;
-      data = data.parentNode;
-    }
-    return deep * 24;
+    // timer(this.firstDispatch ? 150 : 0).subscribe(() => {
+    //   const node = this.warpper.nativeElement;
+    //   let sibling = node.previousElementSibling;
+    //   const container = [this.header.nativeElement];
+    //   while (sibling) {
+    //     container.push(sibling);
+    //     sibling = sibling.previousElementSibling;
+    //   }
+    //   this.system.layout.next(container);
+    // });
+    // this.firstDispatch = false;
   }
 
   /**
@@ -97,8 +91,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
    */
   logout(): void {
     this.mainService.logout().subscribe(() => {
-      this.support.clearStorage();
-      this.support.unsubscribe();
+      this.bit.clear();
+      this.bitRouter.uninstall();
       this.router.navigateByUrl('/login');
       this.notification.info(this.bit.l.auth, this.bit.l.authLogout);
     });

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { BitService, BitSupportService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { switchMap } from 'rxjs/operators';
 import { MainService } from '@vanx/framework';
@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
     private notification: NzNotificationService,
     private router: Router,
     private fb: FormBuilder,
-    private support: BitSupportService,
     private storageMap: StorageMap
   ) {
   }
@@ -71,7 +70,7 @@ export class LoginComponent implements OnInit {
     this.mainService.login(data.username, data.password).subscribe(res => {
       switch (res.error) {
         case 0:
-          this.support.clearStorage();
+          this.bit.clear();
           if (data.remember) {
             this.addUsername(data.username);
           }

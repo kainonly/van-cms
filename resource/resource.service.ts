@@ -1,35 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { BitHttpService } from 'ngx-bit';
+import { BitCurdCommonService, BitHttpService } from 'ngx-bit';
 
 @Injectable()
 export class ResourceService {
   protected model = 'resource';
 
   constructor(
-    protected http: BitHttpService
+    private http: BitHttpService,
+    private curd: BitCurdCommonService
   ) {
   }
 
   originLists(): Observable<any> {
-    return this.http.originLists(this.model);
+    return this.curd.originLists(this.model);
   }
 
   add(data: any): Observable<any> {
-    return this.http.add(this.model, data);
+    return this.curd.add(this.model, data);
   }
 
   get(id: any): Observable<any> {
-    return this.http.get(this.model, id);
+    return this.curd.get(this.model, id);
   }
 
   edit(data: any): Observable<any> {
-    return this.http.edit(this.model, data);
+    return this.curd.edit(this.model, data);
   }
 
   delete(id: any[]): Observable<any> {
-    return this.http.delete(this.model, id);
+    return this.curd.delete(this.model, id);
   }
 
   /**

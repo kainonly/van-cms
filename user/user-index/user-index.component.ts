@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BitSwalService, BitService, ListByPage } from 'ngx-bit';
+import { BitService, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { RoleService } from '@vanx/framework/role';
 import { PermissionService } from '@vanx/framework/permission';
@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import { PageTableColumn } from '@vanx/framework';
 import { UserService } from '../user.service';
 import * as packer from './language';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-user-index',

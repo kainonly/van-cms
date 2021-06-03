@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitSwalService, BitService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { asyncValidator } from 'ngx-bit/operates';
 import { ActivatedRoute } from '@angular/router';
@@ -8,6 +8,7 @@ import { AsyncSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AclService } from '../acl.service';
 import * as packer from './language';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-acl-page',

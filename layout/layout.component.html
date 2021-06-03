@@ -1,48 +1,5 @@
 <nz-layout class="main-layout">
-  <nz-sider nzCollapsible [(nzCollapsed)]="collapsed" [nzBreakpoint]="'lg'">
-    <div class="scroll-bar">
-      <ul
-        nz-menu
-        [nzTheme]="'dark'"
-        [nzInlineCollapsed]="collapsed"
-        [nzMode]="collapsed ? 'vertical' : 'inline'"
-      >
-        <ng-container *ngTemplateOutlet="navTpl; context: { $implicit: navLists }"></ng-container>
-        <ng-template #navTpl let-navs>
-          <ng-container *ngFor="let x of navs">
-            <ng-container *ngIf="x.router; else notRouter">
-              <li
-                nz-menu-item
-                [nzPaddingLeft]="level(x)"
-                [bitOpen]="[x.key]"
-                [nzSelected]="support.navActive.indexOf(x.key) !== -1"
-              >
-                <i nz-icon [nzType]="x.icon"></i>
-                <span class="nav-text">{{ x.name | object: bit.locale }}</span>
-              </li>
-            </ng-container>
-            <ng-template #notRouter>
-              <li
-                nz-submenu
-                [nzOpen]="support.navActive.indexOf(x.key) !== -1"
-                [nzPaddingLeft]="level(x)"
-              >
-                  <span title>
-                    <i nz-icon [nzType]="x.icon"></i>
-                    <span>{{ x.name | object: bit.locale }}</span>
-                  </span>
-                <ul>
-                  <ng-container
-                    *ngTemplateOutlet="navTpl; context: { $implicit: x.children }"
-                  ></ng-container>
-                </ul>
-              </li>
-            </ng-template>
-          </ng-container>
-        </ng-template>
-      </ul>
-    </div>
-  </nz-sider>
+  <bit-sider [collapsed]="collapsed" [data]="navLists"></bit-sider>
   <nz-layout class="right-layout" [ngClass]="{ collapsed: collapsed }">
     <ul #header nz-menu [nzMode]="'horizontal'" [nzSelectable]="false">
       <li nz-menu-item routerLink="/">
@@ -80,40 +37,8 @@
       </li>
     </ul>
     <nz-content>
-      <ng-container *ngTemplateOutlet="support.banner"></ng-container>
-      <nz-page-header
-        [nzGhost]="false"
-        [nzTitle]="support.title | object: bit.locale"
-        [nzSubtitle]="!support.subTitle ? null : support.subTitle"
-        [nzBackIcon]="!support.back ? null : ''"
-        (nzBack)="bit.back()"
-      >
-        <nz-breadcrumb [nzSeparator]="breadcrumbIcon" nz-page-header-breadcrumb>
-          <ng-template #breadcrumbIcon>
-            <i nz-icon nzType="right"></i>
-          </ng-template>
-          <nz-breadcrumb-item>
-            <a routerLink="/">{{ bit.l["dashboard"] }}</a>
-          </nz-breadcrumb-item>
-          <nz-breadcrumb-item *ngFor="let x of support.breadcrumb;index as i; last as islast">
-            <ng-container *ngIf="islast; else notLast">
-              {{ x.name | object: bit.locale }}
-            </ng-container>
-            <ng-template #notLast>
-              <a *ngIf="x.router; else notRouterlink" [bitHistory]="x.key">
-                {{ x.name | object: bit.locale }}
-              </a>
-              <ng-template #notRouterlink>{{ x.name | object: bit.locale }}</ng-template>
-            </ng-template>
-          </nz-breadcrumb-item>
-        </nz-breadcrumb>
-        <nz-page-header-extra>
-          <ng-container *ngTemplateOutlet="support.actions"></ng-container>
-        </nz-page-header-extra>
-      </nz-page-header>
-      <nz-page-header-content #warpper class="page-header-content">
-        <router-outlet></router-outlet>
-      </nz-page-header-content>
+      <bit-content></bit-content>
+      <!-- TODO:bit content -->
     </nz-content>
   </nz-layout>
 </nz-layout>

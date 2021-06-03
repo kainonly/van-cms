@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BitDirectiveModule } from 'ngx-bit/directive';
-import { BitExtModule } from 'ngx-bit/component';
 import { BitPipeModule } from 'ngx-bit/pipe';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -49,6 +48,10 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { PortalModule } from '@angular/cdk/portal';
+import { BitComponentModule } from 'ngx-bit/component';
+import { BitStorageModule } from 'ngx-bit/storage';
+import { BitSwalModule } from 'ngx-bit/swal';
+import { BitRouterModule } from 'ngx-bit/router';
 
 @NgModule({
   exports: [
@@ -102,9 +105,10 @@ import { PortalModule } from '@angular/cdk/portal';
     NzTimelineModule,
     NzInputNumberModule,
     PortalModule,
-    BitExtModule,
+    BitComponentModule,
+    BitDirectiveModule,
     BitPipeModule,
-    BitDirectiveModule
+    BitRouterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
