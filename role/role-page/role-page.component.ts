@@ -1,16 +1,17 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitSwalService, BitService, BitEventsService } from 'ngx-bit';
+import { BitSwalService, BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap, throttleTime } from 'rxjs/operators';
 import { ResourceService } from '@vanx/framework/resource';
 import { PermissionService } from '@vanx/framework/permission';
+import { ActivatedRoute } from '@angular/router';
+import { AsyncSubject, Subscription } from 'rxjs';
+import { SystemService } from '@vanx/framework';
 import { RoleService } from '../role.service';
 import * as packer from './language';
-import { ActivatedRoute } from '@angular/router';
-import { AsyncSubject } from 'rxjs';
 
 @Component({
   selector: 'v-role-page',
@@ -27,16 +28,18 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
   permissionLists: any[] = [];
   form: FormGroup;
 
+  private localeChanged: Subscription;
+
   constructor(
     public bit: BitService,
     private fb: FormBuilder,
-    private events: BitEventsService,
     private notification: NzNotificationService,
     private swal: BitSwalService,
     private roleService: RoleService,
     private resourceService: ResourceService,
     private permissionService: PermissionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private system: SystemService
   ) {
   }
 
@@ -57,7 +60,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.getNodes();
     this.getPermission();
-    this.events.on('locale').subscribe(() => {
+    this.localeChanged = this.bit.localeChanged.subscribe(() => {
       this.getNodes();
     });
     this.route.params.subscribe(param => {
@@ -91,7 +94,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.events.off('locale');
+    this.localeChanged.unsubscribe();
   }
 
   existsKey = (control: AbstractControl) => {
@@ -257,7 +260,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
         if (status) {
           this.getData();
         }
-        this.events.publish('refresh-menu');
+        this.system.refreshMenuStart();
       });
     }
   };
