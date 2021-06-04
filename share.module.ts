@@ -49,8 +49,6 @@ import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { PortalModule } from '@angular/cdk/portal';
 import { BitComponentModule } from 'ngx-bit/component';
-import { BitStorageModule } from 'ngx-bit/storage';
-import { BitSwalModule } from 'ngx-bit/swal';
 import { BitRouterModule } from 'ngx-bit/router';
 
 @NgModule({

@@ -7,7 +7,8 @@ import { switchMap } from 'rxjs/operators';
 import { MainService } from '@vanx/framework';
 import { particles } from './particles';
 import * as packer from './language';
-import { storage } from 'ngx-bit/storage';
+import { StorageMap } from '@ngx-pwa/local-storage';
+
 
 @Component({
   selector: 'v-login',
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
     private mainService: MainService,
     private notification: NzNotificationService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private storage: StorageMap
   ) {
   }
 
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
       password: [null, [Validators.required, Validators.minLength(12), Validators.maxLength(20)]],
       remember: [1, [Validators.required]]
     });
-    storage.get(['users']).subscribe((data: Set<string>) => {
+    this.storage.get('users').subscribe((data: Set<string>) => {
       if (data) {
         this.users = [...data.keys()];
       }
@@ -44,20 +46,20 @@ export class LoginComponent implements OnInit {
   }
 
   addUsername(username: string): void {
-    storage.get(['users']).pipe(
+    this.storage.get('users').pipe(
       switchMap((data: Set<string>) =>
-        storage.set(['users'], data ? data.add(username) : new Set([username]))
+        this.storage.set('users', data ? data.add(username) : new Set([username]))
       )
     ).subscribe(() => {
     });
   }
 
   deleteUsername(event: any, username: string): void {
-    storage.get(['users']).pipe(
+    this.storage.get('users').pipe(
       switchMap((data: Set<string>) => {
         data.delete(username);
         this.users = [...data.keys()];
-        return storage.set(['users'], data);
+        return this.storage.set('users', data);
       })
     ).subscribe(() => {
     });
