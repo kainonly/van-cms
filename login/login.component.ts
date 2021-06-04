@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BitService } from 'ngx-bit';
-import { StorageMap } from '@ngx-pwa/local-storage';
 import { switchMap } from 'rxjs/operators';
 import { MainService } from '@vanx/framework';
 import { particles } from './particles';
 import * as packer from './language';
+import { storage } from 'ngx-bit/storage';
 
 @Component({
   selector: 'v-login',
@@ -25,8 +25,7 @@ export class LoginComponent implements OnInit {
     private mainService: MainService,
     private notification: NzNotificationService,
     private router: Router,
-    private fb: FormBuilder,
-    private storageMap: StorageMap
+    private fb: FormBuilder
   ) {
   }
 
@@ -37,7 +36,7 @@ export class LoginComponent implements OnInit {
       password: [null, [Validators.required, Validators.minLength(12), Validators.maxLength(20)]],
       remember: [1, [Validators.required]]
     });
-    this.storageMap.get('users').subscribe((data: Set<string>) => {
+    storage.get(['users']).subscribe((data: Set<string>) => {
       if (data) {
         this.users = [...data.keys()];
       }
@@ -45,20 +44,20 @@ export class LoginComponent implements OnInit {
   }
 
   addUsername(username: string): void {
-    this.storageMap.get('users').pipe(
+    storage.get(['users']).pipe(
       switchMap((data: Set<string>) =>
-        this.storageMap.set('users', data ? data.add(username) : new Set([username]))
+        storage.set(['users'], data ? data.add(username) : new Set([username]))
       )
     ).subscribe(() => {
     });
   }
 
   deleteUsername(event: any, username: string): void {
-    this.storageMap.get('users').pipe(
+    storage.get(['users']).pipe(
       switchMap((data: Set<string>) => {
         data.delete(username);
         this.users = [...data.keys()];
-        return this.storageMap.set('users', data);
+        return storage.set(['users'], data);
       })
     ).subscribe(() => {
     });
