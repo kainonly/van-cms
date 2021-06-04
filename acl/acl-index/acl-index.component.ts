@@ -15,8 +15,8 @@ export class AclIndexComponent implements OnInit {
   columns: PageTableColumn[] = [
     { key: 'name', width: '200px', format: 'i18n' },
     { key: 'key', width: '200px' },
-    { key: 'read', width: '300px', breakWord: true },
-    { key: 'write', width: '300px', breakWord: true },
+    { key: 'read', breakWord: true },
+    { key: 'write', breakWord: true },
     columnType.status('status'),
     columnType.action('acl-edit')
   ];

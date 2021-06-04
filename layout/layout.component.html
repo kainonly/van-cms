@@ -5,7 +5,6 @@
       <li nz-menu-item routerLink="/">
         <i nz-icon nzType="dashboard"></i> {{ bit.l["dashboard"] }}
       </li>
-
       <li nz-submenu>
           <span title>
             <i nz-icon nzType="translation"></i>
@@ -20,7 +19,6 @@
           </li>
         </ul>
       </li>
-
       <li style="float: right" nz-submenu nzMenuClassName="center-submenu">
           <span title>
             <i nz-icon nzType="user"></i>
@@ -37,8 +35,10 @@
       </li>
     </ul>
     <nz-content>
-      <bit-content></bit-content>
-      <!-- TODO:bit content -->
+      <bit-page-header></bit-page-header>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
     </nz-content>
   </nz-layout>
 </nz-layout>

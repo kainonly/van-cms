@@ -1,5 +1,5 @@
 <bit-header>
-  <nz-alert bitBanner nzBanner nzType="info" nzCloseable [nzMessage]="nzMessage.ref">
+  <nz-alert *bitHeaderBanner nzBanner nzType="info" nzCloseable [nzMessage]="nzMessage.ref">
     <bit-print #nzMessage [text]="bit.l['info']" [vars]="[vars0, vars1, vars2]">
       <ng-template #vars0>
         <nz-tag>
@@ -18,28 +18,26 @@
       </ng-template>
     </bit-print>
   </nz-alert>
-  <nz-space>
-    <button *nzSpaceItem nz-button nzType="primary" [bitOpen]="['resource-add']">
-      <i nz-icon nzType="plus"></i>
-      <span>{{ bit.l["add"] }}</span>
+  <button *bitHeaderAction nz-button nzType="primary" [bitOpen]="['resource-add']">
+    <i nz-icon nzType="plus"></i>
+    <span>{{ bit.l["add"] }}</span>
+  </button>
+  <ng-container *ngIf="!isSort">
+    <button *bitHeaderAction nz-button nzType="primary" (click)="openSort()">
+      <i nz-icon nzType="sort-ascending"></i>
+      {{ bit.l["sort"] }}
     </button>
-    <ng-container *ngIf="!isSort">
-      <button *nzSpaceItem nz-button nzType="primary" (click)="openSort()">
-        <i nz-icon nzType="sort-ascending"></i>
-        {{ bit.l["sort"] }}
-      </button>
-    </ng-container>
-    <ng-container *ngIf="isSort">
-      <button *nzSpaceItem nz-button (click)="closeSort()">
-        <i nz-icon nzType="close"></i>
-        {{ bit.l["sortCancel"] }}
-      </button>
-      <button *nzSpaceItem nz-button nzType="primary" (click)="sortSubmit()">
-        <i nz-icon nzType="check"></i>
-        {{ bit.l["sortYes"] }}
-      </button>
-    </ng-container>
-  </nz-space>
+  </ng-container>
+  <ng-container *ngIf="isSort">
+    <button *bitHeaderAction nz-button (click)="closeSort()">
+      <i nz-icon nzType="close"></i>
+      {{ bit.l["sortCancel"] }}
+    </button>
+    <button *bitHeaderAction nz-button nzType="primary" (click)="sortSubmit()">
+      <i nz-icon nzType="check"></i>
+      {{ bit.l["sortYes"] }}
+    </button>
+  </ng-container>
 </bit-header>
 
 <ng-template #search>

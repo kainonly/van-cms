@@ -5,7 +5,7 @@ import { BitCurdCommonService, BitHttpService } from 'ngx-bit';
 
 @Injectable()
 export class ResourceService {
-  protected model = 'resource';
+  private model = 'resource';
 
   constructor(
     private http: BitHttpService,

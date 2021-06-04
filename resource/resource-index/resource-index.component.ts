@@ -69,6 +69,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
    */
   getNodes(): void {
     this.resourceService.originLists().subscribe(data => {
+      console.log(data);
       const refer: Map<string, NzTreeNodeOptions> = new Map();
       const lists = data.map(v => {
         const rows = {
