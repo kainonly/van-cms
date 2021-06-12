@@ -12,6 +12,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription, timer } from 'rxjs';
 import { MainService, SystemService } from '@vanx/framework';
 import { BitRouterService } from 'ngx-bit/router';
+import { NzContentComponent } from 'ng-zorro-antd/layout';
 
 @Component({
   selector: 'v-layout',
@@ -21,6 +22,7 @@ import { BitRouterService } from 'ngx-bit/router';
 export class LayoutComponent implements OnInit, OnDestroy {
   @ViewChild('header') header: ElementRef;
   @ViewChild('warpper') warpper: ElementRef;
+  @ViewChild(NzContentComponent) content: NzContentComponent;
 
   collapsed = false;
   navLists: any[] = [];
@@ -73,17 +75,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   private dispatch(): void {
-    // timer(this.firstDispatch ? 150 : 0).subscribe(() => {
-    //   const node = this.warpper.nativeElement;
-    //   let sibling = node.previousElementSibling;
-    //   const container = [this.header.nativeElement];
-    //   while (sibling) {
-    //     container.push(sibling);
-    //     sibling = sibling.previousElementSibling;
-    //   }
-    //   this.system.layout.next(container);
-    // });
-    // this.firstDispatch = false;
+    timer(300).subscribe(() => {
+      this.system.content.next(this.content['elementRef']);
+      this.system.content.complete();
+    });
   }
 
   /**

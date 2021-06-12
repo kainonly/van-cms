@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { ElementRef, Injectable } from '@angular/core';
+import { AsyncSubject, BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable()
 export class SystemService {
   /**
-   * 图层
+   * 内容节点
    */
-  readonly layout = new BehaviorSubject([]);
+  readonly content: AsyncSubject<ElementRef> = new AsyncSubject();
 
   /**
    * 登录状态
