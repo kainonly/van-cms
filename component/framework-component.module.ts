@@ -5,12 +5,14 @@ import { PageTableSearchDirective } from './page-table/page-table-search.directi
 import { PageTableCellDirective } from './page-table/page-table-cell.directive';
 import { PageFormComponent } from './page-form/page-form.component';
 import { PageFormItemDirective } from './page-form/page-form-item.directive';
+import { TransportComponent } from './transport/transport.component';
 
 @NgModule({
   imports: [
     ShareModule
   ],
   declarations: [
+    TransportComponent,
     PageTableComponent,
     PageTableSearchDirective,
     PageTableCellDirective,
@@ -18,6 +20,7 @@ import { PageFormItemDirective } from './page-form/page-form-item.directive';
     PageFormItemDirective
   ],
   exports: [
+    TransportComponent,
     PageTableComponent,
     PageTableSearchDirective,
     PageTableCellDirective,

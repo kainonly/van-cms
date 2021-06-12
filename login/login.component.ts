@@ -5,9 +5,9 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BitService } from 'ngx-bit';
 import { switchMap } from 'rxjs/operators';
 import { MainService } from '@vanx/framework';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { particles } from './particles';
 import * as packer from './language';
-import { StorageMap } from '@ngx-pwa/local-storage';
 
 
 @Component({
@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.bit.clear();
     this.bit.registerLocales(packer);
     this.form = this.fb.group({
       username: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
