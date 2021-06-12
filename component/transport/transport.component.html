@@ -30,7 +30,7 @@
     </nz-badge>
 
     <ng-template #transportContent>
-      <cdk-virtual-scroll-viewport itemSize="10" class="transport-container">
+      <cdk-virtual-scroll-viewport itemSize="39" class="transport-container">
         <nz-list nzSize="small">
           <nz-list-empty *ngIf="ds.total === 0"></nz-list-empty>
           <nz-list-item *cdkVirtualFor="let x of ds">

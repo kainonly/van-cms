@@ -6,10 +6,12 @@ import { PageTableCellDirective } from './page-table/page-table-cell.directive';
 import { PageFormComponent } from './page-form/page-form.component';
 import { PageFormItemDirective } from './page-form/page-form-item.directive';
 import { TransportComponent } from './transport/transport.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   imports: [
-    ShareModule
+    ShareModule,
+    ScrollingModule
   ],
   declarations: [
     TransportComponent,
