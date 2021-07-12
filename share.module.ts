@@ -110,5 +110,4 @@ import { BitRouterModule } from 'ngx-bit/router';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ShareModule {
-}
+export class ShareModule {}
