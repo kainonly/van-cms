@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ContentChildren, EventEmitter, Input, OnInit, QueryList, TemplateRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ContentChildren,
+  EventEmitter,
+  Input,
+  OnInit,
+  QueryList,
+  TemplateRef
+} from '@angular/core';
 import { BitService, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PageTableColumn, PageTableServiceInterface } from '@vanx/framework';
@@ -13,27 +22,22 @@ import { BitSwalService } from 'ngx-bit/swal';
   styleUrls: ['./page-table.component.scss']
 })
 export class PageTableComponent implements OnInit, AfterViewInit {
-  @Input() extra: TemplateRef<any>;
+  @Input() extra!: TemplateRef<any>;
   @Input() scroll: any;
   @Input() batch = true;
   @Input() columns: PageTableColumn[] = [];
-  @Input() lists: ListByPage;
-  @Input() service: PageTableServiceInterface;
-  @Input() listsOperate: (observable: Observable<any>) => Observable<any>;
+  @Input() lists!: ListByPage;
+  @Input() service!: PageTableServiceInterface;
+  @Input() listsOperate!: (observable: Observable<any>) => Observable<any>;
   @Input() listsDataChange: EventEmitter<any> = new EventEmitter<any>();
-  @Input() deleteOperate: (observable: Observable<any>) => Observable<any>;
+  @Input() deleteOperate!: (observable: Observable<any>) => Observable<any>;
 
-  @ContentChildren(PageTableSearchDirective) searchItems: QueryList<PageTableSearchDirective>;
-  @ContentChildren(PageTableCellDirective) items: QueryList<PageTableCellDirective>;
+  @ContentChildren(PageTableSearchDirective) searchItems!: QueryList<PageTableSearchDirective>;
+  @ContentChildren(PageTableCellDirective) items!: QueryList<PageTableCellDirective>;
 
-  columnDef: Map<string, TemplateRef<any>>;
+  columnDef!: Map<string, TemplateRef<any>>;
 
-  constructor(
-    public bit: BitService,
-    private swal: BitSwalService,
-    private message: NzMessageService
-  ) {
-  }
+  constructor(public bit: BitService, private swal: BitSwalService, private message: NzMessageService) {}
 
   ngOnInit(): void {
     this.lists.ready.subscribe(() => {
@@ -50,7 +54,7 @@ export class PageTableComponent implements OnInit, AfterViewInit {
   }
 
   getLists(refresh = false, event?: number): void {
-    let observable = this.service.lists(this.lists, refresh, event !== undefined);
+    let observable = this.service.lists!(this.lists, refresh, event !== undefined);
     if (this.listsOperate) {
       observable = this.listsOperate(observable);
     }
@@ -61,7 +65,7 @@ export class PageTableComponent implements OnInit, AfterViewInit {
   }
 
   delete(id: any[]): void {
-    let observable = this.swal.deleteAlert(this.service.delete(id));
+    let observable = this.swal.deleteAlert(this.service.delete!(id));
     if (this.deleteOperate) {
       observable = this.deleteOperate(observable);
     }

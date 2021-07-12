@@ -4,10 +4,7 @@ import { Directive, Input, TemplateRef } from '@angular/core';
   selector: '[vPageTableCell]'
 })
 export class PageTableCellDirective {
-  @Input() vPageTableCell: string;
+  @Input() vPageTableCell!: string;
 
-  constructor(
-    public templateRef: TemplateRef<any>
-  ) {
-  }
+  constructor(public templateRef: TemplateRef<any>) {}
 }

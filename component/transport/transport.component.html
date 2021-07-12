@@ -1,18 +1,12 @@
 <ng-template #messageTpl>
-  {{ bit.l["Uploading"] }}
+  {{ bit.l['Uploading'] }}
   <nz-progress [nzPercent]="ds.percent" nzStatus="active"></nz-progress>
 </ng-template>
 
 <nz-button-group>
-  <nz-upload
-    class="upload"
-    nzName="file"
-    bitUpload
-    nzMultiple
-    (nzChange)="ds.update($event)"
-  >
+  <nz-upload class="upload" nzName="file" bitUpload nzMultiple (nzChange)="ds.update($event)">
     <button nz-button>
-      <i nz-icon [nzType]="'upload'"></i><span>{{ bit.l["upload"] }}</span>
+      <i nz-icon [nzType]="'upload'"></i><span>{{ bit.l['upload'] }}</span>
     </button>
   </nz-upload>
   <button

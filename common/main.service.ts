@@ -7,10 +7,7 @@ import { map } from 'rxjs/operators';
 export class MainService {
   protected model = 'main';
 
-  constructor(
-    protected http: BitHttpService
-  ) {
-  }
+  constructor(protected http: BitHttpService) {}
 
   /**
    * User Login
@@ -26,9 +23,7 @@ export class MainService {
    * User Logout
    */
   logout(): Observable<boolean> {
-    return this.http.req(this.model + '/logout').pipe(
-      map(res => !res.error)
-    );
+    return this.http.req(this.model + '/logout').pipe(map(res => !res.error));
   }
 
   /**
@@ -37,8 +32,8 @@ export class MainService {
   resource(): Observable<any> {
     return this.http.req(this.model + '/resource').pipe(
       map(res => {
-        const resource: object = {};
-        const router: object = {};
+        const resource: Record<string, any> = {};
+        const router: Record<string, any> = {};
         const nav: any = [];
 
         if (!res.error) {
@@ -78,9 +73,7 @@ export class MainService {
    * Get Profile Information
    */
   information(): Observable<any> {
-    return this.http.req(this.model + '/information').pipe(
-      map(res => (!res.error ? res.data : {}))
-    );
+    return this.http.req(this.model + '/information').pipe(map(res => (!res.error ? res.data : {})));
   }
 
   /**

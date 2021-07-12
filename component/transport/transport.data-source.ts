@@ -26,14 +26,14 @@ export class TransportDataSource extends DataSource<any> {
     const file = param.file;
     this.datamap.set(file.uid, {
       name: file.name,
-      percent: Math.floor(file.percent),
+      percent: Math.floor(file.percent!),
       status: file.status,
       file
     });
     const lists = [...this.datamap.values()];
     this.total = lists.length;
     this.doneLength = lists.filter(v => v.status === 'done').length;
-    this.percent = Math.floor(this.doneLength / this.total * 100);
+    this.percent = Math.floor((this.doneLength / this.total) * 100);
     const done = lists.every(v => v.status === 'done');
     this.done.next(done);
     this.stream.next(lists);

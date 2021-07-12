@@ -4,10 +4,7 @@ import { Directive, Input, TemplateRef } from '@angular/core';
   selector: '[vPageTableSearch]'
 })
 export class PageTableSearchDirective {
-  @Input() vPageTableSearch: string;
+  @Input() vPageTableSearch!: string;
 
-  constructor(
-    public templateRef: TemplateRef<any>
-  ) {
-  }
+  constructor(public templateRef: TemplateRef<any>) {}
 }

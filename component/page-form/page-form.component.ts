@@ -4,15 +4,12 @@ import {
   Component,
   ContentChildren,
   Input,
-  OnChanges,
   QueryList,
-  SimpleChanges,
   TemplateRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BitService } from 'ngx-bit';
 import { PageFormItemDirective } from './page-form-item.directive';
-import { any } from 'codelyzer/util/function';
 import { PageFormSchema } from '@vanx/framework';
 
 @Component({
@@ -22,26 +19,19 @@ import { PageFormSchema } from '@vanx/framework';
 export class PageFormComponent implements AfterViewInit {
   templates: TemplateRef<any>[] = [];
 
-  @Input() formGroup: FormGroup;
-  @Input() submit: (data: any) => void;
+  @Input() formGroup!: FormGroup;
+  @Input() submit!: (data: any) => void;
   @Input() cancelDisabled = false;
-  @Input() innerItems: QueryList<PageFormItemDirective>;
-  @Input() options: Map<string, any>;
-  @ContentChildren(PageFormItemDirective) items: QueryList<PageFormItemDirective>;
+  @Input() innerItems!: QueryList<PageFormItemDirective>;
+  @Input() options!: Map<string, any>;
+  @ContentChildren(PageFormItemDirective) items!: QueryList<PageFormItemDirective>;
 
-  private dataset: any[];
+  private dataset!: any[];
 
-  constructor(
-    public bit: BitService,
-    public changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
+  constructor(public bit: BitService, public changeDetectorRef: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
-    this.dataset = [
-      ...this.items.toArray(),
-      ...(!this.innerItems ? [] : this.innerItems.toArray())
-    ];
+    this.dataset = [...this.items.toArray(), ...(!this.innerItems ? [] : this.innerItems.toArray())];
     this.templates = this.dataset.map(v => v.ref);
     this.changeDetectorRef.detectChanges();
   }
@@ -55,8 +45,8 @@ export class PageFormComponent implements AfterViewInit {
         return !schema[v.vPageFormItem].disabled;
       })
       .sort((a: PageFormItemDirective, b: PageFormItemDirective) => {
-        const n1 = !schema.hasOwnProperty(a.vPageFormItem) ? 0 : schema[a.vPageFormItem].weight;
-        const n2 = !schema.hasOwnProperty(b.vPageFormItem) ? 0 : schema[b.vPageFormItem].weight;
+        const n1 = !schema.hasOwnProperty(a.vPageFormItem) ? 0 : schema[a.vPageFormItem].weight!;
+        const n2 = !schema.hasOwnProperty(b.vPageFormItem) ? 0 : schema[b.vPageFormItem].weight!;
         return n1 > n2 ? -1 : 1;
       });
     this.templates = this.dataset.map(v => v.ref);

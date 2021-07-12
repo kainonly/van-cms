@@ -6,12 +6,7 @@ import { BitHttpService } from 'ngx-bit';
 
 @Injectable()
 export class TokenService implements CanActivate {
-
-  constructor(
-    protected http: BitHttpService,
-    protected router: Router
-  ) {
-  }
+  constructor(protected http: BitHttpService, protected router: Router) {}
 
   canActivate(): Observable<any> {
     return this.http.req('main/verify').pipe(

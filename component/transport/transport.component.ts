@@ -14,20 +14,14 @@ import { Observable } from 'rxjs';
 export class TransportComponent implements OnInit, AfterViewInit {
   ds: TransportDataSource = new TransportDataSource();
 
-  @ViewChild('messageTpl') messageTpl: TemplateRef<any>;
-  @Input() action: (files: NzUploadFile[]) => Observable<any>;
+  @ViewChild('messageTpl') messageTpl!: TemplateRef<any>;
+  @Input() action!: (files: NzUploadFile[]) => Observable<any>;
   @Output() actionComplete: EventEmitter<string> = new EventEmitter();
 
-  constructor(
-    public bit: BitService,
-    private message: NzMessageService
-  ) {
-  }
+  constructor(public bit: BitService, private message: NzMessageService) {}
 
   ngOnInit(): void {
-    this.ds.complete.pipe(
-      switchMap(files => this.action(files))
-    ).subscribe(res => {
+    this.ds.complete.pipe(switchMap(files => this.action(files))).subscribe(res => {
       if (res.error === 1) {
         this.message.error(this.bit.l.uploadError);
         return;
@@ -47,7 +41,7 @@ export class TransportComponent implements OnInit, AfterViewInit {
       }
       if (status && messageId) {
         this.message.remove(messageId);
-        messageId = undefined;
+        messageId = undefined!;
       }
     });
   }

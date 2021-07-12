@@ -9,10 +9,7 @@ import { TransportComponent } from './transport/transport.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
-  imports: [
-    ShareModule,
-    ScrollingModule
-  ],
+  imports: [ShareModule, ScrollingModule],
   declarations: [
     TransportComponent,
     PageTableComponent,
@@ -30,5 +27,4 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     PageFormItemDirective
   ]
 })
-export class FrameworkComponentModule {
-}
+export class FrameworkComponentModule {}

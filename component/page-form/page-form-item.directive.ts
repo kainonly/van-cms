@@ -4,10 +4,7 @@ import { Directive, Input, TemplateRef } from '@angular/core';
   selector: '[vPageFormItem]'
 })
 export class PageFormItemDirective {
-  @Input() vPageFormItem: string;
+  @Input() vPageFormItem!: string;
 
-  constructor(
-    public ref: TemplateRef<any>
-  ) {
-  }
+  constructor(public ref: TemplateRef<any>) {}
 }

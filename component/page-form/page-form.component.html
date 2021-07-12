@@ -8,11 +8,11 @@
       <nz-form-control bitCol="submit">
         <nz-space>
           <button *nzSpaceItem nz-button nzType="primary" [disabled]="!formGroup.valid">
-            <i nz-icon nzType="check"></i> {{ bit.l["submit"] }}
+            <i nz-icon nzType="check"></i> {{ bit.l['submit'] }}
           </button>
           <ng-container *ngIf="!cancelDisabled">
             <button *nzSpaceItem nz-button type="button" bitBack>
-              <i nz-icon nzType="close"></i> {{ bit.l["cancel"] }}
+              <i nz-icon nzType="close"></i> {{ bit.l['cancel'] }}
             </button>
           </ng-container>
         </nz-space>
