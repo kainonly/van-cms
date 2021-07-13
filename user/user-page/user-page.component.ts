@@ -20,20 +20,20 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './user-page.component.html'
 })
 export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  private id: number;
+  private id!: number;
   private dataAsync: AsyncSubject<void> = new AsyncSubject<void>();
 
-  @ViewChild('nzTree') nzTree: NzTreeComponent;
+  @ViewChild('nzTree') nzTree!: NzTreeComponent;
   private resource: string[] = [];
   nodes: NzTreeNodeOptions[] = [];
-  form: FormGroup;
+  form!: FormGroup;
   pwd = true;
   pwdMust = true;
   avatar = '';
   roleLists: any[] = [];
   permissionLists: any[] = [];
 
-  private localeChanged: Subscription;
+  private localeChanged!: Subscription;
 
   constructor(
     private swal: BitSwalService,
@@ -45,18 +45,17 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private resourceService: ResourceService,
     private permissionService: PermissionService,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.userService.setModel('admin');
     this.bit.registerLocales(packer);
     this.form = this.fb.group({
-      username: [null, [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(20)
-      ], [this.validedUsername]],
+      username: [
+        null,
+        [Validators.required, Validators.minLength(4), Validators.maxLength(20)],
+        [this.validedUsername]
+      ],
       password: [null, this.validedPassword],
       role: [null, [Validators.required]],
       permission: [[]],
@@ -90,13 +89,11 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   ngAfterViewInit(): void {
-    this.dataAsync.pipe(
-      throttleTime(200)
-    ).subscribe(() => {
+    this.dataAsync.pipe(throttleTime(200)).subscribe(() => {
       const resource = this.resource;
       const queue = [...this.nzTree.getTreeNodes()];
       while (queue.length !== 0) {
-        const node = queue.pop();
+        const node = queue.pop()!;
         node.isChecked = resource.indexOf(node.key) !== -1;
         const parent = node.parentNode;
         if (parent) {
@@ -117,22 +114,24 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getData(): void {
     this.pwdMust = false;
-    this.form.get('username').disable();
+    this.form.get('username')!.disable();
     this.userService.get(this.id).subscribe(data => {
       if (data.self) {
-        this.swal.create({
-          title: this.bit.l.auth,
-          content: this.bit.l.selfTip,
-          type: 'info',
-          okText: this.bit.l.goProfile,
-          cancelText: this.bit.l.back
-        }).subscribe((status) => {
-          if (status) {
-            this.bit.open(['profile']);
-          } else {
-            this.bit.back();
-          }
-        });
+        this.swal
+          .create({
+            title: this.bit.l.auth,
+            content: this.bit.l.selfTip,
+            type: 'info',
+            okText: this.bit.l.goProfile,
+            cancelText: this.bit.l.back
+          })
+          .subscribe(status => {
+            if (status) {
+              this.bit.open(['profile']);
+            } else {
+              this.bit.back();
+            }
+          });
       }
       this.resource = data.resource ? data.resource.split(',') : [];
       this.dataAsync.next();
@@ -158,7 +157,7 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
   getNodes(): void {
     this.resourceService.originLists().subscribe(data => {
       const refer: Map<string, NzTreeNodeOptions> = new Map();
-      const lists = data.map(v => {
+      const lists = data.map((v: any) => {
         const rows = {
           title: JSON.parse(v.name)[this.bit.locale] + '[' + v.key + ']',
           key: v.key,
@@ -176,9 +175,9 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           const parent = x.parent;
           if (refer.has(parent)) {
-            const rows = refer.get(parent);
+            const rows = refer.get(parent)!;
             rows.isLeaf = false;
-            rows.children.push(x);
+            rows.children!.push(x);
             refer.set(parent, rows);
           }
         }
@@ -194,7 +193,7 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resource = [];
     const queue = [...this.nzTree.getTreeNodes()];
     while (queue.length !== 0) {
-      const node = queue.pop();
+      const node = queue.pop()!;
       if (node.isChecked || node.isHalfChecked) {
         this.resource.push(node.key);
       }
@@ -225,7 +224,7 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private allCheckedStatus(status: boolean): void {
     const queue = [...this.nzTree.getTreeNodes()];
     while (queue.length !== 0) {
-      const node = queue.pop();
+      const node = queue.pop()!;
       node.isHalfChecked = false;
       node.isChecked = status;
       const children = node.getChildren();
@@ -253,7 +252,7 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private allExpandStatus(status: boolean): void {
     const queue = [...this.nzTree.getTreeNodes()];
     while (queue.length !== 0) {
-      const node = queue.pop();
+      const node = queue.pop()!;
       node.isExpanded = status;
       const children = node.getChildren();
       if (children.length !== 0) {
@@ -268,7 +267,7 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  upload(info): void {
+  upload(info: any): void {
     if (info.type === 'success') {
       this.avatar = info.file.response.data.save_name;
       this.notification.success(this.bit.l.success, this.bit.l.uploadSuccess);
@@ -278,30 +277,33 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  submit = (data): void => {
+  submit = (data: any): void => {
     Reflect.set(data, 'resource', this.resource);
     if (this.avatar) {
       Reflect.set(data, 'avatar', this.avatar);
     }
     if (!this.id) {
-      this.userService.add(data).pipe(
-        switchMap(res =>
-          this.swal.addAlert(res, this.form, {
-            status: true
-          })
+      this.userService
+        .add(data)
+        .pipe(
+          switchMap(res =>
+            this.swal.addAlert(res, this.form, {
+              status: true
+            })
+          )
         )
-      ).subscribe(() => {
-      });
+        .subscribe(() => {});
     } else {
       Reflect.set(data, 'id', this.id);
-      this.userService.edit(data).pipe(
-        switchMap(res => this.swal.editAlert(res))
-      ).subscribe(status => {
-        if (status) {
-          this.form.reset();
-          this.getData();
-        }
-      });
+      this.userService
+        .edit(data)
+        .pipe(switchMap(res => this.swal.editAlert(res)))
+        .subscribe(status => {
+          if (status) {
+            this.form.reset();
+            this.getData();
+          }
+        });
     }
   };
 }

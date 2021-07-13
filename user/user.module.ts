@@ -6,21 +6,9 @@ import { UserIndexComponent } from './user-index/user-index.component';
 import { UserPageComponent } from './user-page/user-page.component';
 
 @NgModule({
-  imports: [
-    ShareModule,
-    FrameworkComponentModule
-  ],
-  declarations: [
-    UserIndexComponent,
-    UserPageComponent
-  ],
-  exports: [
-    UserIndexComponent,
-    UserPageComponent
-  ],
-  providers: [
-    UserService
-  ]
+  imports: [ShareModule, FrameworkComponentModule],
+  declarations: [UserIndexComponent, UserPageComponent],
+  exports: [UserIndexComponent, UserPageComponent],
+  providers: [UserService]
 })
-export class UserModule {
-}
+export class UserModule {}

@@ -5,13 +5,12 @@ import { columnType } from '@vanx/framework/component';
 import { AclService } from '../acl.service';
 import * as packer from './language';
 
-
 @Component({
   selector: 'v-acl-index',
   templateUrl: './acl-index.component.html'
 })
 export class AclIndexComponent implements OnInit {
-  lists: ListByPage;
+  lists!: ListByPage;
   columns: PageTableColumn[] = [
     { key: 'name', width: '200px', format: 'i18n' },
     { key: 'key', width: '200px' },
@@ -21,11 +20,7 @@ export class AclIndexComponent implements OnInit {
     columnType.action('acl-edit')
   ];
 
-  constructor(
-    public bit: BitService,
-    public aclService: AclService
-  ) {
-  }
+  constructor(public bit: BitService, public aclService: AclService) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);

@@ -6,21 +6,9 @@ import { PermissionPageComponent } from './permission-page/permission-page.compo
 import { PermissionService } from './permission.service';
 
 @NgModule({
-  imports: [
-    ShareModule,
-    FrameworkComponentModule
-  ],
-  declarations: [
-    PermissionIndexComponent,
-    PermissionPageComponent
-  ],
-  exports: [
-    PermissionIndexComponent,
-    PermissionPageComponent
-  ],
-  providers: [
-    PermissionService
-  ]
+  imports: [ShareModule, FrameworkComponentModule],
+  declarations: [PermissionIndexComponent, PermissionPageComponent],
+  exports: [PermissionIndexComponent, PermissionPageComponent],
+  providers: [PermissionService]
 })
-export class PermissionModule {
-}
+export class PermissionModule {}

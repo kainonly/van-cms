@@ -17,12 +17,12 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './user-index.component.html'
 })
 export class UserIndexComponent implements OnInit {
-  lists: ListByPage;
+  lists!: ListByPage;
   columns: PageTableColumn[] = [
     { key: 'username', width: '200px' },
     { key: 'role', width: '200px' },
     { key: 'permission', breakWord: true },
-    columnType.status('status', true, (res) => {
+    columnType.status('status', true, res => {
       if (res.error === 1) {
         this.message.error(this.bit.l.StatusError);
       }
@@ -35,7 +35,7 @@ export class UserIndexComponent implements OnInit {
   role: any = {};
   permission: any = {};
   userData: any;
-  @ViewChild('userDataInfoTpl') userDataInfoTpl: TemplateRef<any>;
+  @ViewChild('userDataInfoTpl') userDataInfoTpl!: TemplateRef<any>;
 
   constructor(
     private swal: BitSwalService,
@@ -45,8 +45,7 @@ export class UserIndexComponent implements OnInit {
     private permissionService: PermissionService,
     private message: NzMessageService,
     private drawer: NzDrawerService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.userService.setModel('admin');

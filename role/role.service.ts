@@ -7,11 +7,7 @@ import { map, switchMap } from 'rxjs/operators';
 export class RoleService {
   private model = 'role';
 
-  constructor(
-    private http: BitHttpService,
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
 
   originLists(): Observable<any> {
     return this.curd.originLists(this.model);

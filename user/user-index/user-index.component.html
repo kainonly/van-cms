@@ -1,22 +1,12 @@
 <bit-header>
   <button *bitHeaderAction nz-button nzType="primary" [bitOpen]="['admin-add']">
     <i nz-icon nzType="plus"></i>
-    <span>{{ bit.l["add"] }}</span>
+    <span>{{ bit.l['add'] }}</span>
   </button>
 </bit-header>
 
-<v-page-table
-  #pageTable
-  [lists]="lists"
-  [columns]="columns"
-  [service]="userService"
-  [deleteOperate]="deleteOperate"
->
-  <nz-input-group
-    *vPageTableSearch="'username'"
-    [nzSuffixIcon]="'search'"
-    style="width: 320px"
-  >
+<v-page-table #pageTable [lists]="lists" [columns]="columns" [service]="userService" [deleteOperate]="deleteOperate">
+  <nz-input-group *vPageTableSearch="'username'" [nzSuffixIcon]="'search'" style="width: 320px">
     <input
       nz-input
       [placeholder]="bit.l['search']"
@@ -25,7 +15,7 @@
       (after)="pageTable.getLists(true)"
     />
   </nz-input-group>
-  <ng-container *vPageTableCell="'username';let data">
+  <ng-container *vPageTableCell="'username'; let data">
     <span>
       {{ data.username }}
       <ng-container *ngIf="data.call"> （{{ data.call }}） </ng-container>
@@ -34,7 +24,7 @@
       <i nz-icon nzType="audit"></i>
     </a>
   </ng-container>
-  <ng-container *vPageTableCell="'role';let data">
+  <ng-container *vPageTableCell="'role'; let data">
     <ng-container *ngFor="let x of data.role | Split: ','; last as isLast">
       <ng-container *ngIf="role.hasOwnProperty(x)">
         {{ role[x].name | object: bit.locale }}
@@ -42,7 +32,7 @@
       <ng-container *ngIf="!isLast">,</ng-container>
     </ng-container>
   </ng-container>
-  <ng-container *vPageTableCell="'permission';let data">
+  <ng-container *vPageTableCell="'permission'; let data">
     <ng-container *ngFor="let x of data.permission | Split: ','; last as isLast">
       {{ permission[x] | object: bit.locale }}
       <ng-container *ngIf="!isLast">,</ng-container>
@@ -51,13 +41,7 @@
 </v-page-table>
 
 <ng-template #userDataInfoTpl>
-  <nz-descriptions
-    *ngIf="userData"
-    nzLayout="vertical"
-    nzBordered
-    [nzColumn]="1"
-    nzSize="middle"
-  >
+  <nz-descriptions *ngIf="userData" nzLayout="vertical" nzBordered [nzColumn]="1" nzSize="middle">
     <nz-descriptions-item [nzTitle]="bit.l['call']">
       <ng-container *ngIf="userData.call; else empty">
         {{ userData.call }}

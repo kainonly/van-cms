@@ -9,7 +9,7 @@ import { ActivitiesService } from '../activities.service';
   templateUrl: './activities.component.html'
 })
 export class ActivitiesComponent implements OnInit {
-  lists: ListByPage;
+  lists!: ListByPage;
   columns: PageTableColumn[] = [
     { key: 'username', width: '160px' },
     { key: 'ip', width: '160px' },
@@ -19,11 +19,7 @@ export class ActivitiesComponent implements OnInit {
     { key: 'time', width: '160px', right: true, format: 'datetime' }
   ];
 
-  constructor(
-    public bit: BitService,
-    public activitiesService: ActivitiesService
-  ) {
-  }
+  constructor(public bit: BitService, public activitiesService: ActivitiesService) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);

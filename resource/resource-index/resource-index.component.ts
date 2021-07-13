@@ -1,6 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
-import { NzFormatBeforeDropEvent, NzFormatEmitEvent, NzTreeComponent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import {
+  NzFormatBeforeDropEvent,
+  NzFormatEmitEvent,
+  NzTreeComponent,
+  NzTreeNode,
+  NzTreeNodeOptions
+} from 'ng-zorro-antd/tree';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BitService } from 'ngx-bit';
 import { Observable, of, Subscription } from 'rxjs';
@@ -19,11 +25,11 @@ import { BitSwalService } from 'ngx-bit/swal';
   styleUrls: ['./resource-index.component.scss']
 })
 export class ResourceIndexComponent implements OnInit, OnDestroy {
-  @ViewChild('nzTree') nzTree: NzTreeComponent;
+  @ViewChild('nzTree') nzTree!: NzTreeComponent;
 
   keyword = '';
   resource: NzTreeNodeOptions[] = [];
-  activeNode: NzTreeNode;
+  activeNode!: NzTreeNode;
   isSort = false;
   sortData = [];
 
@@ -32,10 +38,10 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
   policy: Map<string, any[]> = new Map();
   policyVisable = false;
   policyAcl: any[] = [];
-  policyAclKey: string;
+  policyAclKey!: string;
   policyValue = 0;
 
-  private localeChanged: Subscription;
+  private localeChanged!: Subscription;
 
   constructor(
     public bit: BitService,
@@ -48,8 +54,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     public policyService: PolicyService,
     private aclService: AclService,
     private system: SystemService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
@@ -70,7 +75,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
   getNodes(): void {
     this.resourceService.originLists().subscribe(data => {
       const refer: Map<string, NzTreeNodeOptions> = new Map();
-      const lists = data.map(v => {
+      const lists = data.map((v: any) => {
         const rows = {
           title: JSON.parse(v.name)[this.bit.locale],
           key: v.key,
@@ -94,9 +99,9 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
         } else {
           const parent = x.parent;
           if (refer.has(parent)) {
-            const rows = refer.get(parent);
+            const rows = refer.get(parent)!;
             rows.isLeaf = false;
-            rows.children.push(x);
+            rows.children!.push(x);
             refer.set(parent, rows);
           }
         }
@@ -113,7 +118,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
       this.policy.clear();
       for (const x of data) {
         if (this.policy.has(x.resource_key)) {
-          const queue = this.policy.get(x.resource_key);
+          const queue = this.policy.get(x.resource_key)!;
           queue.push({
             id: x.id,
             acl_key: x.acl_key,
@@ -149,7 +154,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     this.expanded = new Set();
     const queue = [...this.nzTree.getTreeNodes()];
     while (queue.length !== 0) {
-      const node = queue.pop();
+      const node = queue.pop()!;
       if (node.isExpanded) {
         this.expanded.add(node.key);
       }
@@ -167,7 +172,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     this.expanded = new Set();
     const queue = [...this.nzTree.getTreeNodes()];
     while (queue.length !== 0) {
-      const node = queue.pop();
+      const node = queue.pop()!;
       if (status) {
         this.expanded.add(node.key);
       }
@@ -183,8 +188,8 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
    * more actions
    */
   actions(nzFormatEmitEvent: NzFormatEmitEvent, menu: NzDropdownMenuComponent): void {
-    this.activeNode = nzFormatEmitEvent.node;
-    this.contextMenu.create(nzFormatEmitEvent.event, menu);
+    this.activeNode = nzFormatEmitEvent.node!;
+    this.contextMenu.create(nzFormatEmitEvent.event!, menu);
   }
 
   /**
@@ -194,9 +199,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     if (this.activeNode.getChildren().length !== 0) {
       return;
     }
-    this.swal.deleteAlert(
-      this.resourceService.delete([this.activeNode.origin.id])
-    ).subscribe(res => {
+    this.swal.deleteAlert(this.resourceService.delete([this.activeNode.origin.id])).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.deleteSuccess);
         this.system.refreshMenuStart();
@@ -228,9 +231,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
    */
   beforeDrop = (arg: NzFormatBeforeDropEvent): Observable<any> => {
     return of(
-      arg.dragNode.level === arg.node.level &&
-      arg.dragNode.origin.parent === arg.node.origin.parent &&
-      arg.pos !== 0
+      arg.dragNode.level === arg.node.level && arg.dragNode.origin.parent === arg.node.origin.parent && arg.pos !== 0
     );
   };
 
@@ -242,15 +243,15 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     const queue = [...this.nzTree.getTreeNodes()];
     let originIndex = queue.length - 1;
     while (queue.length !== 0) {
-      const node = queue.pop();
+      const node = queue.pop()!;
       if (node.origin.parent === 'origin') {
-        this.sortData.push({
+        this.sortData.push(<never>{
           id: node.origin.id,
           sort: originIndex
         });
         originIndex--;
       } else {
-        this.sortData.push({
+        this.sortData.push(<never>{
           id: node.origin.id,
           sort: node.origin.sort
         });
@@ -271,9 +272,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
    * 提交排序
    */
   sortSubmit(): void {
-    this.resourceService.sort(
-      this.sortData
-    ).subscribe(res => {
+    this.resourceService.sort(this.sortData).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.sortSuccess);
         this.system.refreshMenuStart();
@@ -301,7 +300,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
   }
 
   private policyReset(): void {
-    this.policyAclKey = undefined;
+    this.policyAclKey = undefined!;
     this.policyValue = 0;
   }
 
@@ -312,27 +311,29 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     if (!this.policy.has(this.activeNode.key)) {
       return false;
     }
-    return this.policy.get(this.activeNode.key).some(v => v.acl_key === value);
+    return this.policy.get(this.activeNode.key)!.some(v => v.acl_key === value);
   }
 
   /**
    * 提交策略绑定
    */
   policySubmit(): void {
-    this.policyService.add({
-      resource_key: this.activeNode.key,
-      acl_key: this.policyAclKey,
-      policy: this.policyValue
-    }).subscribe(res => {
-      if (!res.error) {
-        this.notification.success(this.bit.l.success, this.bit.l.updateSuccess);
-        this.policyReset();
-        this.getPolicy();
-        this.getAcl();
-      } else {
-        this.notification.error(this.bit.l.error, this.bit.l.updateError);
-      }
-    });
+    this.policyService
+      .add({
+        resource_key: this.activeNode.key,
+        acl_key: this.policyAclKey,
+        policy: this.policyValue
+      })
+      .subscribe(res => {
+        if (!res.error) {
+          this.notification.success(this.bit.l.success, this.bit.l.updateSuccess);
+          this.policyReset();
+          this.getPolicy();
+          this.getAcl();
+        } else {
+          this.notification.error(this.bit.l.error, this.bit.l.updateError);
+        }
+      });
   }
 
   /**

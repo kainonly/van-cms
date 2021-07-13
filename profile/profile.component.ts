@@ -11,7 +11,7 @@ import * as packer from './language';
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
-  form: FormGroup;
+  form!: FormGroup;
   editPassword = false;
   avatar = '';
 
@@ -20,8 +20,7 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private mainService: MainService,
     private notification: NzNotificationService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
@@ -33,7 +32,7 @@ export class ProfileComponent implements OnInit {
     this.getInformation();
   }
 
-  validedPassword = (control: AbstractControl) => {
+  validedPassword = (control: AbstractControl): any => {
     if (!this.editPassword) {
       return;
     }
@@ -66,7 +65,7 @@ export class ProfileComponent implements OnInit {
     return null;
   };
 
-  validedNewPassword = (control: AbstractControl) => {
+  validedNewPassword = (control: AbstractControl): any => {
     if (!this.editPassword) {
       return;
     }
@@ -76,7 +75,7 @@ export class ProfileComponent implements OnInit {
     if (!control.value) {
       return { required: true };
     }
-    control.parent.get('new_password_check').updateValueAndValidity();
+    control.parent!.get('new_password_check')!.updateValueAndValidity();
     const value = control.value;
     const len = value.length;
     if (len < 12) {
@@ -100,7 +99,7 @@ export class ProfileComponent implements OnInit {
     return null;
   };
 
-  checkNewPassword = (control: AbstractControl) => {
+  checkNewPassword = (control: AbstractControl): any => {
     if (!this.editPassword) {
       return;
     }
@@ -110,7 +109,7 @@ export class ProfileComponent implements OnInit {
     if (!control.value) {
       return { required: true };
     }
-    const password = control.parent.get('new_password').value;
+    const password = control.parent!.get('new_password')!.value;
     if (control.value !== password) {
       return { correctly: true, error: true };
     }
@@ -136,7 +135,7 @@ export class ProfileComponent implements OnInit {
    */
   upload(info: NzUploadChangeParam): void {
     if (info.type === 'success') {
-      this.avatar = Reflect.get(info.file.originFileObj, 'key');
+      this.avatar = Reflect.get(info.file.originFileObj!, 'key');
       this.notification.success(this.bit.l.success, this.bit.l.uploadSuccess);
     }
     if (info.type === 'error') {
@@ -159,7 +158,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  submit = (data): void => {
+  submit = (data: any): void => {
     if (this.avatar) {
       data.avatar = this.avatar;
     }

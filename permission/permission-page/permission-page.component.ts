@@ -15,9 +15,9 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './permission-page.component.html'
 })
 export class PermissionPageComponent implements OnInit {
-  private id: number;
-  private keyAsync: AsyncSubject<any>;
-  form: FormGroup;
+  private id!: number;
+  private keyAsync!: AsyncSubject<any>;
+  form!: FormGroup;
 
   constructor(
     public bit: BitService,
@@ -26,8 +26,7 @@ export class PermissionPageComponent implements OnInit {
     private swal: BitSwalService,
     private permissionService: PermissionService,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
@@ -71,25 +70,28 @@ export class PermissionPageComponent implements OnInit {
     });
   }
 
-  submit = (data): void => {
+  submit = (data: any): void => {
     if (!this.id) {
-      this.permissionService.add(data).pipe(
-        switchMap(res =>
-          this.swal.addAlert(res, this.form, {
-            status: true
-          })
+      this.permissionService
+        .add(data)
+        .pipe(
+          switchMap(res =>
+            this.swal.addAlert(res, this.form, {
+              status: true
+            })
+          )
         )
-      ).subscribe(() => {
-      });
+        .subscribe(() => {});
     } else {
       Reflect.set(data, 'id', this.id);
-      this.permissionService.edit(data).pipe(
-        switchMap(res => this.swal.editAlert(res))
-      ).subscribe(status => {
-        if (status) {
-          this.getData();
-        }
-      });
+      this.permissionService
+        .edit(data)
+        .pipe(switchMap(res => this.swal.editAlert(res)))
+        .subscribe(status => {
+          if (status) {
+            this.getData();
+          }
+        });
     }
   };
 }

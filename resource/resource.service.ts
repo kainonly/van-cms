@@ -7,11 +7,7 @@ import { BitCurdCommonService, BitHttpService } from 'ngx-bit';
 export class ResourceService {
   private model = 'resource';
 
-  constructor(
-    private http: BitHttpService,
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
 
   originLists(): Observable<any> {
     return this.curd.originLists(this.model);

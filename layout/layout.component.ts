@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ChangeDetectorRef,
-  ElementRef
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -20,15 +13,15 @@ import { NzContentComponent } from 'ng-zorro-antd/layout';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-  @ViewChild('header') header: ElementRef;
-  @ViewChild('warpper') warpper: ElementRef;
-  @ViewChild(NzContentComponent) content: NzContentComponent;
+  @ViewChild('header') header!: ElementRef;
+  @ViewChild('warpper') warpper!: ElementRef;
+  @ViewChild(NzContentComponent) content!: NzContentComponent;
 
   collapsed = false;
   navLists: any[] = [];
 
-  private refreshMenu: Subscription;
-  private statusSubscription: Subscription;
+  private refreshMenu!: Subscription;
+  private statusSubscription!: Subscription;
   private firstDispatch = true;
 
   constructor(
@@ -40,8 +33,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     public bitRouter: BitRouterService,
     public bit: BitService,
     private changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales({});

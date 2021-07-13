@@ -2,7 +2,7 @@
   <Particles id="tsparticles" [options]="particlesOptions"></Particles>
   <div class="i18n-btn">
     <button nz-button nzType="text" nzSize="large" nz-dropdown [nzDropdownMenu]="i18nMenu">
-      <i nz-icon nzType="translation"></i> {{ bit.l["language"] }}
+      <i nz-icon nzType="translation"></i> {{ bit.l['language'] }}
     </button>
     <nz-dropdown-menu #i18nMenu>
       <ul nz-menu>
@@ -17,9 +17,9 @@
   </div>
   <div class="login-wrapper">
     <h1 class="animate__animated animate__rubberBand">
-      <img src="assets/login.svg" alt="ant-design" />
+      <img src="/assets/login.svg" alt="ant-design" />
     </h1>
-    <h3 class="login-title">{{ bit.l["welcome"] }}</h3>
+    <h3 class="login-title">{{ bit.l['welcome'] }}</h3>
     <form [formGroup]="form" (bitFormSubmit)="submit($event)">
       <nz-form-item>
         <nz-form-control [nzErrorTip]="username.ref">
@@ -35,12 +35,7 @@
               <ng-container *ngFor="let x of users">
                 <nz-auto-option [nzValue]="x">
                   {{ x }}
-                  <i
-                    class="user-del"
-                    nz-icon
-                    nzType="delete"
-                    (click)="deleteUsername($event, x)"
-                  ></i>
+                  <i class="user-del" nz-icon nzType="delete" (click)="deleteUsername($event, x)"></i>
                 </nz-auto-option>
               </ng-container>
             </nz-autocomplete>
@@ -82,12 +77,7 @@
             <i nz-icon nzType="lock"></i>
           </ng-template>
           <ng-template #passwordSuffix>
-            <i
-              *ngIf="form.get('password').value"
-              nz-icon
-              nzType="close-circle"
-              (click)="form.get('password').reset()"
-            >
+            <i *ngIf="form.get('password').value" nz-icon nzType="close-circle" (click)="form.get('password').reset()">
             </i>
           </ng-template>
           <bit-error-tip
@@ -105,7 +95,7 @@
       <nz-form-item>
         <nz-form-control>
           <label nz-checkbox formControlName="remember">
-            <span>{{ bit.l["loginRemember"] }}</span>
+            <span>{{ bit.l['loginRemember'] }}</span>
           </label>
         </nz-form-control>
       </nz-form-item>
@@ -113,7 +103,7 @@
       <nz-form-item>
         <nz-form-control>
           <button nz-button [nzLoading]="logining" nzType="primary" [nzBlock]="true">
-            {{ bit.l["login"] }}
+            {{ bit.l['login'] }}
           </button>
         </nz-form-control>
       </nz-form-item>
@@ -121,8 +111,10 @@
   </div>
 
   <footer>
-    <span nz-typography><strong>{{ bit.l["subTitle"] }}</strong></span>
-    <br>
-    <span nz-typography>{{ bit.l["footer"] }}</span>
+    <span nz-typography
+      ><strong>{{ bit.l['subTitle'] }}</strong></span
+    >
+    <br />
+    <span nz-typography>{{ bit.l['footer'] }}</span>
   </footer>
 </div>

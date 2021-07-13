@@ -2,14 +2,9 @@
 <v-page-form [formGroup]="form" [submit]="submit">
   <nz-form-item *vPageFormItem="'username'">
     <nz-form-label bitCol="label" nzRequired>
-      {{ bit.l["username"] }}
+      {{ bit.l['username'] }}
     </nz-form-label>
-    <nz-form-control
-      bitCol="control"
-      nzHasFeedback
-      [nzValidatingTip]="bit.l['validating']"
-      [nzErrorTip]="username.ref"
-    >
+    <nz-form-control bitCol="control" nzHasFeedback [nzValidatingTip]="bit.l['validating']" [nzErrorTip]="username.ref">
       <input nz-input formControlName="username" [placeholder]="bit.l['usernamePlaceholder']" />
       <bit-error-tip
         #username
@@ -25,14 +20,10 @@
 
   <nz-form-item *vPageFormItem="'role'">
     <nz-form-label bitCol="label" nzRequired>
-      {{ bit.l["role"] }}
+      {{ bit.l['role'] }}
     </nz-form-label>
     <nz-form-control bitCol="control">
-      <nz-select
-        nzMode="multiple"
-        formControlName="role"
-        [nzPlaceHolder]="bit.l['rolePlaceholder']"
-      >
+      <nz-select nzMode="multiple" formControlName="role" [nzPlaceHolder]="bit.l['rolePlaceholder']">
         <ng-template ngFor let-x [ngForOf]="roleLists">
           <nz-option [nzLabel]="x.name | object: bit.locale" [nzValue]="x.key"></nz-option>
         </ng-template>
@@ -43,7 +34,7 @@
   <nz-form-item *vPageFormItem="'password'">
     <nz-form-label bitCol="label" [nzRequired]="pwdMust">
       <span>
-        {{ bit.l["password"] }}
+        {{ bit.l['password'] }}
         <i nz-icon nzType="question-circle" [nz-tooltip]="bit.l['passwordTips']"> </i>
       </span>
     </nz-form-label>
@@ -53,16 +44,11 @@
           nz-input
           formControlName="password"
           autocomplete="new-password"
-          [type]="pwd?'password':'text'"
-          [placeholder]="pwdMust?bit.l['passwordPlaceholderMust']:bit.l['passwordPlaceholder']"
+          [type]="pwd ? 'password' : 'text'"
+          [placeholder]="pwdMust ? bit.l['passwordPlaceholderMust'] : bit.l['passwordPlaceholder']"
         />
         <ng-template #suffixPasswordTpl>
-          <i
-            nz-icon
-            [nzType]="pwd ? 'eye-invisible' : 'eye'"
-            (click)="pwd = !pwd"
-          >
-          </i>
+          <i nz-icon [nzType]="pwd ? 'eye-invisible' : 'eye'" (click)="pwd = !pwd"> </i>
         </ng-template>
       </nz-input-group>
       <bit-error-tip
@@ -82,30 +68,30 @@
 
   <nz-form-item *vPageFormItem="'role'">
     <nz-form-label bitCol="label">
-        <span>
-          {{ bit.l["personalRole"] }}
-        </span>
+      <span>
+        {{ bit.l['personalRole'] }}
+      </span>
     </nz-form-label>
     <nz-form-control bitCol="control">
       <nz-space>
         <nz-button-group *nzSpaceItem>
           <button nz-button type="button" (click)="allChecked()">
             <i nz-icon nzType="check-square"></i>
-            {{ bit.l["checked"] }}
+            {{ bit.l['checked'] }}
           </button>
           <button nz-button type="button" (click)="allUnchecked()">
             <i nz-icon nzType="close-square"></i>
-            {{ bit.l["unchecked"] }}
+            {{ bit.l['unchecked'] }}
           </button>
         </nz-button-group>
         <nz-button-group *nzSpaceItem>
           <button nz-button type="button" (click)="allExpand()">
             <i nz-icon nzType="node-expand"></i>
-            {{ bit.l["expand"] }}
+            {{ bit.l['expand'] }}
           </button>
           <button nz-button type="button" (click)="allClose()">
             <i nz-icon nzType="node-collapse"></i>
-            {{ bit.l["close"] }}
+            {{ bit.l['close'] }}
           </button>
         </nz-button-group>
       </nz-space>
@@ -128,14 +114,10 @@
 
   <nz-form-item *vPageFormItem="'permission'">
     <nz-form-label bitCol="label">
-      {{ bit.l["permission"] }}
+      {{ bit.l['permission'] }}
     </nz-form-label>
     <nz-form-control bitCol="control">
-      <nz-select
-        nzMode="multiple"
-        formControlName="permission"
-        [nzPlaceHolder]="bit.l['permissionPlaceholder']"
-      >
+      <nz-select nzMode="multiple" formControlName="permission" [nzPlaceHolder]="bit.l['permissionPlaceholder']">
         <ng-container *ngFor="let x of permissionLists">
           <nz-option [nzLabel]="x.name | object: bit.locale" [nzValue]="x.key"></nz-option>
         </ng-container>
@@ -145,7 +127,7 @@
 
   <nz-form-item *vPageFormItem="'call'">
     <nz-form-label bitCol="label">
-      {{ bit.l["call"] }}
+      {{ bit.l['call'] }}
     </nz-form-label>
     <nz-form-control bitCol="control" nzHasFeedback>
       <input nz-input formControlName="call" [placeholder]="bit.l['callPlaceholder']" />
@@ -154,22 +136,22 @@
 
   <nz-form-item *vPageFormItem="'email'">
     <nz-form-label bitCol="label">
-      {{ bit.l["email"] }}
+      {{ bit.l['email'] }}
     </nz-form-label>
     <nz-form-control bitCol="control" nzHasFeedback [nzErrorTip]="email.ref">
       <input nz-input formControlName="email" [placeholder]="bit.l['emailPlaceholder']" />
       <bit-error-tip
         #email
         [hasError]="{
-            email: bit.l['emailCorrectly']
-          }"
+          email: bit.l['emailCorrectly']
+        }"
       ></bit-error-tip>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem="'phone'">
     <nz-form-label bitCol="label">
-      {{ bit.l["phone"] }}
+      {{ bit.l['phone'] }}
     </nz-form-label>
     <nz-form-control bitCol="control" nzHasFeedback>
       <input nz-input formControlName="phone" [placeholder]="bit.l['phonePlaceholder']" />
@@ -178,14 +160,14 @@
 
   <nz-form-item *vPageFormItem="'avatar'">
     <nz-form-label bitCol="label">
-      {{ bit.l["avatar"] }}
+      {{ bit.l['avatar'] }}
     </nz-form-label>
     <nz-form-control bitCol="control">
-      <p>{{ bit.l["avatarTips"] }}</p>
+      <p>{{ bit.l['avatarTips'] }}</p>
       <nz-upload nzName="image" bitUpload nzListType="picture-card" (nzChange)="upload($event)">
         <ng-container *ngIf="!avatar">
           <i nz-icon nzType="plus"></i>
-          <div class="ant-upload-text">{{ bit.l["upload"] }}</div>
+          <div class="ant-upload-text">{{ bit.l['upload'] }}</div>
         </ng-container>
         <img width="120" *ngIf="avatar" [src]="bit.static + avatar" class="avatar" />
       </nz-upload>
@@ -194,14 +176,10 @@
 
   <nz-form-item *vPageFormItem="'status'">
     <nz-form-label bitCol="label" nzRequired>
-      {{ bit.l["status"] }}
+      {{ bit.l['status'] }}
     </nz-form-label>
     <nz-form-control bitCol="control">
-      <nz-switch
-        formControlName="status"
-        [nzCheckedChildren]="bit.l['on']"
-        [nzUnCheckedChildren]="bit.l['off']"
-      >
+      <nz-switch formControlName="status" [nzCheckedChildren]="bit.l['on']" [nzUnCheckedChildren]="bit.l['off']">
       </nz-switch>
     </nz-form-control>
   </nz-form-item>

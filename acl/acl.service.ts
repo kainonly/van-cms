@@ -7,11 +7,7 @@ import { BitCurdCommonService, BitHttpService, ListByPage } from 'ngx-bit';
 export class AclService {
   private model = 'acl';
 
-  constructor(
-    private http: BitHttpService,
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
 
   originLists(): Observable<any> {
     return this.curd.originLists(this.model);

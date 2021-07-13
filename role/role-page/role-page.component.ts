@@ -19,17 +19,17 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './role-page.component.html'
 })
 export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
-  private id: number;
+  private id!: number;
   private dataAsync: AsyncSubject<void> = new AsyncSubject();
-  private keyAsync: AsyncSubject<any>;
+  private keyAsync!: AsyncSubject<any>;
 
-  @ViewChild('nzTree') nzTree: NzTreeComponent;
+  @ViewChild('nzTree') nzTree!: NzTreeComponent;
   private resource: string[] = [];
   nodes: NzTreeNodeOptions[] = [];
   permissionLists: any[] = [];
-  form: FormGroup;
+  form!: FormGroup;
 
-  private localeChanged: Subscription;
+  private localeChanged!: Subscription;
 
   constructor(
     public bit: BitService,
@@ -41,8 +41,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
     private permissionService: PermissionService,
     private route: ActivatedRoute,
     private system: SystemService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
@@ -73,13 +72,11 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.dataAsync.pipe(
-      throttleTime(200)
-    ).subscribe(() => {
+    this.dataAsync.pipe(throttleTime(200)).subscribe(() => {
       const resource = this.resource;
       const queue = [...this.nzTree.getTreeNodes()];
       while (queue.length !== 0) {
-        const node = queue.pop();
+        const node = queue.pop()!;
         node.isChecked = resource.indexOf(node.key) !== -1;
         const parent = node.parentNode;
         if (parent) {
@@ -126,7 +123,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
   getNodes(): void {
     this.resourceService.originLists().subscribe(data => {
       const refer: Map<string, NzTreeNodeOptions> = new Map();
-      const lists = data.map(v => {
+      const lists = data.map((v: any) => {
         const rows = {
           title: JSON.parse(v.name)[this.bit.locale] + '[' + v.key + ']',
           key: v.key,
@@ -144,9 +141,9 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           const parent = x.parent;
           if (refer.has(parent)) {
-            const rows = refer.get(parent);
+            const rows = refer.get(parent)!;
             rows.isLeaf = false;
-            rows.children.push(x);
+            rows.children!.push(x);
             refer.set(parent, rows);
           }
         }
@@ -171,7 +168,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resource = [];
     const queue = [...this.nzTree.getTreeNodes()];
     while (queue.length !== 0) {
-      const node = queue.pop();
+      const node = queue.pop()!;
       if (node.isChecked || node.isHalfChecked) {
         this.resource.push(node.key);
       }
@@ -202,7 +199,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
   private allCheckedStatus(status: boolean): void {
     const queue = [...this.nzTree.getTreeNodes()];
     while (queue.length !== 0) {
-      const node = queue.pop();
+      const node = queue.pop()!;
       node.isHalfChecked = false;
       node.isChecked = status;
       const children = node.getChildren();
@@ -233,7 +230,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
   private allExpandStatus(status: boolean): void {
     const queue = [...this.nzTree.getTreeNodes()];
     while (queue.length !== 0) {
-      const node = queue.pop();
+      const node = queue.pop()!;
       node.isExpanded = status;
       const children = node.getChildren();
       if (children.length !== 0) {
@@ -242,27 +239,30 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  submit = (data): void => {
+  submit = (data: any): void => {
     Reflect.set(data, 'resource', this.resource);
     if (!this.id) {
-      this.roleService.add(data).pipe(
-        switchMap(res =>
-          this.swal.addAlert(res, this.form, {
-            status: true
-          })
+      this.roleService
+        .add(data)
+        .pipe(
+          switchMap(res =>
+            this.swal.addAlert(res, this.form, {
+              status: true
+            })
+          )
         )
-      ).subscribe(() => {
-      });
+        .subscribe(() => {});
     } else {
       Reflect.set(data, 'id', this.id);
-      this.roleService.edit(data).pipe(
-        switchMap(res => this.swal.editAlert(res))
-      ).subscribe(status => {
-        if (status) {
-          this.getData();
-        }
-        this.system.refreshMenuStart();
-      });
+      this.roleService
+        .edit(data)
+        .pipe(switchMap(res => this.swal.editAlert(res)))
+        .subscribe(status => {
+          if (status) {
+            this.getData();
+          }
+          this.system.refreshMenuStart();
+        });
     }
   };
 }

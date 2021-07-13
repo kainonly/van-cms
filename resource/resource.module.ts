@@ -7,22 +7,9 @@ import { ResourceService } from './resource.service';
 import { PolicyService } from './policy.service';
 
 @NgModule({
-  imports: [
-    ShareModule,
-    FrameworkComponentModule
-  ],
-  declarations: [
-    ResourceIndexComponent,
-    ResourcePageComponent
-  ],
-  exports: [
-    ResourceIndexComponent,
-    ResourcePageComponent
-  ],
-  providers: [
-    ResourceService,
-    PolicyService
-  ]
+  imports: [ShareModule, FrameworkComponentModule],
+  declarations: [ResourceIndexComponent, ResourcePageComponent],
+  exports: [ResourceIndexComponent, ResourcePageComponent],
+  providers: [ResourceService, PolicyService]
 })
-export class ResourceModule {
-}
+export class ResourceModule {}

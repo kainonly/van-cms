@@ -13,9 +13,15 @@ export default {
   sort: ['排序', 'Sort'],
   sortYes: ['确认排序', 'Submit Sort'],
   sortCancel: ['取消排序', 'Cancel Sort'],
-  sortSuccess: ['资源控制排序成功，正在为您重置导航~', 'The resource control is sorted successfully, and the navigation is being reset for you~'],
+  sortSuccess: [
+    '资源控制排序成功，正在为您重置导航~',
+    'The resource control is sorted successfully, and the navigation is being reset for you~'
+  ],
   sortError: ['请求错误，数据排序失败', 'Request error, data sorting failed'],
-  isSort: ['您已开启排序，请拖拽树视图节点并确认排序', 'You have enabled sorting, please drag the tree view node and confirm the sorting'],
+  isSort: [
+    '您已开启排序，请拖拽树视图节点并确认排序',
+    'You have enabled sorting, please drag the tree view node and confirm the sorting'
+  ],
   policy: ['策略', 'Policy'],
   policyRead: ['只读', 'Read'],
   policyReadAndWrite: ['读写', 'Read And Write'],

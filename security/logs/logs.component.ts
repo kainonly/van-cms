@@ -9,7 +9,7 @@ import * as packer from './language';
   templateUrl: './logs.component.html'
 })
 export class LogsComponent implements OnInit {
-  lists: ListByPage;
+  lists!: ListByPage;
   columns: PageTableColumn[] = [
     { key: 'username', width: '160px' },
     // { key: 'type', width: '160px' },
@@ -18,11 +18,7 @@ export class LogsComponent implements OnInit {
     { key: 'time', width: '160px', right: true, format: 'datetime' }
   ];
 
-  constructor(
-    public bit: BitService,
-    public logsService: LogsService
-  ) {
-  }
+  constructor(public bit: BitService, public logsService: LogsService) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);

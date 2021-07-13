@@ -16,14 +16,14 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './resource-page.component.html'
 })
 export class ResourcePageComponent implements OnInit, OnDestroy {
-  private id: number;
-  private keyAsync: AsyncSubject<any>;
+  private id!: number;
+  private keyAsync!: AsyncSubject<any>;
 
-  form: FormGroup;
-  parentId: number;
+  form!: FormGroup;
+  parentId!: number;
   parentLists: any[] = [];
 
-  private localeChanged: Subscription;
+  private localeChanged!: Subscription;
 
   constructor(
     public bit: BitService,
@@ -32,8 +32,7 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
     private resourceService: ResourceService,
     private route: ActivatedRoute,
     private system: SystemService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
@@ -101,9 +100,9 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
   getParentNodes(): void {
     this.resourceService.originLists().subscribe(data => {
       const refer: Map<string, NzTreeNodeOptions> = new Map();
-      const lists = data.map(v => {
+      const lists = data.map((v: any) => {
         if (this.parentId && v.id === this.parentId) {
-          this.form.get('parent').setValue(v.key);
+          this.form.get('parent')!.setValue(v.key);
         }
         const rows = {
           title: JSON.parse(v.name)[this.bit.locale] + ' [' + v.key + ']',
@@ -132,9 +131,9 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
         } else {
           const parent = x.parent;
           if (refer.has(parent)) {
-            const rows = refer.get(parent);
+            const rows = refer.get(parent)!;
             rows.isLeaf = false;
-            rows.children.push(x);
+            rows.children!.push(x);
             refer.set(parent, rows);
           }
         }
@@ -143,33 +142,37 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  submit = (data): void => {
+  submit = (data: any): void => {
     if (!this.id) {
-      this.resourceService.add(data).pipe(
-        switchMap(res =>
-          this.swal.addAlert(res, this.form, {
-            nav: false,
-            router: false,
-            policy: false,
-            status: true
-          })
+      this.resourceService
+        .add(data)
+        .pipe(
+          switchMap(res =>
+            this.swal.addAlert(res, this.form, {
+              nav: false,
+              router: false,
+              policy: false,
+              status: true
+            })
+          )
         )
-      ).subscribe(status => {
-        if (status) {
-          this.getParentNodes();
-        }
-        this.system.refreshMenuStart();
-      });
+        .subscribe(status => {
+          if (status) {
+            this.getParentNodes();
+          }
+          this.system.refreshMenuStart();
+        });
     } else {
       Reflect.set(data, 'id', this.id);
-      this.resourceService.edit(data).pipe(
-        switchMap(res => this.swal.editAlert(res))
-      ).subscribe(status => {
-        if (status) {
-          this.getParentNodes();
-        }
-        this.system.refreshMenuStart();
-      });
+      this.resourceService
+        .edit(data)
+        .pipe(switchMap(res => this.swal.editAlert(res)))
+        .subscribe(status => {
+          if (status) {
+            this.getParentNodes();
+          }
+          this.system.refreshMenuStart();
+        });
     }
   };
 }

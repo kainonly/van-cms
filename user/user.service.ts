@@ -5,13 +5,9 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
-  private model: string;
+  private model!: string;
 
-  constructor(
-    private http: BitHttpService,
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
 
   setModel(value: string): void {
     this.model = value;

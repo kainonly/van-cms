@@ -20,22 +20,22 @@
   </nz-alert>
   <button *bitHeaderAction nz-button nzType="primary" [bitOpen]="['resource-add']">
     <i nz-icon nzType="plus"></i>
-    <span>{{ bit.l["add"] }}</span>
+    <span>{{ bit.l['add'] }}</span>
   </button>
   <ng-container *ngIf="!isSort">
     <button *bitHeaderAction nz-button nzType="primary" (click)="openSort()">
       <i nz-icon nzType="sort-ascending"></i>
-      {{ bit.l["sort"] }}
+      {{ bit.l['sort'] }}
     </button>
   </ng-container>
   <ng-container *ngIf="isSort">
     <button *bitHeaderAction nz-button (click)="closeSort()">
       <i nz-icon nzType="close"></i>
-      {{ bit.l["sortCancel"] }}
+      {{ bit.l['sortCancel'] }}
     </button>
     <button *bitHeaderAction nz-button nzType="primary" (click)="sortSubmit()">
       <i nz-icon nzType="check"></i>
-      {{ bit.l["sortYes"] }}
+      {{ bit.l['sortYes'] }}
     </button>
   </ng-container>
 </bit-header>
@@ -114,9 +114,9 @@
               </ng-container>
               <ng-container
                 *ngIf="
-                (node.origin.nav && node.origin.router) ||
-                (node.origin.nav && !node.origin.router && node.origin.policy)
-              "
+                  (node.origin.nav && node.origin.router) ||
+                  (node.origin.nav && !node.origin.router && node.origin.policy)
+                "
               >
                 <nz-divider nzType="vertical"></nz-divider>
               </ng-container>
@@ -149,38 +149,27 @@
     </ng-template>
     <nz-dropdown-menu #actionsMenu>
       <ul nz-menu *ngIf="activeNode">
-        <li style="color: #333" nz-menu-item nzDisabled>
-          {{ activeNode.title }} [ {{ activeNode.key }} ]
-        </li>
+        <li style="color: #333" nz-menu-item nzDisabled> {{ activeNode.title }} [ {{ activeNode.key }} ] </li>
         <li nz-menu-divider></li>
         <li nz-menu-item [bitOpen]="['resource-add', { parentId: activeNode.origin.id }]">
-          <i nz-icon nzType="subnode"></i> {{ bit.l["add"] }}
+          <i nz-icon nzType="subnode"></i> {{ bit.l['add'] }}
         </li>
         <li *ngIf="activeNode.origin.policy" nz-menu-item (click)="openPolicy()">
-          <i nz-icon nzType="function"></i> {{ bit.l["policy"] }}
+          <i nz-icon nzType="function"></i> {{ bit.l['policy'] }}
         </li>
         <li nz-menu-item [bitOpen]="['resource-edit', activeNode.origin.id]">
-          <i nz-icon nzType="edit"></i> {{ bit.l["edit"] }}
+          <i nz-icon nzType="edit"></i> {{ bit.l['edit'] }}
         </li>
         <li nz-menu-divider></li>
-        <li
-          nz-menu-item
-          [nzDisabled]="activeNode.getChildren().length !== 0"
-          (click)="deleteData()"
-        >
-          <i nz-icon nzType="delete"></i> {{ bit.l["delete"] }}
+        <li nz-menu-item [nzDisabled]="activeNode.getChildren().length !== 0" (click)="deleteData()">
+          <i nz-icon nzType="delete"></i> {{ bit.l['delete'] }}
         </li>
       </ul>
     </nz-dropdown-menu>
   </nz-card>
 </nz-ribbon>
 
-<nz-drawer
-  [nzWidth]="540"
-  [nzTitle]="nzTitle"
-  [nzVisible]="policyVisable"
-  (nzOnClose)="closePolicy()"
->
+<nz-drawer [nzWidth]="540" [nzTitle]="nzTitle" [nzVisible]="policyVisable" (nzOnClose)="closePolicy()">
   <ng-template #nzTitle>
     <nz-space>
       <ng-container *nzSpaceItem>
@@ -206,32 +195,27 @@
             </nz-option>
           </ng-container>
         </nz-select>
-        <nz-select
-          style="width: 80px"
-          [(ngModel)]="policyValue"
-          [nzDropdownMatchSelectWidth]="false"
-        >
+        <nz-select style="width: 80px" [(ngModel)]="policyValue" [nzDropdownMatchSelectWidth]="false">
           <nz-option [nzLabel]="bit.l['policyRead']" [nzValue]="0"></nz-option>
           <nz-option [nzLabel]="bit.l['policyReadAndWrite']" [nzValue]="1"></nz-option>
         </nz-select>
       </nz-input-group>
       <button *nzSpaceItem nz-button nzType="primary" (click)="policySubmit()" [disabled]="!policyAclKey">
-        <i nz-icon nzType="check"></i> {{ bit.l["add"] }}
+        <i nz-icon nzType="check"></i> {{ bit.l['add'] }}
       </button>
     </nz-space>
   </ng-template>
   <ng-container *nzDrawerContent>
     <ng-container *ngIf="activeNode">
       <ng-container *ngFor="let data of policy.get(activeNode.key)">
-
         <nz-tag nzColor="blue" nzMode="closeable" (nzOnClose)="deletePolicy([data.id])">
           <span>{{ data.acl_key }}</span>
           <nz-divider nzType="vertical"></nz-divider>
           <ng-container *ngIf="data.policy === 0">
-            {{ bit.l["policyRead"] }}
+            {{ bit.l['policyRead'] }}
           </ng-container>
           <ng-container *ngIf="data.policy === 1">
-            {{ bit.l["policyReadAndWrite"] }}
+            {{ bit.l['policyReadAndWrite'] }}
           </ng-container>
         </nz-tag>
       </ng-container>

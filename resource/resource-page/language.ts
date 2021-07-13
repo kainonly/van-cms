@@ -5,7 +5,10 @@ export default {
   namePlaceholder: ['请输入资源名称', 'Please Enter Resource Name'],
   nameRequire: ['当前资源名称不能为空', 'Current route name cannot be empty'],
   key: ['资源控制键', 'Resource Key'],
-  keyHelp: ['资源控制键即代表唯一标识也作用于路由', 'The resource control key means that the unique identifier also acts on the route'],
+  keyHelp: [
+    '资源控制键即代表唯一标识也作用于路由',
+    'The resource control key means that the unique identifier also acts on the route'
+  ],
   keyPlaceholder: ['请输入资源控制键', 'Please Enter Resource Key'],
   keyRequire: ['当前资源控制键不能为空', 'Current Resource Key cannot be empty'],
   keyDuplicated: ['当前资源控制键已存在', 'Current Resource Key already exists'],

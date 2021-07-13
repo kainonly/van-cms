@@ -10,7 +10,7 @@ import { columnType } from '@vanx/framework/component';
   templateUrl: './permission-index.component.html'
 })
 export class PermissionIndexComponent implements OnInit {
-  lists: ListByPage;
+  lists!: ListByPage;
   columns: PageTableColumn[] = [
     { key: 'name', width: '200px', format: 'i18n' },
     { key: 'key', width: '200px' },
@@ -19,11 +19,7 @@ export class PermissionIndexComponent implements OnInit {
     columnType.action('permission-edit')
   ];
 
-  constructor(
-    public bit: BitService,
-    public permissionService: PermissionService
-  ) {
-  }
+  constructor(public bit: BitService, public permissionService: PermissionService) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);

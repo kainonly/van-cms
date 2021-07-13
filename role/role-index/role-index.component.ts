@@ -15,7 +15,7 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './role-index.component.html'
 })
 export class RoleIndexComponent implements OnInit {
-  lists: ListByPage;
+  lists!: ListByPage;
   permission: any = {};
   columns: PageTableColumn[] = [
     { key: 'name', width: '200px', format: 'i18n' },
@@ -31,8 +31,7 @@ export class RoleIndexComponent implements OnInit {
     private message: NzMessageService,
     public roleService: RoleService,
     private permissionService: PermissionService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
@@ -50,11 +49,13 @@ export class RoleIndexComponent implements OnInit {
 
   listsOperate = (observable: Observable<any>): Observable<any> => {
     return observable.pipe(
-      map(data => data.map(v => {
-        v.acl = !v.acl ? [] : v.acl.split(',').map(c => c.split(':'));
-        v.resource = !v.resource ? [] : v.resource.split(',');
-        return v;
-      }))
+      map(data =>
+        data.map((v: any) => {
+          v.acl = !v.acl ? [] : v.acl.split(',').map((c: any) => c.split(':'));
+          v.resource = !v.resource ? [] : v.resource.split(',');
+          return v;
+        })
+      )
     );
   };
 

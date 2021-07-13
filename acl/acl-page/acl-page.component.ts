@@ -15,10 +15,10 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './acl-page.component.html'
 })
 export class AclPageComponent implements OnInit {
-  private id: number;
-  private keyAsync: AsyncSubject<any>;
+  private id!: number;
+  private keyAsync!: AsyncSubject<any>;
 
-  form: FormGroup;
+  form!: FormGroup;
   readonly default: any = {
     read: ['get', 'originLists', 'lists'],
     write: ['add', 'edit', 'delete']
@@ -31,8 +31,7 @@ export class AclPageComponent implements OnInit {
     private aclService: AclService,
     private notification: NzNotificationService,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
@@ -80,25 +79,28 @@ export class AclPageComponent implements OnInit {
     });
   }
 
-  submit = (data): void => {
+  submit = (data: any): void => {
     if (!this.id) {
-      this.aclService.add(data).pipe(
-        switchMap(res =>
-          this.swal.addAlert(res, this.form, {
-            status: true
-          })
+      this.aclService
+        .add(data)
+        .pipe(
+          switchMap(res =>
+            this.swal.addAlert(res, this.form, {
+              status: true
+            })
+          )
         )
-      ).subscribe(() => {
-      });
+        .subscribe(() => {});
     } else {
       Reflect.set(data, 'id', this.id);
-      this.aclService.edit(data).pipe(
-        switchMap(res => this.swal.editAlert(res))
-      ).subscribe(status => {
-        if (status) {
-          this.getData();
-        }
-      });
+      this.aclService
+        .edit(data)
+        .pipe(switchMap(res => this.swal.editAlert(res)))
+        .subscribe(status => {
+          if (status) {
+            this.getData();
+          }
+        });
     }
   };
 }

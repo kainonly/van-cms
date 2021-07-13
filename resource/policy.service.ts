@@ -6,10 +6,7 @@ import { Observable } from 'rxjs';
 export class PolicyService {
   private model = 'policy';
 
-  constructor(
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private curd: BitCurdCommonService) {}
 
   originLists(): Observable<any> {
     return this.curd.originLists(this.model);

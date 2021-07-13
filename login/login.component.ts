@@ -9,14 +9,13 @@ import { StorageMap } from '@ngx-pwa/local-storage';
 import { particles } from './particles';
 import * as packer from './language';
 
-
 @Component({
   selector: 'v-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
+  form!: FormGroup;
   users: any[] = [];
   logining = false;
   particlesOptions = particles;
@@ -28,8 +27,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private storage: StorageMap
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.clear();
@@ -39,31 +37,35 @@ export class LoginComponent implements OnInit {
       password: [null, [Validators.required, Validators.minLength(12), Validators.maxLength(20)]],
       remember: [1, [Validators.required]]
     });
-    this.storage.get('users').subscribe((data: Set<string>) => {
+    this.storage.get('users').subscribe((data: unknown) => {
       if (data) {
-        this.users = [...data.keys()];
+        this.users = [...(<Set<string>>data).keys()];
       }
     });
   }
 
   addUsername(username: string): void {
-    this.storage.get('users').pipe(
-      switchMap((data: Set<string>) =>
-        this.storage.set('users', data ? data.add(username) : new Set([username]))
+    this.storage
+      .get('users')
+      .pipe(
+        switchMap((data: unknown) =>
+          this.storage.set('users', data ? (<Set<string>>data).add(username) : new Set([username]))
+        )
       )
-    ).subscribe(() => {
-    });
+      .subscribe(() => {});
   }
 
   deleteUsername(event: any, username: string): void {
-    this.storage.get('users').pipe(
-      switchMap((data: Set<string>) => {
-        data.delete(username);
-        this.users = [...data.keys()];
-        return this.storage.set('users', data);
-      })
-    ).subscribe(() => {
-    });
+    this.storage
+      .get('users')
+      .pipe(
+        switchMap((data: unknown) => {
+          (<Set<string>>data).delete(username);
+          this.users = [...(<Set<string>>data).keys()];
+          return this.storage.set('users', data);
+        })
+      )
+      .subscribe(() => {});
     event.stopPropagation();
   }
 

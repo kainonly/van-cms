@@ -1,16 +1,12 @@
 <bit-header>
   <button *bitHeaderAction nz-button nzType="primary" [bitOpen]="['acl-add']">
     <i nz-icon nzType="plus"></i>
-    <span>{{ bit.l["add"] }}</span>
+    <span>{{ bit.l['add'] }}</span>
   </button>
 </bit-header>
 
 <v-page-table #pageTable [lists]="lists" [columns]="columns" [service]="aclService">
-  <nz-input-group
-    *vPageTableSearch="'name->' + bit.locale"
-    [nzSuffixIcon]="'search'"
-    style="width: 320px"
-  >
+  <nz-input-group *vPageTableSearch="'name->' + bit.locale" [nzSuffixIcon]="'search'" style="width: 320px">
     <input
       nz-input
       [placeholder]="bit.l['search']"
@@ -20,5 +16,3 @@
     />
   </nz-input-group>
 </v-page-table>
-
-

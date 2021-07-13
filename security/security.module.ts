@@ -7,22 +7,9 @@ import { LogsService } from './logs.service';
 import { ActivitiesService } from './activities.service';
 
 @NgModule({
-  imports: [
-    ShareModule,
-    FrameworkComponentModule
-  ],
-  declarations: [
-    LogsComponent,
-    ActivitiesComponent
-  ],
-  exports: [
-    LogsComponent,
-    ActivitiesComponent
-  ],
-  providers: [
-    LogsService,
-    ActivitiesService
-  ]
+  imports: [ShareModule, FrameworkComponentModule],
+  declarations: [LogsComponent, ActivitiesComponent],
+  exports: [LogsComponent, ActivitiesComponent],
+  providers: [LogsService, ActivitiesService]
 })
-export class SecurityModule {
-}
+export class SecurityModule {}

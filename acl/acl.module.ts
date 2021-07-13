@@ -6,21 +6,9 @@ import { AclPageComponent } from './acl-page/acl-page.component';
 import { AclService } from './acl.service';
 
 @NgModule({
-  imports: [
-    ShareModule,
-    FrameworkComponentModule
-  ],
-  declarations: [
-    AclIndexComponent,
-    AclPageComponent
-  ],
-  exports: [
-    AclIndexComponent,
-    AclPageComponent
-  ],
-  providers: [
-    AclService
-  ]
+  imports: [ShareModule, FrameworkComponentModule],
+  declarations: [AclIndexComponent, AclPageComponent],
+  exports: [AclIndexComponent, AclPageComponent],
+  providers: [AclService]
 })
-export class AclModule {
-}
+export class AclModule {}
