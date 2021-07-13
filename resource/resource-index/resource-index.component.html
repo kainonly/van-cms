@@ -132,7 +132,7 @@
             </nz-tag>
             <nz-tag *ngIf="node.origin.policy && policy.has(node.key)" nzColor="blue">
               <ng-container *ngIf="policy.has(node.key)">
-                <ng-container *ngFor="let x of policy.get(node.key); last as isLast; index as i">
+                <ng-container *ngFor="let x of policy.get(node.key)!; last as isLast; index as i">
                   <ng-container *ngIf="i < 10">
                     {{ x.acl_key }}:
                     <ng-container *ngIf="x.policy === 0"> r</ng-container>
@@ -140,7 +140,7 @@
                     <nz-divider *ngIf="!isLast" nzType="vertical"></nz-divider>
                   </ng-container>
                 </ng-container>
-                <ng-container *ngIf="policy.get(node.key).length >= 10"> ...</ng-container>
+                <ng-container *ngIf="policy.get(node.key)!.length >= 10"> ...</ng-container>
               </ng-container>
             </nz-tag>
           </ng-container>

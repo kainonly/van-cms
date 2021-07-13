@@ -44,10 +44,10 @@
             </ng-template>
             <ng-template #usernameSuffix>
               <i
-                *ngIf="form.get('username').value"
+                *ngIf="form.get('username')!.value"
                 nz-icon
                 nzType="close-circle"
-                (click)="form.get('username').reset()"
+                (click)="form.get('username')!.reset()"
               >
               </i>
             </ng-template>
@@ -77,7 +77,7 @@
             <i nz-icon nzType="lock"></i>
           </ng-template>
           <ng-template #passwordSuffix>
-            <i *ngIf="form.get('password').value" nz-icon nzType="close-circle" (click)="form.get('password').reset()">
+            <i *ngIf="form.get('password')!.value" nz-icon nzType="close-circle" (click)="form.get('password')!.reset()">
             </i>
           </ng-template>
           <bit-error-tip

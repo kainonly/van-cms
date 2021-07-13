@@ -1,4 +1,4 @@
-<nz-card [nzTitle]="search" [nzExtra]="extra ? null : extraDefault">
+<nz-card [nzTitle]="search" [nzExtra]="extra ? undefined : extraDefault">
   <ng-template #search>
     <nz-space class="page-table-head" nzWrap>
       <ng-container *ngFor="let item of searchItems">
@@ -45,9 +45,13 @@
           (nzCheckedChange)="lists.checkedAll($event)"
         ></th>
         <ng-container *ngFor="let column of columns">
-          <th [nzWidth]="column.width" [nzLeft]="column.left" [nzRight]="column.right" [nzAlign]="column.align">{{
-            bit.l[column.key]
-          }}</th>
+          <th
+            [nzWidth]="column.width ?? null"
+            [nzLeft]="column.left!"
+            [nzRight]="column.right!"
+            [nzAlign]="column.align ?? null"
+            >{{ bit.l[column.key] }}</th
+          >
         </ng-container>
       </tr>
     </thead>
@@ -55,10 +59,15 @@
       <tr *ngFor="let data of contentTable.data">
         <td *ngIf="batch" nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="lists.refreshStatus()"></td>
         <ng-container *ngFor="let column of columns">
-          <td [nzLeft]="column.left" [nzRight]="column.right" [nzAlign]="column.align" [nzBreakWord]="column.breakWord">
+          <td
+            [nzLeft]="column.left ?? false"
+            [nzRight]="column.right ?? false"
+            [nzAlign]="column.align ?? null"
+            [nzBreakWord]="column.breakWord"
+          >
             <ng-container *ngIf="columnDef && columnDef.has(column.key); else normal">
               <ng-container
-                *ngTemplateOutlet="columnDef.get(column.key); context: context(data, column)"
+                *ngTemplateOutlet="columnDef.get(column.key)!; context: context(data, column)"
               ></ng-container>
             </ng-container>
             <ng-template #normal>
@@ -78,7 +87,7 @@
                       [(ngModel)]="data.status"
                       [nzCheckedChildren]="bit.l['on']"
                       [nzUnCheckedChildren]="bit.l['off']"
-                      [bitStatusChange]="service.status(data)"
+                      [bitStatusChange]="service.status!(data)"
                       [bitControl]="!column.extra.control"
                       (response)="!column.extra.response($event)"
                     >
