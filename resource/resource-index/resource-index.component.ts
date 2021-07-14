@@ -8,7 +8,7 @@ import {
   NzTreeNodeOptions
 } from 'ng-zorro-antd/tree';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { Bit } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { Observable, of, Subscription } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { AclService } from '@vanx/framework/acl';
@@ -44,7 +44,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
   private localeChanged!: Subscription;
 
   constructor(
-    public bit: Bit,
+    public bit: BitService,
     private fb: FormBuilder,
     private swal: BitSwalService,
     private message: NzMessageService,

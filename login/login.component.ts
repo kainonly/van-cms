@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { Bit } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { switchMap } from 'rxjs/operators';
 import { MainService } from '@vanx/framework';
 import { StorageMap } from '@ngx-pwa/local-storage';
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   particlesOptions = particles;
 
   constructor(
-    public bit: Bit,
+    public bit: BitService,
     private mainService: MainService,
     private notification: NzNotificationService,
     private router: Router,

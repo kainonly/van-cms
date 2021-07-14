@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Bit } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap, throttleTime } from 'rxjs/operators';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -38,7 +38,7 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private swal: BitSwalService,
     private fb: FormBuilder,
-    public bit: Bit,
+    public bit: BitService,
     private notification: NzNotificationService,
     private userService: UserService,
     private roleService: RoleService,

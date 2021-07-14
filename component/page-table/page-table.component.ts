@@ -8,7 +8,7 @@ import {
   QueryList,
   TemplateRef
 } from '@angular/core';
-import { Bit, ListByPage } from 'ngx-bit';
+import { BitService, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PageTableColumn, PageTableServiceInterface } from '@vanx/framework';
 import { PageTableCellDirective } from './page-table-cell.directive';
@@ -37,7 +37,7 @@ export class PageTableComponent implements OnInit, AfterViewInit {
 
   columnDef!: Map<string, TemplateRef<any>>;
 
-  constructor(public bit: Bit, private swal: BitSwalService, private message: NzMessageService) {}
+  constructor(public bit: BitService, private swal: BitSwalService, private message: NzMessageService) {}
 
   ngOnInit(): void {
     this.lists.ready.subscribe(() => {

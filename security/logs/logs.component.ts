@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Bit, ListByPage } from 'ngx-bit';
+import { BitService, ListByPage } from 'ngx-bit';
 import { PageTableColumn } from '@vanx/framework';
 import { LogsService } from '../logs.service';
 import * as packer from './language';
@@ -18,7 +18,7 @@ export class LogsComponent implements OnInit {
     { key: 'time', width: '160px', right: true, format: 'datetime' }
   ];
 
-  constructor(public bit: Bit, public logsService: LogsService) {}
+  constructor(public bit: BitService, public logsService: LogsService) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);

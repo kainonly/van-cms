@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Bit } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { asyncValidator } from 'ngx-bit/operates';
 import { switchMap } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class PermissionPageComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
-    public bit: Bit,
+    public bit: BitService,
     private fb: FormBuilder,
     private notification: NzNotificationService,
     private swal: BitSwalService,

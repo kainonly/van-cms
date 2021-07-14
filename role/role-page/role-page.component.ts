@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Bit } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { asyncValidator } from 'ngx-bit/operates';
@@ -32,7 +32,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
   private localeChanged!: Subscription;
 
   constructor(
-    public bit: Bit,
+    public bit: BitService,
     private fb: FormBuilder,
     private notification: NzNotificationService,
     private swal: BitSwalService,
