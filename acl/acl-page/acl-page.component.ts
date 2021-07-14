@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService } from 'ngx-bit';
+import { Bit } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { asyncValidator } from 'ngx-bit/operates';
 import { ActivatedRoute } from '@angular/router';
@@ -25,7 +25,7 @@ export class AclPageComponent implements OnInit {
   };
 
   constructor(
-    public bit: BitService,
+    public bit: Bit,
     private fb: FormBuilder,
     private swal: BitSwalService,
     private aclService: AclService,

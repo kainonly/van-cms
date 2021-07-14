@@ -8,7 +8,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BitService } from 'ngx-bit';
+import { Bit } from 'ngx-bit';
 import { PageFormItemDirective } from './page-form-item.directive';
 import { PageFormSchema } from '@vanx/framework';
 
@@ -28,7 +28,7 @@ export class PageFormComponent implements AfterViewInit {
 
   private dataset!: any[];
 
-  constructor(public bit: BitService, public changeDetectorRef: ChangeDetectorRef) {}
+  constructor(public bit: Bit, public changeDetectorRef: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     this.dataset = [...this.items.toArray(), ...(!this.innerItems ? [] : this.innerItems.toArray())];

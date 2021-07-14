@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
+import { Bit, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { RoleService } from '@vanx/framework/role';
 import { PermissionService } from '@vanx/framework/permission';
@@ -39,7 +39,7 @@ export class UserIndexComponent implements OnInit {
 
   constructor(
     private swal: BitSwalService,
-    public bit: BitService,
+    public bit: Bit,
     public userService: UserService,
     private roleService: RoleService,
     private permissionService: PermissionService,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService } from 'ngx-bit';
+import { Bit } from 'ngx-bit';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   avatar = '';
 
   constructor(
-    public bit: BitService,
+    public bit: Bit,
     private fb: FormBuilder,
     private mainService: MainService,
     private notification: NzNotificationService

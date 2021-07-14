@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
+import { Bit, ListByPage } from 'ngx-bit';
 import { PermissionService } from '../permission.service';
 import { PageTableColumn } from '@vanx/framework';
 import * as packer from './language';
@@ -19,7 +19,7 @@ export class PermissionIndexComponent implements OnInit {
     columnType.action('permission-edit')
   ];
 
-  constructor(public bit: BitService, public permissionService: PermissionService) {}
+  constructor(public bit: Bit, public permissionService: PermissionService) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);

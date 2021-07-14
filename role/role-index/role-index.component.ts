@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
+import { Bit, ListByPage } from 'ngx-bit';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PermissionService } from '@vanx/framework/permission';
 import { PageTableColumn } from '@vanx/framework';
@@ -26,7 +26,7 @@ export class RoleIndexComponent implements OnInit {
   ];
 
   constructor(
-    public bit: BitService,
+    public bit: Bit,
     private swal: BitSwalService,
     private message: NzMessageService,
     public roleService: RoleService,

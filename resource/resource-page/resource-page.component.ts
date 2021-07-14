@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService } from 'ngx-bit';
+import { Bit } from 'ngx-bit';
 import { ActivatedRoute } from '@angular/router';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import { asyncValidator } from 'ngx-bit/operates';
@@ -26,7 +26,7 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
   private localeChanged!: Subscription;
 
   constructor(
-    public bit: BitService,
+    public bit: Bit,
     private fb: FormBuilder,
     private swal: BitSwalService,
     private resourceService: ResourceService,

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { TransportDataSource } from './transport.data-source';
-import { BitService } from 'ngx-bit';
+import { Bit } from 'ngx-bit';
 import { switchMap } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
@@ -18,7 +18,7 @@ export class TransportComponent implements OnInit, AfterViewInit {
   @Input() action!: (files: NzUploadFile[]) => Observable<any>;
   @Output() actionComplete: EventEmitter<string> = new EventEmitter();
 
-  constructor(public bit: BitService, private message: NzMessageService) {}
+  constructor(public bit: Bit, private message: NzMessageService) {}
 
   ngOnInit(): void {
     this.ds.complete.pipe(switchMap(files => this.action(files))).subscribe(res => {

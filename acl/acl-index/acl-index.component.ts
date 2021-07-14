@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
+import { Bit, ListByPage } from 'ngx-bit';
 import { PageTableColumn } from '@vanx/framework';
 import { columnType } from '@vanx/framework/component';
 import { AclService } from '../acl.service';
@@ -20,7 +20,7 @@ export class AclIndexComponent implements OnInit {
     columnType.action('acl-edit')
   ];
 
-  constructor(public bit: BitService, public aclService: AclService) {}
+  constructor(public bit: Bit, public aclService: AclService) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
