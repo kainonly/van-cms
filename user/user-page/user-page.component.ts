@@ -1,19 +1,21 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService } from 'ngx-bit';
-import { asyncValidator } from 'ngx-bit/operates';
+import { ActivatedRoute } from '@angular/router';
+import { AsyncSubject, Subscription } from 'rxjs';
 import { switchMap, throttleTime } from 'rxjs/operators';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { RoleService } from '@vanx/framework/role';
+
 import { PermissionService } from '@vanx/framework/permission';
 import { ResourceService } from '@vanx/framework/resource';
+import { RoleService } from '@vanx/framework/role';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
-import { validedPassword } from './valided-password';
-import { AsyncSubject, Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { BitService } from 'ngx-bit';
+import { asyncValidator } from 'ngx-bit/operates';
+import { BitSwalService } from 'ngx-bit/swal';
+
 import { UserService } from '../user.service';
 import * as packer from './language';
-import { BitSwalService } from 'ngx-bit/swal';
+import { validedPassword } from './valided-password';
 
 @Component({
   selector: 'v-user-page',
@@ -73,7 +75,7 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getData();
       }
     });
-    this.localeChanged = this.bit.localeChanged.subscribe(() => {
+    this.localeChanged = this.bit.localeChanged!.subscribe(() => {
       this.getNodes();
     });
   }
@@ -115,7 +117,7 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
   getData(): void {
     this.pwdMust = false;
     this.form.get('username')!.disable();
-    this.userService.get(this.id).subscribe(data => {
+    this.userService.api.get(this.id).subscribe((data: any) => {
       if (data.self) {
         this.swal
           .create({
@@ -149,17 +151,17 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getRole(): void {
-    this.roleService.originLists().subscribe(data => {
+    this.roleService.api.originLists().subscribe((data: any) => {
       this.roleLists = data;
     });
   }
 
   getNodes(): void {
-    this.resourceService.originLists().subscribe(data => {
+    this.resourceService.api.originLists().subscribe((data: any) => {
       const refer: Map<string, NzTreeNodeOptions> = new Map();
       const lists = data.map((v: any) => {
         const rows = {
-          title: JSON.parse(v.name)[this.bit.locale] + '[' + v.key + ']',
+          title: `${JSON.parse(v.name)[this.bit.locale!]}[${v.key}]`,
           key: v.key,
           parent: v.parent,
           children: [],
@@ -262,7 +264,7 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getPermission(): void {
-    this.permissionService.originLists().subscribe(data => {
+    this.permissionService.api.originLists().subscribe((data: any) => {
       this.permissionLists = data;
     });
   }
@@ -283,11 +285,11 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
       Reflect.set(data, 'avatar', this.avatar);
     }
     if (!this.id) {
-      this.userService
+      this.userService.api
         .add(data)
         .pipe(
-          switchMap(res =>
-            this.swal.addAlert(res, this.form, {
+          switchMap((v: any) =>
+            this.swal.addAlert(v, this.form, {
               status: true
             })
           )
@@ -295,9 +297,9 @@ export class UserPageComponent implements OnInit, AfterViewInit, OnDestroy {
         .subscribe(() => {});
     } else {
       Reflect.set(data, 'id', this.id);
-      this.userService
+      this.userService.api
         .edit(data)
-        .pipe(switchMap(res => this.swal.editAlert(res)))
+        .pipe(switchMap((v: any) => this.swal.editAlert(v)))
         .subscribe(status => {
           if (status) {
             this.form.reset();

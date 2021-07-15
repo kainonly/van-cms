@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
+
 import { PageTableColumn } from '@vanx/framework';
-import * as packer from './language';
+import { BitService, ListByPage } from 'ngx-bit';
+
 import { ActivitiesService } from '../activities.service';
+import * as packer from './language';
 
 @Component({
   selector: 'v-activities',

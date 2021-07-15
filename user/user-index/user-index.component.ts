@@ -1,16 +1,18 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { RoleService } from '@vanx/framework/role';
-import { PermissionService } from '@vanx/framework/permission';
-import { columnType } from '@vanx/framework/component';
-import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { PageTableColumn } from '@vanx/framework';
+import { columnType } from '@vanx/framework/component';
+import { PermissionService } from '@vanx/framework/permission';
+import { RoleService } from '@vanx/framework/role';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { BitService, ListByPage } from 'ngx-bit';
+import { BitSwalService } from 'ngx-bit/swal';
+
 import { UserService } from '../user.service';
 import * as packer from './language';
-import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-user-index',
@@ -64,7 +66,7 @@ export class UserIndexComponent implements OnInit {
    * 获取权限组
    */
   getRole(): void {
-    this.roleService.originLists().subscribe(data => {
+    this.roleService.api.originLists().subscribe((data: any) => {
       for (const x of data) {
         this.role[x.key] = x;
       }
@@ -75,7 +77,7 @@ export class UserIndexComponent implements OnInit {
    * 获取特殊授权
    */
   getPermission(): void {
-    this.permissionService.originLists().subscribe(data => {
+    this.permissionService.api.originLists().subscribe((data: any) => {
       for (const x of data) {
         this.permission[x.key] = x.name;
       }

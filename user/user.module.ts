@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
+
 import { ShareModule } from '@vanx/framework';
 import { FrameworkComponentModule } from '@vanx/framework/component';
-import { UserService } from './user.service';
+
 import { UserIndexComponent } from './user-index/user-index.component';
 import { UserPageComponent } from './user-page/user-page.component';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [ShareModule, FrameworkComponentModule],

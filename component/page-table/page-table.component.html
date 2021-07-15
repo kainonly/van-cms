@@ -13,7 +13,7 @@
       <button nz-button (click)="getLists(true)" [nz-tooltip]="bit.l['refreshLists']">
         <i nz-icon nzType="sync"></i>
       </button>
-      <button nz-button [bitSearchClear]="lists" (after)="getLists(true)" [nz-tooltip]="bit.l['clearSearch']">
+      <button nz-button [bitSearchClear]="lists" (bitAfter)="getLists(true)" [nz-tooltip]="bit.l['clearSearch']">
         <i nz-icon nzType="clear"></i>
       </button>
       <button nz-button nzDanger [disabled]="!lists.batch" (click)="bulkDelete()" [nz-tooltip]="bit.l['bulkDelete']">
@@ -87,9 +87,9 @@
                       [(ngModel)]="data.status"
                       [nzCheckedChildren]="bit.l['on']"
                       [nzUnCheckedChildren]="bit.l['off']"
-                      [bitStatusChange]="service.status!(data)"
+                      [bitStatusChange]="api.status!(data)"
                       [bitControl]="!column.extra.control"
-                      (response)="!column.extra.response($event)"
+                      (bitResponse)="!column.extra.response($event)"
                     >
                     </nz-switch>
                   </ng-container>

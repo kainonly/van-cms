@@ -1,5 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Observable, of, Subscription } from 'rxjs';
+
+import { AppService } from '@vanx/framework';
+import { AclService } from '@vanx/framework/acl';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
   NzFormatBeforeDropEvent,
   NzFormatEmitEvent,
@@ -7,17 +14,12 @@ import {
   NzTreeNode,
   NzTreeNodeOptions
 } from 'ng-zorro-antd/tree';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BitService } from 'ngx-bit';
-import { Observable, of, Subscription } from 'rxjs';
-import { FormBuilder } from '@angular/forms';
-import { AclService } from '@vanx/framework/acl';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { ResourceService } from '../resource.service';
-import { PolicyService } from '../policy.service';
-import * as packer from './language';
-import { LayoutService } from '@vanx/framework';
 import { BitSwalService } from 'ngx-bit/swal';
+
+import { PolicyService } from '../policy.service';
+import { ResourceService } from '../resource.service';
+import * as packer from './language';
 
 @Component({
   selector: 'v-resource-index',
@@ -53,14 +55,14 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     private resourceService: ResourceService,
     public policyService: PolicyService,
     private aclService: AclService,
-    private system: LayoutService
+    private app: AppService
   ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
     this.getNodes();
     this.getPolicy();
-    this.localeChanged = this.bit.localeChanged.subscribe(() => {
+    this.localeChanged = this.bit.localeChanged!.subscribe(() => {
       this.getNodes();
     });
   }
@@ -73,11 +75,11 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
    * 获取树形数据
    */
   getNodes(): void {
-    this.resourceService.originLists().subscribe(data => {
+    this.resourceService.api.originLists().subscribe((data: any) => {
       const refer: Map<string, NzTreeNodeOptions> = new Map();
       const lists = data.map((v: any) => {
         const rows = {
-          title: JSON.parse(v.name)[this.bit.locale],
+          title: JSON.parse(v.name)[this.bit.locale!],
           key: v.key,
           expanded: this.expanded.has(v.key),
           parent: v.parent,
@@ -114,7 +116,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
    * 获取策略数据
    */
   getPolicy(): void {
-    this.policyService.originLists().subscribe(data => {
+    this.policyService.api.originLists().subscribe((data: any) => {
       this.policy.clear();
       for (const x of data) {
         if (this.policy.has(x.resource_key)) {
@@ -142,7 +144,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
    * 获取访问控制
    */
   getAcl(): void {
-    this.aclService.originLists().subscribe(data => {
+    this.aclService.api.originLists().subscribe((data: any) => {
       this.policyAcl = data;
     });
   }
@@ -199,15 +201,17 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     if (this.activeNode.getChildren().length !== 0) {
       return;
     }
-    this.swal.deleteAlert(this.resourceService.delete([this.activeNode.origin.id])).subscribe(res => {
-      if (!res.error) {
-        this.message.success(this.bit.l.deleteSuccess);
-        this.system.refreshMenuStart();
-        this.getNodes();
-      } else {
-        this.message.error(this.bit.l.deleteError);
-      }
-    });
+    this.swal
+      .deleteAlert(this.resourceService.api.delete([this.activeNode.origin.id]) as Observable<any>)
+      .subscribe((v: any) => {
+        if (!v.error) {
+          this.message.success(this.bit.l.deleteSuccess);
+          this.app.refreshMenuStart();
+          this.getNodes();
+        } else {
+          this.message.error(this.bit.l.deleteError);
+        }
+      });
   }
 
   /**
@@ -275,7 +279,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     this.resourceService.sort(this.sortData).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.sortSuccess);
-        this.system.refreshMenuStart();
+        this.app.refreshMenuStart();
         this.closeSort();
       } else {
         this.message.error(this.bit.l.sortError);
@@ -318,14 +322,14 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
    * 提交策略绑定
    */
   policySubmit(): void {
-    this.policyService
+    this.policyService.api
       .add({
         resource_key: this.activeNode.key,
         acl_key: this.policyAclKey,
         policy: this.policyValue
       })
-      .subscribe(res => {
-        if (!res.error) {
+      .subscribe((v: any) => {
+        if (!v.error) {
           this.notification.success(this.bit.l.success, this.bit.l.updateSuccess);
           this.policyReset();
           this.getPolicy();
@@ -340,8 +344,8 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
    * 删除策略绑定
    */
   deletePolicy(id: any[]): void {
-    this.policyService.delete(id).subscribe(res => {
-      if (!res.error) {
+    this.policyService.api.delete(id).subscribe((v: any) => {
+      if (!v.error) {
         this.notification.success(this.bit.l.success, this.bit.l.deleteSuccess);
       } else {
         this.notification.error(this.bit.l.error, this.bit.l.deleteError);

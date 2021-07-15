@@ -5,14 +5,14 @@
   </button>
 </bit-header>
 
-<v-page-table #pageTable [lists]="lists" [columns]="columns" [service]="userService" [deleteOperate]="deleteOperate">
+<v-page-table #pageTable [lists]="lists" [columns]="columns" [api]="userService.api" [deleteOperate]="deleteOperate">
   <nz-input-group *vPageTableSearch="'username'" [nzSuffixIcon]="'search'" style="width: 320px">
     <input
       nz-input
       [placeholder]="bit.l['search']"
       [(ngModel)]="lists.search['username'].value"
       [bitSearchStart]="lists"
-      (after)="pageTable.getLists(true)"
+      (bitAfter)="pageTable.getLists(true)"
     />
   </nz-input-group>
   <ng-container *vPageTableCell="'username'; let data">
@@ -58,7 +58,7 @@
       </ng-container>
     </nz-descriptions-item>
     <nz-descriptions-item *ngIf="userData.avatar" [nzTitle]="bit.l['avatar']">
-      <img nz-image width="200px" height="200px" [nzSrc]="bit.static + userData.avatar" />
+      <img nz-image width="200px" height="200px" [nzSrc]="bit.assets + userData.avatar" />
     </nz-descriptions-item>
     <ng-template #empty>-</ng-template>
   </nz-descriptions>

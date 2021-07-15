@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService } from 'ngx-bit';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { AppService } from '@vanx/framework';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
-import { MainService } from '@vanx/framework';
+import { BitService } from 'ngx-bit';
+
 import * as packer from './language';
 
 @Component({
@@ -18,7 +20,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     public bit: BitService,
     private fb: FormBuilder,
-    private mainService: MainService,
+    private mainService: AppService,
     private notification: NzNotificationService
   ) {}
 

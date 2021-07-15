@@ -5,7 +5,7 @@
   </button>
 </bit-header>
 
-<v-page-table #pageTable [lists]="lists" [columns]="columns" [service]="aclService">
+<v-page-table #pageTable [lists]="lists" [columns]="columns" [api]="aclService.api">
   <nz-input-group *vPageTableSearch="'name->' + bit.locale" [nzSuffixIcon]="'search'" style="width: 320px">
     <input
       nz-input

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 import { StorageMap } from '@ngx-pwa/local-storage';
-import { MainService } from '@vanx/framework';
+import { AppService } from '@vanx/framework';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BitService } from 'ngx-bit';
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public bit: BitService,
-    private mainService: MainService,
+    private appService: AppService,
     private notification: NzNotificationService,
     private router: Router,
     private fb: FormBuilder,
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
 
   submit(data: any): void {
     this.logining = true;
-    this.mainService.login(data.username, data.password).subscribe(res => {
+    this.appService.login(data.username, data.password).subscribe(res => {
       switch (res.error) {
         case 0:
           this.bit.clear();

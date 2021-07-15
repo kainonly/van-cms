@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { PermissionService } from '@vanx/framework/permission';
-import { PageTableColumn } from '@vanx/framework';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { PageTableColumn } from '@vanx/framework';
+import { columnType } from '@vanx/framework/component';
+import { PermissionService } from '@vanx/framework/permission';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { BitService, ListByPage } from 'ngx-bit';
+import { BitSwalService } from 'ngx-bit/swal';
+
 import { RoleService } from '../role.service';
 import * as packer from './language';
-import { columnType } from '@vanx/framework/component';
-import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-role-index',
@@ -60,7 +62,7 @@ export class RoleIndexComponent implements OnInit {
   };
 
   getPermission(): void {
-    this.permissionService.originLists().subscribe(data => {
+    this.permissionService.api.originLists().subscribe((data: any) => {
       for (const x of data) {
         this.permission[x.key] = x.name;
       }

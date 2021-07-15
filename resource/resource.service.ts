@@ -1,51 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { BitCurdCommonService, BitHttpService } from 'ngx-bit';
+
+import { Api, BitService } from 'ngx-bit';
 
 @Injectable()
 export class ResourceService {
-  private model = 'resource';
+  api: Api;
 
-  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
-
-  originLists(): Observable<any> {
-    return this.curd.originLists(this.model);
-  }
-
-  add(data: any): Observable<any> {
-    return this.curd.add(this.model, data);
-  }
-
-  get(id: any): Observable<any> {
-    return this.curd.get(this.model, id);
-  }
-
-  edit(data: any): Observable<any> {
-    return this.curd.edit(this.model, data);
-  }
-
-  delete(id: any[]): Observable<any> {
-    return this.curd.delete(this.model, id);
+  constructor(private bit: BitService) {
+    this.api = bit.api('resource');
   }
 
   /**
-   * Resource Sort
+   * 资源排序
    */
   sort(data: any[]): Observable<any> {
-    return this.http.req(this.model + '/sort', {
+    return this.api.send(`sort`, {
       data
     });
   }
 
   /**
-   * Validate Resource Key
+   * 验证资源索引是否存在
    */
   validedKey(key: string, edit: Observable<any> = of(null)): Observable<any> {
     return edit.pipe(
       switchMap(editKey => {
         if (key !== editKey) {
-          return this.http.req(this.model + '/validedKey', {
+          return this.api.send(`validedKey`, {
             key
           });
         }
@@ -56,11 +39,11 @@ export class ResourceService {
           }
         });
       }),
-      map(res => {
-        if (res.error === 1) {
+      map((v: any) => {
+        if (v.error === 1) {
           return false;
         }
-        return !res.data.exists;
+        return !v.data.exists;
       })
     );
   }

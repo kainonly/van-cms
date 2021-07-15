@@ -1,22 +1,22 @@
 <bit-header>
-  <nz-alert *bitHeaderBanner nzBanner nzType="info" nzCloseable [nzMessage]="nzMessage.ref">
-    <bit-print #nzMessage [text]="bit.l['info']" [vars]="[vars0, vars1, vars2]">
-      <ng-template #vars0>
-        <nz-tag>
-          <i nz-icon nzType="flag"></i>
-        </nz-tag>
-      </ng-template>
-      <ng-template #vars1>
-        <nz-tag>
-          <i nz-icon nzType="file-done"></i>
-        </nz-tag>
-      </ng-template>
-      <ng-template #vars2>
-        <nz-tag>
-          <i nz-icon nzType="control"></i>
-        </nz-tag>
-      </ng-template>
-    </bit-print>
+  <nz-alert *bitHeaderBanner nzBanner nzType="info" nzCloseable>
+    <!--    <bit-print #nzMessage [text]="bit.l['info']" [vars]="[vars0, vars1, vars2]">-->
+    <!--      <ng-template #vars0>-->
+    <!--        <nz-tag>-->
+    <!--          <i nz-icon nzType="flag"></i>-->
+    <!--        </nz-tag>-->
+    <!--      </ng-template>-->
+    <!--      <ng-template #vars1>-->
+    <!--        <nz-tag>-->
+    <!--          <i nz-icon nzType="file-done"></i>-->
+    <!--        </nz-tag>-->
+    <!--      </ng-template>-->
+    <!--      <ng-template #vars2>-->
+    <!--        <nz-tag>-->
+    <!--          <i nz-icon nzType="control"></i>-->
+    <!--        </nz-tag>-->
+    <!--      </ng-template>-->
+    <!--    </bit-print>-->
   </nz-alert>
   <button *bitHeaderAction nz-button nzType="primary" [bitOpen]="['resource-add']">
     <i nz-icon nzType="plus"></i>
@@ -149,7 +149,7 @@
     </ng-template>
     <nz-dropdown-menu #actionsMenu>
       <ul nz-menu *ngIf="activeNode">
-        <li style="color: #333" nz-menu-item nzDisabled> {{ activeNode.title }} [ {{ activeNode.key }} ] </li>
+        <li style="color: #333" nz-menu-item nzDisabled> {{ activeNode.title }} [ {{ activeNode.key }} ]</li>
         <li nz-menu-divider></li>
         <li nz-menu-item [bitOpen]="['resource-add', { parentId: activeNode.origin.id }]">
           <i nz-icon nzType="subnode"></i> {{ bit.l['add'] }}

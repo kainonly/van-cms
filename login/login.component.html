@@ -22,7 +22,7 @@
     <h3 class="login-title">{{ bit.l['welcome'] }}</h3>
     <form [formGroup]="form" (bitFormSubmit)="submit($event)">
       <nz-form-item>
-        <nz-form-control [nzErrorTip]="username.ref">
+        <nz-form-control>
           <nz-input-group [nzSuffix]="usernameSuffix" [nzPrefix]="userPrefix">
             <input
               type="text"
@@ -52,18 +52,11 @@
               </i>
             </ng-template>
           </nz-input-group>
-          <bit-error-tip
-            #username
-            [hasError]="{
-              required: bit.l['usernameRequire']
-            }"
-          >
-          </bit-error-tip>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-control [nzErrorTip]="password.ref">
+        <nz-form-control>
           <nz-input-group [nzSuffix]="passwordSuffix" [nzPrefix]="passwordPrefix">
             <input
               nz-input
@@ -77,18 +70,14 @@
             <i nz-icon nzType="lock"></i>
           </ng-template>
           <ng-template #passwordSuffix>
-            <i *ngIf="form.get('password')!.value" nz-icon nzType="close-circle" (click)="form.get('password')!.reset()">
+            <i
+              *ngIf="form.get('password')!.value"
+              nz-icon
+              nzType="close-circle"
+              (click)="form.get('password')!.reset()"
+            >
             </i>
           </ng-template>
-          <bit-error-tip
-            #password
-            [hasError]="{
-              required: bit.l['passwordRequire'],
-              minlength: bit.l['passwordCorrectly'],
-              maxlength: bit.l['passwordCorrectly']
-            }"
-          >
-          </bit-error-tip>
         </nz-form-control>
       </nz-form-item>
 
@@ -111,9 +100,9 @@
   </div>
 
   <footer>
-    <span nz-typography
-      ><strong>{{ bit.l['subTitle'] }}</strong></span
-    >
+    <span nz-typography>
+      <strong>{{ bit.l['subTitle'] }}</strong>
+    </span>
     <br />
     <span nz-typography>{{ bit.l['footer'] }}</span>
   </footer>

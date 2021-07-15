@@ -59,7 +59,7 @@ export class PermissionPageComponent implements OnInit {
 
   getData(): void {
     this.keyAsync = new AsyncSubject();
-    this.permissionService.get(this.id).subscribe(data => {
+    this.permissionService.api.get(this.id).subscribe((data: any) => {
       const name = this.bit.i18nParse(data.name);
       this.keyAsync.next(data.key);
       this.keyAsync.complete();
@@ -74,11 +74,11 @@ export class PermissionPageComponent implements OnInit {
 
   submit = (data: any): void => {
     if (!this.id) {
-      this.permissionService
+      this.permissionService.api
         .add(data)
         .pipe(
-          switchMap(res =>
-            this.swal.addAlert(res, this.form, {
+          switchMap((v: any) =>
+            this.swal.addAlert(v, this.form, {
               status: true
             })
           )
@@ -86,9 +86,9 @@ export class PermissionPageComponent implements OnInit {
         .subscribe(() => {});
     } else {
       Reflect.set(data, 'id', this.id);
-      this.permissionService
+      this.permissionService.api
         .edit(data)
-        .pipe(switchMap(res => this.swal.editAlert(res)))
+        .pipe(switchMap((v: any) => this.swal.editAlert(v)))
         .subscribe(status => {
           if (status) {
             this.getData();

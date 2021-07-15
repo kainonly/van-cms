@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, ElementRef 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 
-import { MainService, LayoutService } from '@vanx/framework';
+import { AppService } from '@vanx/framework';
 import { NzContentComponent } from 'ng-zorro-antd/layout';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BitService } from 'ngx-bit';
@@ -28,8 +28,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private system: LayoutService,
-    private mainService: MainService,
+    private appService: AppService,
     private notification: NzNotificationService,
     public bitRouter: BitRouterService,
     public bit: BitService,
@@ -40,7 +39,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.bit.registerLocales({});
     this.getMenuLists();
     this.bitRouter.setup();
-    this.refreshMenu = this.system.refreshMenu.subscribe(() => {
+    this.refreshMenu = this.appService.refreshMenu.subscribe(() => {
       this.getMenuLists();
     });
     this.statusSubscription = this.bitRouter.changed.subscribe(() => {
@@ -58,7 +57,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
    * Get Menu Lists
    */
   private getMenuLists(): void {
-    this.mainService.resource().subscribe(data => {
+    this.appService.resource().subscribe(data => {
       this.bitRouter.setData({
         resource: data.resource,
         router: data.router
@@ -69,8 +68,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   private dispatch(): void {
     timer(300).subscribe(() => {
-      this.system.content.next(this.content['elementRef']);
-      this.system.content.complete();
+      this.appService.content.next(this.content['elementRef']);
+      this.appService.content.complete();
     });
   }
 
@@ -78,7 +77,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
    * User logout
    */
   logout(): void {
-    this.mainService.logout().subscribe(() => {
+    this.appService.logout().subscribe(() => {
       this.bit.clear();
       this.bitRouter.uninstall();
       this.router.navigateByUrl('/login');

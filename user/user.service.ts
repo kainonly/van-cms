@@ -1,63 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BitCurdCommonService, BitHttpService, ListByPage } from 'ngx-bit';
 import { map } from 'rxjs/operators';
+
+import { Api, BitService } from 'ngx-bit';
 
 @Injectable()
 export class UserService {
-  private model!: string;
+  api!: Api;
 
-  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
+  constructor(private bit: BitService) {}
 
-  setModel(value: string): void {
-    this.model = value;
-  }
-
-  originLists(): Observable<any> {
-    return this.curd.originLists(this.model);
-  }
-
-  lists(factory: ListByPage, refresh: boolean, persistence: boolean): Observable<any> {
-    return this.curd.lists(this.model, factory, {
-      refresh,
-      persistence
-    });
-  }
-
-  get(id: any): Observable<any> {
-    return this.curd.get(this.model, id);
-  }
-
-  add(data: any): Observable<any> {
-    return this.curd.add(this.model, data);
-  }
-
-  edit(data: any): Observable<any> {
-    return this.curd.edit(this.model, data);
-  }
-
-  delete(id: any[]): Observable<any> {
-    return this.curd.delete(this.model, id);
-  }
-
-  status(data: any): Observable<any> {
-    return this.curd.status(this.model, data);
+  setModel(name: string) {
+    this.api = this.bit.api(name);
   }
 
   /**
-   * Validate Username
+   * 验证用户名是否存在
    */
   validedUsername(username: string): Observable<any> {
-    return this.http
-      .req(this.model + '/validedUsername', {
+    return this.api
+      .send(`validedUsername`, {
         username
       })
       .pipe(
-        map(res => {
-          if (res.error === 1) {
+        map((v: any) => {
+          if (v.error === 1) {
             return false;
           }
-          return !res.data.exists;
+          return !v.data.exists;
         })
       );
   }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
+
 import { PageTableColumn } from '@vanx/framework';
+import { BitService, ListByPage } from 'ngx-bit';
+
 import { LogsService } from '../logs.service';
 import * as packer from './language';
 

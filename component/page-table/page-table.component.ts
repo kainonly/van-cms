@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 
 import { PageTableColumn, PageTableServiceInterface } from '@vanx/framework';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { BitService, ListByPage } from 'ngx-bit';
+import { Api, BitService, ListByPage } from 'ngx-bit';
 import { BitSwalService } from 'ngx-bit/swal';
 
 import { PageTableCellDirective } from './page-table-cell.directive';
@@ -29,7 +29,7 @@ export class PageTableComponent implements OnInit, AfterViewInit {
   @Input() batch = true;
   @Input() columns: PageTableColumn[] = [];
   @Input() lists!: ListByPage;
-  @Input() service!: PageTableServiceInterface;
+  @Input() api!: Api;
   @Input() listsOperate!: (observable: Observable<any>) => Observable<any>;
   @Input() listsDataChange: EventEmitter<any> = new EventEmitter<any>();
   @Input() deleteOperate!: (observable: Observable<any>) => Observable<any>;
@@ -56,18 +56,18 @@ export class PageTableComponent implements OnInit, AfterViewInit {
   }
 
   getLists(refresh = false, event?: number): void {
-    let observable = this.service.lists!(this.lists, refresh, event !== undefined);
+    let observable = this.api.lists!(this.lists, refresh, event !== undefined);
     if (this.listsOperate) {
       observable = this.listsOperate(observable);
     }
-    observable.subscribe(data => {
+    observable.subscribe((data: any) => {
       this.lists.setData(data);
       this.listsDataChange.emit(data);
     });
   }
 
   delete(id: any[]): void {
-    let observable = this.swal.deleteAlert(this.service.delete!(id));
+    let observable = this.swal.deleteAlert(this.api.delete!(id) as Observable<Record<string, unknown>>);
     if (this.deleteOperate) {
       observable = this.deleteOperate(observable);
     }

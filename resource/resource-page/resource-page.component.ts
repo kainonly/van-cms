@@ -1,15 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService } from 'ngx-bit';
 import { ActivatedRoute } from '@angular/router';
-import { NzTreeNodeOptions } from 'ng-zorro-antd/core/tree/nz-tree-base-node';
-import { asyncValidator } from 'ngx-bit/operates';
-import { switchMap } from 'rxjs/operators';
 import { AsyncSubject, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+import { AppService } from '@vanx/framework';
+import { NzTreeNodeOptions } from 'ng-zorro-antd/core/tree/nz-tree-base-node';
+import { BitService } from 'ngx-bit';
+import { asyncValidator } from 'ngx-bit/operates';
+import { BitSwalService } from 'ngx-bit/swal';
+
 import { ResourceService } from '../resource.service';
 import * as packer from './language';
-import { LayoutService } from '@vanx/framework';
-import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-resource-page',
@@ -31,7 +33,7 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
     private swal: BitSwalService,
     private resourceService: ResourceService,
     private route: ActivatedRoute,
-    private system: LayoutService
+    private app: AppService
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +65,7 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
       }
       this.getParentNodes();
     });
-    this.localeChanged = this.bit.localeChanged.subscribe(() => {
+    this.localeChanged = this.bit.localeChanged!.subscribe(() => {
       this.getParentNodes();
     });
   }
@@ -78,14 +80,14 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
 
   getData(): void {
     this.keyAsync = new AsyncSubject();
-    this.resourceService.get(this.id).subscribe(data => {
+    this.resourceService.api.get(this.id).subscribe(data => {
       if (!data) {
         return;
       }
       this.keyAsync.next(data.key);
       this.keyAsync.complete();
       this.form.setValue({
-        name: JSON.parse(data.name),
+        name: JSON.parse(data.name as string),
         key: data.key,
         parent: data.parent,
         nav: data.nav,
@@ -98,14 +100,14 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
   }
 
   getParentNodes(): void {
-    this.resourceService.originLists().subscribe(data => {
+    this.resourceService.api.originLists().subscribe((data: any) => {
       const refer: Map<string, NzTreeNodeOptions> = new Map();
       const lists = data.map((v: any) => {
         if (this.parentId && v.id === this.parentId) {
           this.form.get('parent')!.setValue(v.key);
         }
         const rows = {
-          title: JSON.parse(v.name)[this.bit.locale] + ' [' + v.key + ']',
+          title: `${JSON.parse(v.name)[this.bit.locale!]} [${v.key}]`,
           key: v.key,
           id: v.id,
           parent: v.parent,
@@ -121,7 +123,7 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
           title: {
             zh_cn: '最高级',
             en_us: 'Top'
-          }[this.bit.locale],
+          }[this.bit.locale!],
           isLeaf: true
         }
       ];
@@ -144,11 +146,11 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
 
   submit = (data: any): void => {
     if (!this.id) {
-      this.resourceService
+      this.resourceService.api
         .add(data)
         .pipe(
-          switchMap(res =>
-            this.swal.addAlert(res, this.form, {
+          switchMap((v: any) =>
+            this.swal.addAlert(v, this.form, {
               nav: false,
               router: false,
               policy: false,
@@ -160,18 +162,18 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
           if (status) {
             this.getParentNodes();
           }
-          this.system.refreshMenuStart();
+          this.app.refreshMenuStart();
         });
     } else {
       Reflect.set(data, 'id', this.id);
-      this.resourceService
+      this.resourceService.api
         .edit(data)
-        .pipe(switchMap(res => this.swal.editAlert(res)))
+        .pipe(switchMap((v: any) => this.swal.editAlert(v)))
         .subscribe(status => {
           if (status) {
             this.getParentNodes();
           }
-          this.system.refreshMenuStart();
+          this.app.refreshMenuStart();
         });
     }
   };
