@@ -8,13 +8,15 @@ import {
   QueryList,
   TemplateRef
 } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { Observable } from 'rxjs';
+
 import { PageTableColumn, PageTableServiceInterface } from '@vanx/framework';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { BitService, ListByPage } from 'ngx-bit';
+import { BitSwalService } from 'ngx-bit/swal';
+
 import { PageTableCellDirective } from './page-table-cell.directive';
 import { PageTableSearchDirective } from './page-table-search.directive';
-import { Observable } from 'rxjs';
-import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-page-table',

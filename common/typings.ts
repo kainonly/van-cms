@@ -1,5 +1,6 @@
-import { ListByPage } from 'ngx-bit';
 import { Observable } from 'rxjs';
+
+import { ListByPage } from 'ngx-bit';
 
 export interface PageTableServiceInterface {
   lists?(factory: ListByPage, refresh: boolean, persistence: boolean): Observable<any>;

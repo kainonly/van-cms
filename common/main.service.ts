@@ -1,49 +1,52 @@
 import { Injectable } from '@angular/core';
-import { BitHttpService } from 'ngx-bit';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Api, BitService } from 'ngx-bit';
+
 @Injectable()
 export class MainService {
-  protected model = 'main';
+  private api: Api;
 
-  constructor(protected http: BitHttpService) {}
+  constructor(private bit: BitService) {
+    this.api = bit.api('main');
+  }
 
   /**
-   * User Login
+   * 用户登录
    */
   login(username: string, password: string): Observable<any> {
-    return this.http.req(this.model + '/login', {
+    return this.api.send(`login`, {
       username,
       password
     });
   }
 
   /**
-   * User Logout
+   * 用户注销
    */
   logout(): Observable<boolean> {
-    return this.http.req(this.model + '/logout').pipe(map(res => !res.error));
+    return this.api.send(`logout`).pipe(map((v: any) => !v.error));
   }
 
   /**
-   * Get Resource
+   * 获取路由资源
    */
   resource(): Observable<any> {
-    return this.http.req(this.model + '/resource').pipe(
-      map(res => {
+    return this.api.send(`resource`).pipe(
+      map((v: any) => {
         const resource: Record<string, any> = {};
         const router: Record<string, any> = {};
         const nav: any = [];
 
-        if (!res.error) {
-          for (const x of res.data) {
+        if (!v.error) {
+          for (const x of v.data) {
             resource[x.key] = x;
             if (x.router === 1 || x.router === true) {
               router[x.key] = x;
             }
           }
-          for (const x of res.data) {
+          for (const x of v.data) {
             if (!x.nav) {
               continue;
             }
@@ -70,16 +73,16 @@ export class MainService {
   }
 
   /**
-   * Get Profile Information
+   * 获取个人信息
    */
   information(): Observable<any> {
-    return this.http.req(this.model + '/information').pipe(map(res => (!res.error ? res.data : {})));
+    return this.api.send(`information`).pipe(map((v: any) => (!v.error ? v.data : {})));
   }
 
   /**
-   * Update Profile
+   * 更新个人信息
    */
   update(data: any): Observable<any> {
-    return this.http.req(this.model + '/update', data);
+    return this.api.send(`update`, data);
   }
 }

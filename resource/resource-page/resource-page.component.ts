@@ -8,7 +8,7 @@ import { switchMap } from 'rxjs/operators';
 import { AsyncSubject, Subscription } from 'rxjs';
 import { ResourceService } from '../resource.service';
 import * as packer from './language';
-import { SystemService } from '@vanx/framework';
+import { LayoutService } from '@vanx/framework';
 import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
@@ -31,7 +31,7 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
     private swal: BitSwalService,
     private resourceService: ResourceService,
     private route: ActivatedRoute,
-    private system: SystemService
+    private system: LayoutService
   ) {}
 
   ngOnInit(): void {

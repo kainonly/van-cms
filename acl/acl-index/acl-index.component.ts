@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
+
 import { PageTableColumn } from '@vanx/framework';
 import { columnType } from '@vanx/framework/component';
+import { BitService, ListByPage } from 'ngx-bit';
+
 import { AclService } from '../acl.service';
 import * as packer from './language';
 

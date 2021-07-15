@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService } from 'ngx-bit';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { asyncValidator } from 'ngx-bit/operates';
-import { switchMap } from 'rxjs/operators';
-import { AsyncSubject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { AsyncSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { BitService } from 'ngx-bit';
+import { asyncValidator } from 'ngx-bit/operates';
+import { BitSwalService } from 'ngx-bit/swal';
+
 import { PermissionService } from '../permission.service';
 import * as packer from './language';
-import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-permission-page',

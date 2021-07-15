@@ -12,7 +12,7 @@
       [placeholder]="bit.l['search']"
       [(ngModel)]="lists.search['name->' + bit.locale].value"
       [bitSearchStart]="lists"
-      (after)="pageTable.getLists(true)"
+      (bitAfter)="pageTable.getLists(true)"
     />
   </nz-input-group>
 </v-page-table>

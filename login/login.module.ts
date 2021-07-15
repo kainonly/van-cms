@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
-import { NgParticlesModule } from 'ng-particles';
+
 import { ShareModule } from '@vanx/framework';
+import { NgParticlesModule } from 'ng-particles';
+
 import { LoginComponent } from './login.component';
 
 @NgModule({

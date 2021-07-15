@@ -8,9 +8,11 @@ import {
   TemplateRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BitService } from 'ngx-bit';
-import { PageFormItemDirective } from './page-form-item.directive';
+
 import { PageFormSchema } from '@vanx/framework';
+import { BitService } from 'ngx-bit';
+
+import { PageFormItemDirective } from './page-form-item.directive';
 
 @Component({
   selector: 'v-page-form',

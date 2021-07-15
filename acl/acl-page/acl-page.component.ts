@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService } from 'ngx-bit';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { asyncValidator } from 'ngx-bit/operates';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { BitService } from 'ngx-bit';
+import { asyncValidator } from 'ngx-bit/operates';
+import { BitSwalService } from 'ngx-bit/swal';
+
 import { AclService } from '../acl.service';
 import * as packer from './language';
-import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-acl-page',
@@ -63,7 +65,7 @@ export class AclPageComponent implements OnInit {
 
   getData(): void {
     this.keyAsync = new AsyncSubject();
-    this.aclService.get(this.id).subscribe(data => {
+    this.aclService.api.get(this.id).subscribe((data: any) => {
       const name = this.bit.i18nParse(data.name);
       this.keyAsync.next(data.key);
       this.keyAsync.complete();
@@ -81,10 +83,10 @@ export class AclPageComponent implements OnInit {
 
   submit = (data: any): void => {
     if (!this.id) {
-      this.aclService
+      this.aclService.api
         .add(data)
         .pipe(
-          switchMap(res =>
+          switchMap((res: any) =>
             this.swal.addAlert(res, this.form, {
               status: true
             })
@@ -93,9 +95,9 @@ export class AclPageComponent implements OnInit {
         .subscribe(() => {});
     } else {
       Reflect.set(data, 'id', this.id);
-      this.aclService
+      this.aclService.api
         .edit(data)
-        .pipe(switchMap(res => this.swal.editAlert(res)))
+        .pipe(switchMap((res: any) => this.swal.editAlert(res)))
         .subscribe(status => {
           if (status) {
             this.getData();

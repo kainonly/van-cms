@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BitService } from 'ngx-bit';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Subscription, timer } from 'rxjs';
-import { MainService, SystemService } from '@vanx/framework';
-import { BitRouterService } from 'ngx-bit/router';
+
+import { MainService, LayoutService } from '@vanx/framework';
 import { NzContentComponent } from 'ng-zorro-antd/layout';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { BitService } from 'ngx-bit';
+import { BitRouterService } from 'ngx-bit/router';
 
 @Component({
   selector: 'v-layout',
@@ -27,7 +28,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private system: SystemService,
+    private system: LayoutService,
     private mainService: MainService,
     private notification: NzNotificationService,
     public bitRouter: BitRouterService,

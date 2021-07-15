@@ -16,7 +16,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { ResourceService } from '../resource.service';
 import { PolicyService } from '../policy.service';
 import * as packer from './language';
-import { SystemService } from '@vanx/framework';
+import { LayoutService } from '@vanx/framework';
 import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
@@ -53,7 +53,7 @@ export class ResourceIndexComponent implements OnInit, OnDestroy {
     private resourceService: ResourceService,
     public policyService: PolicyService,
     private aclService: AclService,
-    private system: SystemService
+    private system: LayoutService
   ) {}
 
   ngOnInit(): void {

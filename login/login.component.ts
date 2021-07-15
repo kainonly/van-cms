@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+
+import { StorageMap } from '@ngx-pwa/local-storage';
+import { MainService } from '@vanx/framework';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BitService } from 'ngx-bit';
-import { switchMap } from 'rxjs/operators';
-import { MainService } from '@vanx/framework';
-import { StorageMap } from '@ngx-pwa/local-storage';
-import { particles } from './particles';
+
 import * as packer from './language';
+import { particles } from './particles';
 
 @Component({
   selector: 'v-login',

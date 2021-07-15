@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService, ListByPage } from 'ngx-bit';
-import { PermissionService } from '../permission.service';
+
 import { PageTableColumn } from '@vanx/framework';
-import * as packer from './language';
 import { columnType } from '@vanx/framework/component';
+import { BitService, ListByPage } from 'ngx-bit';
+
+import { PermissionService } from '../permission.service';
+import * as packer from './language';
 
 @Component({
   selector: 'v-permission-index',

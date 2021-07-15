@@ -2,7 +2,7 @@ import { ElementRef, Injectable } from '@angular/core';
 import { AsyncSubject, BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable()
-export class SystemService {
+export class LayoutService {
   /**
    * 内容节点
    */

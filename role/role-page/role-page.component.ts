@@ -9,7 +9,7 @@ import { ResourceService } from '@vanx/framework/resource';
 import { PermissionService } from '@vanx/framework/permission';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncSubject, Subscription } from 'rxjs';
-import { SystemService } from '@vanx/framework';
+import { LayoutService } from '@vanx/framework';
 import { RoleService } from '../role.service';
 import * as packer from './language';
 import { BitSwalService } from 'ngx-bit/swal';
@@ -40,7 +40,7 @@ export class RolePageComponent implements OnInit, AfterViewInit, OnDestroy {
     private resourceService: ResourceService,
     private permissionService: PermissionService,
     private route: ActivatedRoute,
-    private system: SystemService
+    private system: LayoutService
   ) {}
 
   ngOnInit(): void {
