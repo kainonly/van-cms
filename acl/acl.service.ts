@@ -9,7 +9,7 @@ export class AclService {
   api: Api;
 
   constructor(private bit: BitService) {
-    this.api = bit.api('api');
+    this.api = bit.api('acl');
   }
 
   /**
