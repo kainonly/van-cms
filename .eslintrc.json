@@ -10,7 +10,7 @@
       ],
       "parserOptions": {
         "project": [
-          "./tsconfig.lib.json"
+          "projects/vanx/framework/tsconfig.lib.json"
         ],
         "createDefaultProgram": true
       },

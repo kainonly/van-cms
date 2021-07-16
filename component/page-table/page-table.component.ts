@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PageTableColumn, PageTableServiceInterface } from '@vanx/framework';
+import { PageTableColumn } from '@vanx/framework';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Api, BitService, ListByPage } from 'ngx-bit';
 import { BitSwalService } from 'ngx-bit/swal';

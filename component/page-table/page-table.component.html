@@ -57,7 +57,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of contentTable.data">
-        <td *ngIf="batch" nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="lists.refreshStatus()"></td>
+        <td *ngIf="batch" nzShowCheckbox [(nzChecked)]="data['checked']" (nzCheckedChange)="lists.refreshStatus()"></td>
         <ng-container *ngFor="let column of columns">
           <td
             [nzLeft]="column.left ?? false"
