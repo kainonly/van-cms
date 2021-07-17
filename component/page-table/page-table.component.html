@@ -23,8 +23,9 @@
   </ng-template>
   <nz-table
     #contentTable
+    nzTableLayout="fixed"
     [nzData]="lists.data"
-    [nzLoadingDelay]="300"
+    [nzLoadingDelay]="200"
     [nzLoading]="lists.loading"
     [nzTotal]="lists.totals"
     [nzPageSize]="lists.limit"
@@ -32,13 +33,12 @@
     (nzPageIndexChange)="getLists(false, $event)"
     [nzFrontPagination]="false"
     [nzScroll]="scroll"
-    [nzSize]="'middle'"
   >
     <thead>
       <tr>
         <th
           *ngIf="batch"
-          nzWidth="65px"
+          nzWidth="50px"
           nzShowCheckbox
           [(nzChecked)]="lists.checked"
           [nzIndeterminate]="lists.indeterminate"
