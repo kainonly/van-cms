@@ -1,16 +1,16 @@
-<bit-header back></bit-header>
+<bit-header back> </bit-header>
 
 <v-page-form [formGroup]="form" [submit]="submit">
   <nz-form-item *vPageFormItem formGroupName="name">
     <nz-form-label bitCol="label" nzRequired>
       <span>
         {{ bit.l['name'] }}
-        <i nz-icon nz-tooltip [nzTooltipTitle]="bit.l['i18nTip']" nzType="translation"> </i>
       </span>
     </nz-form-label>
     <nz-form-control bitCol="control">
       <input nz-input [placeholder]="bit.l['namePlaceholder']" />
     </nz-form-control>
+    <bit-i18n-btn></bit-i18n-btn>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>

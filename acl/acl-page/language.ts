@@ -1,10 +1,8 @@
 export default {
-  name: ['访问控制名称', 'Acl Name'],
-  name_zh_cn: ['中文为空', 'Chinese empty'],
-  name_en_us: ['英文为空', 'English empty'],
+  name: ['名称', 'Name'],
   namePlaceholder: ['请输入访问控制名称', 'Please enter acl name'],
   nameRequire: ['当前访问控制名称不能为空', 'Current acl name cannot be empty'],
-  key: ['访问控制键', 'Acl Key'],
+  key: ['索引键', 'Index Key'],
   keyHelp: [
     '访问控制键即代表唯一标识也作用于基础策略路径',
     'The acl key means that the unique identifier also acts on the underlying policy path'
