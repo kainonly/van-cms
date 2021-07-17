@@ -38,14 +38,12 @@ export class AclPageComponent implements OnInit {
   ngOnInit(): void {
     this.bit.registerLocales(packer);
     this.form = this.fb.group({
-      name: this.fb.group(
-        this.bit.i18nGroup({
-          validate: {
-            zh_cn: [Validators.required],
-            en_us: [Validators.required]
-          }
-        })
-      ),
+      name: this.bit.i18nGroup({
+        validate: {
+          zh_cn: [Validators.required],
+          en_us: [Validators.required]
+        }
+      }),
       key: [null, [Validators.required], [this.existsKey]],
       read: [this.default.read],
       write: [this.default.write],

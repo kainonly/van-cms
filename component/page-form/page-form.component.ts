@@ -16,7 +16,8 @@ import { PageFormItemDirective } from './page-form-item.directive';
 
 @Component({
   selector: 'v-page-form',
-  templateUrl: './page-form.component.html'
+  templateUrl: './page-form.component.html',
+  styleUrls: ['./page-form.component.scss']
 })
 export class PageFormComponent implements AfterViewInit {
   templates: TemplateRef<any>[] = [];
@@ -38,7 +39,7 @@ export class PageFormComponent implements AfterViewInit {
     this.changeDetectorRef.detectChanges();
   }
 
-  plan(schema: { [key: string]: PageFormSchema }): void {
+  plan(schema: Record<string, PageFormSchema>): void {
     this.dataset = this.dataset
       .filter((v: PageFormItemDirective) => {
         if (!schema.hasOwnProperty(v.vPageFormItem)) {

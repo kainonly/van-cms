@@ -103,6 +103,7 @@ import { BitRouterModule } from 'ngx-bit/router';
     NzTabsModule,
     NzTimelineModule,
     NzInputNumberModule,
+    NzPopoverModule,
     PortalModule,
     BitComponentModule,
     BitDirectiveModule,

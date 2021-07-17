@@ -1,9 +1,8 @@
-<nz-card>
+<nz-card class="page-form">
   <form nz-form [formGroup]="formGroup" (bitFormSubmit)="submit($event)">
     <ng-container *ngFor="let template of templates">
       <ng-container *ngTemplateOutlet="template"></ng-container>
     </ng-container>
-    <nz-divider></nz-divider>
     <nz-form-item>
       <nz-form-control bitCol="submit">
         <nz-space>

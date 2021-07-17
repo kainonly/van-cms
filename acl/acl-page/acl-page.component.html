@@ -10,11 +10,20 @@
         <i nz-icon nz-tooltip [nzTooltipTitle]="bit.l['i18nTip']" nzType="translation"> </i>
       </span>
     </nz-form-label>
-    <ng-container *ngFor="let x of bit.i18nContain">
-      <nz-form-control *ngIf="bit.equalI18n(x)" nzHasFeedback bitCol="control">
-        <input nz-input [formControlName]="x" [placeholder]="bit.l['namePlaceholder']" />
-      </nz-form-control>
-    </ng-container>
+    <nz-form-control bitCol="control">
+      <input
+        nz-input
+        [placeholder]="bit.l['namePlaceholder']"
+        nz-popover
+        nzPopoverTitle="Title"
+        nzPopoverContent="Content"
+      />
+    </nz-form-control>
+    <!--    <ng-container *ngFor="let x of bit.i18nContain">-->
+    <!--      <nz-form-control *ngIf="bit.equalI18n(x)" nzHasFeedback bitCol="control">-->
+    <!--        <input nz-input [formControlName]="x" [placeholder]="bit.l['namePlaceholder']" />-->
+    <!--      </nz-form-control>-->
+    <!--    </ng-container>-->
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
