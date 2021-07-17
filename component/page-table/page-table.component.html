@@ -98,11 +98,23 @@
                   </ng-container>
                 </ng-container>
                 <ng-container *ngSwitchCase="'action'">
-                  <a *ngIf="column.extra.hasOwnProperty('edit')" [bitOpen]="[column.extra.edit, data.id]">
-                    <i nz-icon nzType="edit"></i> {{ bit.l['edit'] }}
-                  </a>
+                  <button
+                    *ngIf="column.extra.hasOwnProperty('edit')"
+                    nz-button
+                    nzType="text"
+                    [bitOpen]="[column.extra.edit, data.id]"
+                  >
+                    <i nz-icon nzType="edit"></i>
+                  </button>
                   <nz-divider nzType="vertical"></nz-divider>
-                  <a (click)="delete([data.id])"> <i nz-icon nzType="delete"></i> {{ bit.l['delete'] }} </a>
+                  <button
+                    *ngIf="column.extra.hasOwnProperty('edit')"
+                    nz-button
+                    nzType="text"
+                    [bitOpen]="[column.extra.edit, data.id]"
+                  >
+                    <i nz-icon nzType="ellipsis"></i>
+                  </button>
                 </ng-container>
               </ng-container>
             </ng-template>

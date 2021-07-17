@@ -5,6 +5,6 @@ export const columnType = {
     return { key, format: 'status', extra: { control, response } };
   },
   action(edit: string): PageTableColumn {
-    return { key: 'action', width: '300px', right: true, format: 'action', extra: { edit } };
+    return { key: 'action', width: '120px', right: true, format: 'action', extra: { edit } };
   }
 };

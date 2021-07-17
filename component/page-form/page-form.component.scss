@@ -1,9 +1,10 @@
-::ng-deep {
-  .page-form {
-    padding-top: 12px;
+form {
+  margin-top: 12px;
+}
 
-    input {
-      width: 328px;
-    }
+::ng-deep .page {
+  .ant-input,
+  .ant-select {
+    max-width: 328px;
   }
 }
