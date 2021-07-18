@@ -49,6 +49,9 @@ export class AclPageComponent implements OnInit {
       write: [this.default.write],
       status: [true, [Validators.required]]
     });
+    this.form.valueChanges.subscribe(data => {
+      console.log(data.name);
+    });
     this.route.params.subscribe(param => {
       if (param.id) {
         this.id = param.id;
