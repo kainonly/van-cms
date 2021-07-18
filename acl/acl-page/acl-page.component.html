@@ -5,9 +5,9 @@
     <nz-form-label nzRequired>
       <span>{{ bit.l['name'] }}</span>
     </nz-form-label>
-    <bit-i18n #i18n="bitI18n" nz-col [nzSpan]="16" formGroupName="name">
+    <bit-i18n #i18n="bitI18n" nz-col [nzSpan]="12" formGroupName="name">
       <ng-container *ngFor="let language of i18n.languages">
-        <nz-form-item *bitI18nTab="language">
+        <nz-form-item *bitI18nItem="language">
           <nz-form-control nzHasFeedback>
             <input [formControlName]="language.id" nz-input [placeholder]="bit.l['namePlaceholder']" />
           </nz-form-control>

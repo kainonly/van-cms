@@ -51,6 +51,7 @@ import { BitComponentModule } from 'ngx-bit/component';
 import { BitDirectiveModule } from 'ngx-bit/directive';
 import { BitPipeModule } from 'ngx-bit/pipe';
 import { BitRouterModule } from 'ngx-bit/router';
+import { BitI18nModule } from '../../ngx-bit/i18n/bit-i18n.module';
 
 @NgModule({
   exports: [
@@ -108,6 +109,7 @@ import { BitRouterModule } from 'ngx-bit/router';
     BitComponentModule,
     BitDirectiveModule,
     BitPipeModule,
+    BitI18nModule,
     BitRouterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
