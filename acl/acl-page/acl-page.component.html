@@ -5,11 +5,11 @@
     <nz-form-label nzRequired>
       <span>{{ bit.l['name'] }}</span>
     </nz-form-label>
-    <bit-i18n nz-col [nzSpan]="16" #i18n="bitI18n" [bitTitle]="bit.l['name']" formGroupName="name">
-      <ng-container *ngFor="let id of i18n.contain">
-        <nz-form-item *ngIf="i18n.id === id">
+    <bit-i18n nz-col [nzSpan]="16" #i18n="bitI18n" formGroupName="name">
+      <ng-container *ngFor="let language of i18n.languages">
+        <nz-form-item *ngIf="i18n.eq(language)">
           <nz-form-control nzHasFeedback>
-            <input [formControlName]="id" nz-input [placeholder]="bit.l['namePlaceholder']" />
+            <input [formControlName]="language.id" nz-input [placeholder]="bit.l['namePlaceholder']" />
           </nz-form-control>
         </nz-form-item>
       </ng-container>
