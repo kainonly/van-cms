@@ -5,11 +5,15 @@
     <nz-form-label bitCol="label" nzRequired>
       <span>{{ bit.l['name'] }}</span>
     </nz-form-label>
-    <nz-form-control bitCol="i18n">
-      <bit-i18n [bitTitle]="bit.l['name']" formGroupName="name">
-        <input nz-input [placeholder]="bit.l['namePlaceholder']" />
-      </bit-i18n>
-    </nz-form-control>
+    <bit-i18n #i18n="bitI18n" [bitTitle]="bit.l['name']" formGroupName="name">
+      <ng-container *ngFor="let id of i18n.contain">
+        <nz-form-item *ngIf="i18n.id === id">
+          <nz-form-control nzHasFeedback>
+            <input [formControlName]="id" nz-input [placeholder]="bit.l['namePlaceholder']" />
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+    </bit-i18n>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
