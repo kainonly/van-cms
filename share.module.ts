@@ -47,10 +47,10 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
-import { BitComponentModule } from 'ngx-bit/component';
 import { BitDirectiveModule } from 'ngx-bit/directive';
 import { BitPipeModule } from 'ngx-bit/pipe';
 import { BitRouterModule } from 'ngx-bit/router';
+
 import { BitI18nModule } from '../../ngx-bit/i18n/bit-i18n.module';
 
 @NgModule({
@@ -106,7 +106,6 @@ import { BitI18nModule } from '../../ngx-bit/i18n/bit-i18n.module';
     NzInputNumberModule,
     NzPopoverModule,
     PortalModule,
-    BitComponentModule,
     BitDirectiveModule,
     BitPipeModule,
     BitI18nModule,

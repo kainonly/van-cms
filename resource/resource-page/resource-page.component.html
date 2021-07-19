@@ -1,6 +1,4 @@
-<bit-header back>
-  <bit-i18n-switch *bitHeaderAction></bit-i18n-switch>
-</bit-header>
+<bit-header back> </bit-header>
 
 <v-page-form [formGroup]="form" [submit]="submit">
   <nz-form-item *vPageFormItem formGroupName="name">
@@ -10,11 +8,15 @@
         <i nz-icon nz-tooltip [nzTooltipTitle]="bit.l['i18nTip']" nzType="translation" nzTheme="outline"> </i>
       </span>
     </nz-form-label>
-    <ng-container *ngFor="let x of bit.i18nContain">
-      <nz-form-control *ngIf="bit.equalI18n(x)" nzHasFeedback bitCol="control">
-        <input nz-input [formControlName]="x" [placeholder]="bit.l['namePlaceholder']" />
-      </nz-form-control>
-    </ng-container>
+    <bit-i18n #i18n="bitI18n" nz-col [nzSpan]="12" formGroupName="name">
+      <ng-container *ngFor="let language of i18n.languages">
+        <nz-form-item *bitI18nItem="language">
+          <nz-form-control nzHasFeedback>
+            <input [formControlName]="language.id" nz-input [placeholder]="bit.l['namePlaceholder']" />
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+    </bit-i18n>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
