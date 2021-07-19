@@ -2,7 +2,7 @@
 
 <v-page-form [formGroup]="form" [submit]="submit">
   <nz-form-item *vPageFormItem formGroupName="name">
-    <nz-form-label bitCol="label" nzRequired>
+    <nz-form-label nzRequired>
       <span>
         {{ bit.l['name'] }}
         <i nz-icon nz-tooltip [nzTooltipTitle]="bit.l['i18nTip']" nzType="translation" nzTheme="outline"> </i>
@@ -20,22 +20,22 @@
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label" nzRequired>
+    <nz-form-label nzRequired>
       <span
         >{{ bit.l['key'] }}
         <i nz-icon nz-tooltip [nzTooltipTitle]="bit.l['keyHelp']" nzType="question-circle"></i>
       </span>
     </nz-form-label>
-    <nz-form-control bitCol="control" nzHasFeedback [nzValidatingTip]="bit.l['validating']">
+    <nz-form-control nzHasFeedback [nzValidatingTip]="bit.l['validating']">
       <input nz-input formControlName="key" [placeholder]="bit.l['keyPlaceholder']" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label" nzRequired>
+    <nz-form-label nzRequired>
       {{ bit.l['parent'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control">
+    <nz-form-control>
       <nz-tree-select
         *ngIf="parentLists.length !== 0"
         formControlName="parent"
@@ -51,49 +51,49 @@
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label" nzRequired>
+    <nz-form-label nzRequired>
       {{ bit.l['nav'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control">
+    <nz-form-control>
       <nz-switch formControlName="nav" [nzCheckedChildren]="bit.l['yes']" [nzUnCheckedChildren]="bit.l['no']">
       </nz-switch>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label" nzRequired>
+    <nz-form-label nzRequired>
       {{ bit.l['router'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control">
+    <nz-form-control>
       <nz-switch formControlName="router" [nzCheckedChildren]="bit.l['yes']" [nzUnCheckedChildren]="bit.l['no']">
       </nz-switch>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label" nzRequired>
+    <nz-form-label nzRequired>
       {{ bit.l['policy'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control">
+    <nz-form-control>
       <nz-switch formControlName="policy" [nzCheckedChildren]="bit.l['yes']" [nzUnCheckedChildren]="bit.l['no']">
       </nz-switch>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label">
+    <nz-form-label>
       {{ bit.l['icon'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control">
+    <nz-form-control>
       <input type="text" nz-input formControlName="icon" [placeholder]="bit.l['iconPlaceholder']" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label" nzRequired>
+    <nz-form-label nzRequired>
       {{ bit.l['status'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control">
+    <nz-form-control>
       <nz-switch formControlName="status" [nzCheckedChildren]="bit.l['on']" [nzUnCheckedChildren]="bit.l['off']">
       </nz-switch>
     </nz-form-control>

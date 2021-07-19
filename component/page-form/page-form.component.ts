@@ -16,8 +16,7 @@ import { PageFormItemDirective } from './page-form-item.directive';
 
 @Component({
   selector: 'v-page-form',
-  templateUrl: './page-form.component.html',
-  styleUrls: ['./page-form.component.scss']
+  templateUrl: './page-form.component.html'
 })
 export class PageFormComponent implements AfterViewInit {
   templates: TemplateRef<any>[] = [];

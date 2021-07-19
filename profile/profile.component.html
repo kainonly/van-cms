@@ -1,36 +1,36 @@
 <v-page-form [formGroup]="form" [submit]="submit" [cancelDisabled]="true">
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label">
+    <nz-form-label>
       {{ bit.l['call'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control" nzHasFeedback>
+    <nz-form-control nzHasFeedback>
       <input nz-input formControlName="call" [placeholder]="bit.l['callPlaceholder']" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label">
+    <nz-form-label>
       {{ bit.l['email'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control" nzHasFeedback>
+    <nz-form-control nzHasFeedback>
       <input nz-input formControlName="email" [placeholder]="bit.l['emailPlaceholder']" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label">
+    <nz-form-label>
       {{ bit.l['phone'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control" nzHasFeedback>
+    <nz-form-control nzHasFeedback>
       <input nz-input formControlName="phone" [placeholder]="bit.l['phonePlaceholder']" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label">
+    <nz-form-label>
       {{ bit.l['avatar'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control">
+    <nz-form-control>
       <nz-upload class="single-uploader" bitUpload nzName="file" nzListType="picture-card" (nzChange)="upload($event)">
         <ng-container *ngIf="!avatar">
           <i nz-icon nzType="plus"></i>
@@ -42,10 +42,10 @@
   </nz-form-item>
 
   <nz-form-item *vPageFormItem>
-    <nz-form-label bitCol="label">
+    <nz-form-label>
       {{ bit.l['editPassword'] }}
     </nz-form-label>
-    <nz-form-control bitCol="control">
+    <nz-form-control>
       <nz-switch
         [(ngModel)]="editPassword"
         (ngModelChange)="editPasswordChange($event)"
@@ -57,10 +57,10 @@
 
   <ng-container *ngIf="editPassword">
     <nz-form-item *vPageFormItem>
-      <nz-form-label bitCol="label" nzRequired>
+      <nz-form-label nzRequired>
         {{ bit.l['oldPassword'] }}
       </nz-form-label>
-      <nz-form-control bitCol="control" nzHasFeedback>
+      <nz-form-control nzHasFeedback>
         <input
           nz-input
           type="password"
@@ -72,22 +72,22 @@
     </nz-form-item>
 
     <nz-form-item *vPageFormItem>
-      <nz-form-label bitCol="label" nzRequired>
+      <nz-form-label nzRequired>
         <span>
           {{ bit.l['newPassword'] }}
           <i nz-icon nzType="question-circle" [nz-tooltip]="bit.l['passwordTips']"> </i>
         </span>
       </nz-form-label>
-      <nz-form-control bitCol="control" nzHasFeedback>
+      <nz-form-control nzHasFeedback>
         <input nz-input type="password" formControlName="new_password" [placeholder]="bit.l['passwordPlaceholder']" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item *vPageFormItem>
-      <nz-form-label bitCol="label" nzRequired>
+      <nz-form-label nzRequired>
         {{ bit.l['passwordCheck'] }}
       </nz-form-label>
-      <nz-form-control bitCol="control" nzHasFeedback>
+      <nz-form-control nzHasFeedback>
         <input
           nz-input
           type="password"

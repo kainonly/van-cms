@@ -1,6 +1,6 @@
-<nz-card class="page">
+<nz-card>
   <div nz-row nzJustify="center">
-    <div nz-col nzFlex="600px">
+    <div style="padding-top: 16px" nz-col nzFlex="600px">
       <form nzLayout="vertical" nz-form [formGroup]="formGroup" (bitFormSubmit)="submit($event)">
         <ng-container *ngFor="let template of templates">
           <ng-container *ngTemplateOutlet="template"></ng-container>
