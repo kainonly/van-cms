@@ -26,7 +26,7 @@
         <i nz-icon nz-tooltip [nzTooltipTitle]="bit.l['keyHelp']" nzType="question-circle"> </i>
       </span>
     </nz-form-label>
-    <nz-form-control nzHasFeedback [nzValidatingTip]="bit.l['validating']">
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzValidatingTip]="bit.l['validating']">
       <input nz-input formControlName="key" [placeholder]="bit.l['keyPlaceholder']" />
     </nz-form-control>
   </nz-form-item>
@@ -37,7 +37,7 @@
         {{ bit.l['note'] }}
       </span>
     </nz-form-label>
-    <nz-form-control>
+    <nz-form-control [nzSpan]="12">
       <textarea rows="4" nz-input formControlName="note"></textarea>
     </nz-form-control>
   </nz-form-item>
@@ -46,7 +46,7 @@
     <nz-form-label nzRequired>
       {{ bit.l['status'] }}
     </nz-form-label>
-    <nz-form-control>
+    <nz-form-control [nzSpan]="12">
       <nz-switch formControlName="status" [nzCheckedChildren]="bit.l['on']" [nzUnCheckedChildren]="bit.l['off']">
       </nz-switch>
     </nz-form-control>

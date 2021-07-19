@@ -67,7 +67,7 @@ export class AclPageComponent implements OnInit {
   getData(): void {
     this.keyAsync = new AsyncSubject();
     this.aclService.api.get(this.id).subscribe((data: any) => {
-      const name = this.bit.i18nParse(data.name);
+      const name = this.bit.i18nData(data.name);
       this.keyAsync.next(data.key);
       this.keyAsync.complete();
       const write = !data.write ? [] : data.write.split(',');

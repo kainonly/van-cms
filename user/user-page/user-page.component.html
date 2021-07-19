@@ -13,7 +13,7 @@
     <nz-form-label nzRequired>
       {{ bit.l['role'] }}
     </nz-form-label>
-    <nz-form-control>
+    <nz-form-control [nzSpan]="12">
       <nz-select nzMode="multiple" formControlName="role" [nzPlaceHolder]="bit.l['rolePlaceholder']">
         <ng-template ngFor let-x [ngForOf]="roleLists">
           <nz-option [nzLabel]="x.name | object: bit.locale" [nzValue]="x.key"></nz-option>
@@ -29,7 +29,7 @@
         <i nz-icon nzType="question-circle" [nz-tooltip]="bit.l['passwordTips']"> </i>
       </span>
     </nz-form-label>
-    <nz-form-control nzHasFeedback>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
       <nz-input-group [nzSuffix]="suffixPasswordTpl">
         <input
           nz-input
@@ -51,7 +51,7 @@
         {{ bit.l['personalRole'] }}
       </span>
     </nz-form-label>
-    <nz-form-control>
+    <nz-form-control [nzSpan]="12">
       <nz-space>
         <nz-button-group *nzSpaceItem>
           <button nz-button type="button" (click)="allChecked()">
@@ -95,7 +95,7 @@
     <nz-form-label>
       {{ bit.l['permission'] }}
     </nz-form-label>
-    <nz-form-control>
+    <nz-form-control [nzSpan]="12">
       <nz-select nzMode="multiple" formControlName="permission" [nzPlaceHolder]="bit.l['permissionPlaceholder']">
         <ng-container *ngFor="let x of permissionLists">
           <nz-option [nzLabel]="x.name | object: bit.locale" [nzValue]="x.key"></nz-option>
@@ -108,7 +108,7 @@
     <nz-form-label>
       {{ bit.l['call'] }}
     </nz-form-label>
-    <nz-form-control nzHasFeedback>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
       <input nz-input formControlName="call" [placeholder]="bit.l['callPlaceholder']" />
     </nz-form-control>
   </nz-form-item>
@@ -117,7 +117,7 @@
     <nz-form-label>
       {{ bit.l['email'] }}
     </nz-form-label>
-    <nz-form-control nzHasFeedback>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
       <input nz-input formControlName="email" [placeholder]="bit.l['emailPlaceholder']" />
     </nz-form-control>
   </nz-form-item>
@@ -126,7 +126,7 @@
     <nz-form-label>
       {{ bit.l['phone'] }}
     </nz-form-label>
-    <nz-form-control nzHasFeedback>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
       <input nz-input formControlName="phone" [placeholder]="bit.l['phonePlaceholder']" />
     </nz-form-control>
   </nz-form-item>
@@ -135,7 +135,7 @@
     <nz-form-label>
       {{ bit.l['avatar'] }}
     </nz-form-label>
-    <nz-form-control>
+    <nz-form-control [nzSpan]="12">
       <p>{{ bit.l['avatarTips'] }}</p>
       <nz-upload nzName="image" bitUpload nzListType="picture-card" (nzChange)="upload($event)">
         <ng-container *ngIf="!avatar">
@@ -151,7 +151,7 @@
     <nz-form-label nzRequired>
       {{ bit.l['status'] }}
     </nz-form-label>
-    <nz-form-control>
+    <nz-form-control [nzSpan]="12">
       <nz-switch formControlName="status" [nzCheckedChildren]="bit.l['on']" [nzUnCheckedChildren]="bit.l['off']">
       </nz-switch>
     </nz-form-control>
