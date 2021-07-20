@@ -18,9 +18,8 @@
     <!--      </ng-template>-->
     <!--    </bit-print>-->
   </nz-alert>
-  <button *bitHeaderAction nz-button nzType="primary" [bitOpen]="['resource-add']">
+  <button *bitHeaderAction nz-button nzType="primary" nzShape="circle" [bitOpen]="['resource-add']">
     <i nz-icon nzType="plus"></i>
-    <span>{{ bit.l['add'] }}</span>
   </button>
   <ng-container *ngIf="!isSort">
     <button *bitHeaderAction nz-button nzType="primary" (click)="openSort()">
