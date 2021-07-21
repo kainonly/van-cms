@@ -52,6 +52,7 @@ import { BitPipeModule } from 'ngx-bit/pipe';
 import { BitRouterModule } from 'ngx-bit/router';
 
 import { BitI18nModule } from '../../ngx-bit/i18n/bit-i18n.module';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 @NgModule({
   exports: [
@@ -105,6 +106,7 @@ import { BitI18nModule } from '../../ngx-bit/i18n/bit-i18n.module';
     NzTimelineModule,
     NzInputNumberModule,
     NzPopoverModule,
+    NzAvatarModule,
     PortalModule,
     BitDirectiveModule,
     BitPipeModule,
